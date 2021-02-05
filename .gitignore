@@ -1,5 +1,13 @@
+# Ignore generated docs
+*.dox
+*.wikidoc
+
+*~
+
+# Emacs
+.#*
+
 archived
 archive
 .mypy_cache
-__cache__
 __pycache__
