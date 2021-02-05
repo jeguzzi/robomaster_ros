@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+
+  <robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_base">
+
+  <xacro:include filename="led.urdf.xacro"/>
+  <xacro:include filename="wheel.urdf.xacro"/>
+  <xacro:include filename="intelligent_controller.urdf.xacro"/>
+
+  <xacro:macro name="robomaster_ep_base">
+
+    <link name="base_link"/>
+
+    <link name="chassis_base_link">
+      <inertial>
+        <origin xyz="-0.0058789 -0.0001128 0.0294307" rpy="0 0 0"/>
+        <mass value="1.934"/>
+        <inertia ixx="0.01451" ixy="0" ixz="0" iyy="0.00512" iyz="0" izz="0.01759"/>
+      </inertial>
+      <visual name="armor">
+        <origin xyz="-0.0064553 -0.078141 0.0292877" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/armor.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="armor_plastic"/>
+      </visual>
+      <visual name="battery">
+        <origin xyz="-0.130336 -0.0018702 0.0174177" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/battery.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="dark_plastic"/>
+      </visual>
+      <visual name="battery_pin_left">
+        <origin xyz="-0.1158907 0.066115 0.0525243" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/battery_pin_left.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="dark_plastic"/>
+      </visual>
+      <visual name="battery_pin_right">
+        <origin xyz="-0.1158907 -0.0658844 0.0525243" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/battery_pin_right.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="dark_plastic"/>
+      </visual>
+      <visual name="chassis">
+        <origin xyz="-0.0059039 0.0004154 0.0527955" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/chassis.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="chassis"/>
+      </visual>
+      <visual name="controller">
+        <origin xyz="-0.1142288 -0.0006716 0.052675" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/controller.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="dark_plastic"/>
+      </visual>
+      <visual name="controller_cover">
+        <origin xyz="-0.0787757 -0.002522 0.0720827" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/controller_cover.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="cover_plastic"/>
+      </visual>
+      <collision name="base_collision">
+        <origin xyz="-0.0058789 -0.0001128 0.0294307" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/base_collision.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="chassis_base_joint" type="fixed">
+      <origin xyz="0 0 0.03465" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="chassis_base_link"/>
+    </joint>
+
+    <link name="extension_base_link">
+      <inertial>
+        <origin xyz="0.0044194 -1.08e-05 0.00431" rpy="0 0 0"/>
+        <mass value="0.22"/>
+        <inertia ixx="0.00133" ixy="0" ixz="0" iyy="0.00092" iyz="0" izz="0.00224"/>
+      </inertial>
+      <visual name="extension_base">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/extension_base.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <visual name="extension_support">
+        <origin xyz="-0.078582 0.0075392 0.0046459" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/extension_support.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="ExtensionBase">
+        <origin xyz="0.0044194 -1.08e-05 0.00431" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.2796935 0.2317787 0.013"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="extension_base_joint" type="fixed">
+      <origin xyz="-0.0091948 0.0010492 0.070543" rpy="0 0 0"/>
+      <parent link="chassis_base_link"/>
+      <child link="extension_base_link"/>
+    </joint>
+
+    <xacro:chassis_module name="front" xyz="0.1569985 -0.0004276 0.0432862" rpy="0 0 0"/>
+    <xacro:chassis_module name="left" xyz="-0.0024413 0.0886932 0.0298341" rpy="0 0 ${pi/2}"/>
+    <xacro:chassis_module name="rear" xyz="-0.1581827 -0.0027864 0.0303668" rpy="0 0 ${pi}"/>
+    <xacro:chassis_module name="right" xyz="-0.0024413 -0.0886932 0.0298341" rpy="0 0 ${-pi/2}"/>
+    <xacro:wheel name="front_left" xyz="0.1 0.1 0.01535" direction="1" side="1"/>
+    <xacro:wheel name="front_right" xyz="0.1 -0.1 0.01535" direction="-1" side="-1"/>
+    <xacro:wheel name="rear_left" xyz="-0.1 0.1 0.01535" direction="-1" side="1"/>
+    <xacro:wheel name="rear_right" xyz="-0.1 -0.1 0.01535" direction="1" side="-1"/>
+    <xacro:intelligent_controller/>
+
+    <material name="armor_plastic">
+      <color rgba="0.2277128 0.2277128 0.2277128 0.8"/>
+    </material>
+
+    <material name="chassis">
+      <color rgba="0.0981132 0.0981132 0.0981132 1.0"/>
+    </material>
+
+    <material name="cover_plastic">
+      <color rgba="0.2548322 0.2548322 0.2548322 0.30000000000000004"/>
+    </material>
+
+    <material name="dark_plastic">
+      <color rgba="0.0281746 0.0281746 0.0281746 1.0"/>
+    </material>
+
+    <material name="metal">
+      <color rgba="0.0281746 0.028 0.0281746 1.0"/>
+    </material>
+
+    <material name="hit_detector">
+      <color rgba="0.1697846 0.1697846 0.1697846 1.0"/>
+    </material>
+
+    <material name="led_light">
+      <color rgba="0 0.7773585 0.7773583 1.0"/>
+    </material>
+
+    <material name="wheel_plastic">
+      <color rgba="0.2739087 0.2739087 0.2739087 1.0"/>
+    </material>
+
+    <material name="intelligent_controller">
+      <color rgba="0.8 0.8 0.8 1.0"/>
+    </material>
+
+    <material name="EP_up.001">
+      <color rgba="0.0284811 0.0284811 0.0284811 1.0"/>
+    </material>
+
+
+  </xacro:macro>
+  </robot>

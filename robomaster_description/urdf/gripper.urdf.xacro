@@ -1,0 +1,442 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_base">
+
+  <xacro:macro name="gripper" params="">
+
+        <link name="left_gripper_link_1">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="left_gripper_1">
+            <origin xyz="-1.52e-05 8.12e-05 -2.25e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_1.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+        </link>
+
+        <link name="left_gripper_link_2">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="left_gripper_2">
+            <origin xyz="0.0135565 -0.0033557 -2.25e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_2.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="left_gripper_2_collision">
+            <origin xyz="0.0136108 -0.003318 -0.0296613" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_2_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <!-- <link name="left_gripper_link_3_dummy">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+        </link> -->
+
+        <link name="left_gripper_link_4">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="left_gripper_4">
+            <origin xyz="-4.74e-05 0.0001737 -1.67e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_4.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="left_gripper_4_collision">
+            <origin xyz="-7.56e-05 -2.97e-05 -0.0296554" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_4_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <link name="left_gripper_link_5">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="left_gripper_5">
+            <origin xyz="-7.26e-05 -1.8e-06 -1.83e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_5.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="left_gripper_5_collision">
+            <origin xyz="-7.26e-05 -1.8e-06 -1.83e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_5_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <link name="left_gripper_link_6">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="left_gripper_6">
+            <origin xyz="-0.0149194 -0.0168522 -1.83e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_6.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="left_gripper_6_collision">
+            <origin xyz="-0.0149892 -0.0167532 -0.0001821" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_6_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <link name="left_gripper_link_7">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="left_gripper_7">
+            <origin xyz="-0.0153264 -0.0166317 -1.83e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_7.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="left_gripper_collision">
+            <origin xyz="-0.0149126 -0.0167727 -0.0296388" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_left_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <link name="gripper_link">
+          <inertial>
+            <origin xyz="0.0326578 -9.78e-05 -0.0327003" rpy="0 0 0"/>
+            <mass value="0.15"/>
+            <inertia ixx="0.0001376" ixy="7.89e-05" ixz="1.5e-06" iyy="0.0002582" iyz="2.9e-06" izz="0.0002497"/>
+          </inertial>
+          <visual name="gripper_base">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_base.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="gripper_base_collision">
+            <origin xyz="0.0003688 -9.78e-05 -0.0112797" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/gripper_base_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+      <link name="gripper_m_link">
+
+      </link>
+
+      <joint name="gripper_m_joint" type="prismatic">
+        <limit effort="0" velocity="0" lower="-0.023" upper="0.001"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="gripper_link"/>
+        <child link="gripper_m_link"/>
+        <axis xyz="-1 0 0"/>
+      </joint>
+
+
+
+
+        <!-- <link name="left_gripper_8_link_dummy">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+        </link> -->
+
+        <link name="right_gripper_link_1">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="right_gripper_1">
+            <origin xyz="-1.52e-05 -8.12e-05 -2.25e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/EP_cilp_BB_R.001.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+        </link>
+
+        <link name="right_gripper_link_2">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="right_gripper_2">
+            <origin xyz="0.0127099 0.0021056 -2.25e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_2.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="right_gripper_2_collision">
+            <origin xyz="0.0134077 0.0024401 -0.0296613" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_2_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <!-- <link name="right_gripper_link_3_dummy">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+        </link> -->
+
+        <link name="right_gripper_link_4">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="right_gripper_4">
+            <origin xyz="-4.74e-05 -0.0001737 -1.67e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_4.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="right_gripper_4_collision">
+            <origin xyz="-6.57e-05 1.16e-05 -0.0296554" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_4_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <link name="right_gripper_link_5">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="right_gripper_5">
+            <origin xyz="-7.26e-05 1.7e-06 -1.83e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_5.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="right_gripper_5_collision">
+            <origin xyz="-0.0001606 2.35e-05 8.1e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_5_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <link name="right_gripper_link_6">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="right_gripper_6">
+            <origin xyz="-0.03103 0.0338258 -1.83e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_6.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="right_gripper_6_collision">
+            <origin xyz="-0.0156676 0.0173828 6.82e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_6_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <link name="right_gripper_link_7">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+          <visual name="right_gripper_7">
+            <origin xyz="-3.72e-05 9e-07 -1.83e-05" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_7.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+            <material name="EP_up.001"/>
+          </visual>
+          <collision name="right_gripper_7_collision">
+            <origin xyz="-0.0150056 0.0168496 -0.0296388" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_7_collision.dae" scale="1.0 1.0 1.0"/>
+            </geometry>
+          </collision>
+        </link>
+
+        <!-- <link name="right_gripper_link_8_dummy">
+          <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+          </inertial>
+        </link> -->
+
+        <joint name="left_gripper_joint_1" type="continuous">
+          <origin xyz="0.0163032 0.0212032 -0.0399201" rpy="0 0 0"/>
+          <parent link="gripper_m_link"/>
+          <child link="left_gripper_link_1"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <joint name="left_gripper_joint_2" type="continuous">
+          <origin xyz="0.0213495 0.0130363 0" rpy="0 0 0"/>
+          <parent link="left_gripper_link_1"/>
+          <child link="left_gripper_link_2"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <!-- <joint name="left_gripper_joint_3_dummy" type="fixed">
+          <origin xyz="0.0136876 -0.0029412 0.0002778" rpy="0 0 0"/>
+          <parent link="left_gripper_link_2"/>
+          <child link="left_gripper_link_3_dummy"/>
+        </joint> -->
+
+        <joint name="left_gripper_joint_4" type="continuous">
+          <origin xyz="0.00485 0.0204148 -5.8e-06" rpy="0 0 0"/>
+          <parent link="left_gripper_link_2"/>
+          <child link="left_gripper_link_4"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <joint name="left_gripper_joint_6" type="continuous">
+          <origin xyz="0.0051144 -0.0140851 0" rpy="0 0 0"/>
+          <parent link="left_gripper_link_5"/>
+          <child link="left_gripper_link_6"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <joint name="left_gripper_joint_7" type="continuous">
+          <origin xyz="-0.0148823 -0.0168513 0" rpy="0 0 0"/>
+          <parent link="left_gripper_link_6"/>
+          <child link="left_gripper_link_7"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <!-- <joint name="left_gripper_joint_8_dummy" type="fixed">
+          <origin xyz="-0.014742 -0.0167196 -3.77e-05" rpy="0 0 0"/>
+          <parent link="left_gripper_link_7"/>
+          <child link="left_gripper_8_link_dummy"/>
+        </joint> -->
+
+        <joint name="left_gripper_joint_5" type="continuous">
+          <origin xyz="0.0385916 0.0103143 1.6e-06" rpy="0 0 0"/>
+          <parent link="left_gripper_link_4"/>
+          <child link="left_gripper_link_5"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <joint name="gripper_link" type="fixed">
+          <origin xyz="0.0002793 -0.027026 0.0001815" rpy="0 0 0"/>
+          <parent link="endpoint_bracket_link"/>
+          <child link="gripper_link"/>
+        </joint>
+
+        <joint name="right_gripper_joint_1" type="continuous">
+          <origin xyz="0.0163034 -0.0209781 -0.0399201" rpy="0 0 0"/>
+          <parent link="gripper_m_link"/>
+          <child link="right_gripper_link_1"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <joint name="right_gripper_joint_2" type="continuous">
+          <origin xyz="0.0213495 -0.0130363 0" rpy="0 0 0"/>
+          <parent link="right_gripper_link_1"/>
+          <child link="right_gripper_link_2"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <!-- <joint name="right_gripper_joint_3_dummy" type="fixed">
+          <origin xyz="0.013553 0.0025081 0.0002778" rpy="0 0 0"/>
+          <parent link="right_gripper_link_2"/>
+          <child link="right_gripper_link_3_dummy"/>
+        </joint> -->
+
+        <joint name="right_gripper_joint_4" type="continuous">
+          <origin xyz="0.0047151 -0.0208481 -5.8e-06" rpy="0 0 0"/>
+          <parent link="right_gripper_link_2"/>
+          <child link="right_gripper_link_4"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <joint name="right_gripper_joint_5" type="continuous">
+          <origin xyz="0.0385916 -0.0103143 1.6e-06" rpy="0 0 0"/>
+          <parent link="right_gripper_link_4"/>
+          <child link="right_gripper_link_5"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <joint name="right_gripper_joint_6" type="continuous">
+          <origin xyz="0.0059278 0.0133069 0" rpy="0 0 0"/>
+          <parent link="right_gripper_link_5"/>
+          <child link="right_gripper_link_6"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <joint name="right_gripper_joint_7" type="continuous">
+          <origin xyz="-0.0156955 0.0176295 0" rpy="0 0 0"/>
+          <parent link="right_gripper_link_6"/>
+          <child link="right_gripper_link_7"/>
+          <axis xyz="0 0 1.0"/>
+          <limit effort="0" velocity="0"/>
+        </joint>
+
+        <!-- <joint name="right_gripper_joint_8_dummy" type="fixed">
+          <origin xyz="-0.0147421 0.0167196 -3.77e-05" rpy="0 0 0"/>
+          <parent link="right_gripper_link_7"/>
+          <child link="right_gripper_link_8_dummy"/>
+        </joint> -->
+
+  </xacro:macro>
+</robot>

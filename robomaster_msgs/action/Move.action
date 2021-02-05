@@ -1,0 +1,12 @@
+# Request
+float32 x
+float32 y
+float32 theta
+float32 linear_speed 0.5      # 0.5 m/s
+float32 angular_speed 0.5236  #  30 deg/s
+---
+# Result
+# bool success
+---
+# Feedback
+float32 progress

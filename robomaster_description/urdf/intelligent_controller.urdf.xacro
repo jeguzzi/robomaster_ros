@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
+  <xacro:macro name="intelligent_controller">
+    <link name="intelligent_controller_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.093"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="intelligent_controller">
+        <origin xyz="0 0 -0.0095231" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/intelligent_controller.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="intelligent_controller"/>
+      </visual>
+      <visual name="wifi_antenna_left">
+        <origin xyz="-0.0147105 0.0344787 0.0032872" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/wifi_antenna_left.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="intelligent_controller"/>
+      </visual>
+      <visual name="wifi_antenna_right">
+        <origin xyz="-0.0147125 -0.0351398 0.0042003" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/wifi_antenna_right.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="intelligent_controller"/>
+      </visual>
+      <collision name="top">
+        <origin xyz="0.0231658 -2.02e-05 -0.0113843" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.108973 0.0591028 0.022915"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="intelligent_controller_joint" type="fixed">
+      <origin xyz="-0.1348326 0.0024866 0.1329" rpy="0 0 0"/>
+      <parent link="chassis_base_link"/>
+      <child link="intelligent_controller_link"/>
+    </joint>
+  </xacro:macro>
+</robot>

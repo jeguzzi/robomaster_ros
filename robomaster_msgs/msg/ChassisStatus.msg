@@ -1,0 +1,11 @@
+bool is_static
+bool up_hill
+bool down_hill
+bool on_slope
+bool is_pick_up
+bool slip
+bool impact_x
+bool impact_y
+bool impact_z
+bool roll_over
+bool hill

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_base">
+
+  <xacro:macro name="chassis_module" params="name xyz rpy">
+
+  <link name="${name}_hit_sensor_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual name="${name}_hit_sensor">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robomaster_description/meshes/hit_sensor.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+      <material name="hit_detector"/>
+    </visual>
+  </link>
+
+  <link name="${name}_led_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual name="${name}_led">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robomaster_description/meshes/led.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+      <material name="led_light"/>
+    </visual>
+  </link>
+
+  <joint name="${name}_hit_sensor_joint" type="fixed">
+    <origin xyz="${xyz}" rpy="${rpy}"/>
+    <parent link="chassis_base_link"/>
+    <child link="${name}_hit_sensor_link"/>
+  </joint>
+
+  <joint name="${name}_led_joint" type="fixed">
+    <origin xyz="0.0087428 -0.0012841 3.75e-05" rpy="0 0 0"/>
+    <parent link="${name}_hit_sensor_link"/>
+    <child link="${name}_led_link"/>
+  </joint>
+
+  </xacro:macro>
+</robot>

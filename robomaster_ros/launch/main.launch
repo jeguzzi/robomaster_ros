@@ -1,0 +1,50 @@
+<launch>
+
+  <arg name="axis_length" default="0.0935"/>
+
+  <node name="robomaster" pkg="robomaster_ros" exec="robomaster_driver" output="screen" args="--ros-args --log-level info">
+    <param name="arm">
+      <param name="enabled" value="false"/>
+    </param>
+    <param name="armor">
+      <param name="enabled" value="false"/>
+    </param>
+    <param name="battery">
+      <param name="enabled" value="false"/>
+    </param>
+    <param name="camera">
+      <param name="enabled" value="false"/>
+    </param>
+    <param name="chassis">
+      <param name="enabled" value="false"/>
+    </param>
+    <param name="gripper">
+      <param name="enabled" value="false"/>
+    </param>
+    <param name="led">
+      <param name="enabled" value="false"/>
+    </param>
+    <param name="pwm">
+      <param name="enabled" value="false"/>
+    </param>
+    <param name="sbus">
+      <param name="enabled" value="true"/>
+    </param>
+    <param name="servo">
+      <param name="enabled" value="false"/>
+    </param>
+    <param name="speaker">
+      <param name="enabled" value="true"/>
+    </param>
+    <param name="tof">
+      <param name="enabled" value="true"/>
+    </param>
+    <param name="uart">
+      <param name="enabled" value="true"/>
+    </param>
+    <param name="vision">
+      <param name="enabled" value="true"/>
+    </param>
+  </node>
+
+</launch>

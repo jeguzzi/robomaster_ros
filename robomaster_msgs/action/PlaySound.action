@@ -1,0 +1,10 @@
+# Request
+uint8 sound_id
+uint8 times 1
+---
+# Result
+# bool success
+---
+# Feedback
+uint8 time
+float32 progress

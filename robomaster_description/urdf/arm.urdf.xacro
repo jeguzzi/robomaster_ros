@@ -1,0 +1,407 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
+
+  <xacro:macro name="arm">
+
+    <link name="arm_1_link">
+      <inertial>
+        <origin xyz="-0.0005586 0.023592 0.0011729" rpy="0 0 0"/>
+        <mass value="0.056"/>
+        <inertia ixx="0.0156113" ixy="2.43e-05" ixz="1.8e-06" iyy="0.0161553" iyz="-0.0023011" izz="0.0018092"/>
+      </inertial>
+      <visual name="arm_1">
+        <origin xyz="0.0073108 0.0184816 0.0437162" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/arm_1.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <visual name="arm_1_cylinder">
+        <origin xyz="-0.0239031 0.0255713 -0.0368083" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/arm_1_cylinder.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="arm_1_collision">
+        <origin xyz="0.0065116 0.0213649 0.0639448" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/arm_1_collision.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- <link name="arm_2_dummy">
+    </link> -->
+
+    <link name="arm_2_link">
+      <inertial>
+        <origin xyz="0.0222614 -0.0202749 -0.008504" rpy="0 0 0"/>
+        <mass value="0.08"/>
+        <inertia ixx="0.0118624" ixy="1e-06" ixz="-3e-07" iyy="0.0041691" iyz="0.0031106" izz="0.0101456"/>
+      </inertial>
+      <visual name="arm_2">
+        <origin xyz="0.0256122 -0.020134 -0.001308" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/arm_2.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <!-- <material name="metal"/> -->
+        <material name="Test">
+          <color rgba="0.0 0.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <visual name="arm_2_bar_1">
+        <origin xyz="7.62e-05 0.0010863 -0.0002509" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/arm_2_bar_1.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <visual name="arm_2_bar_2">
+        <origin xyz="-0.0423232 -0.0099192 0.0221971" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/arm_2_bar_2.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="arm_2_collision">
+        <origin xyz="0.0222614 -0.0202749 -0.008504" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/arm_2_collision.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- <link name="arm_base_attachment_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link> -->
+
+    <link name="arm_base_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.3"/>
+        <inertia ixx="0.0023" ixy="0" ixz="0" iyy="0.0025" iyz="0" izz="0.00072"/>
+      </inertial>
+      <visual name="arm_base">
+        <origin xyz="-0.0008983 -0.0029745 -2.44e-05" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/arm_base.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <visual name="left_servo">
+        <origin xyz="-0.013507 0 -0.0060673" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/left_servo.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <visual name="right_servo">
+        <origin xyz="-0.013507 0 -0.0060673" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/right_servo.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="arm_base_collision">
+        <origin xyz="-0.002098 -0.0004909 0.0073523" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/arm_base_collision.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="end_point_link">
+    </link>
+
+    <link name="endpoint_bracket_link">
+      <inertial>
+        <origin xyz="0.0116468 -0.0288044 0.0041342" rpy="0 0 0"/>
+        <mass value="0.028"/>
+        <inertia ixx="0.0004413" ixy="0.0001147" ixz="2.69e-05" iyy="0.0008301" iyz="-2.89e-05" izz="0.0008237"/>
+      </inertial>
+      <visual name="endpoint_bracket">
+        <origin xyz="0.0071657 -0.0245846 0.0008407" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/endpoint_bracket.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="endpoint_bracket_collision">
+        <origin xyz="0.0116468 -0.0288044 0.0041342" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/endpoint_bracket_collision.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- <link name="rod_1_dummy">
+    </link> -->
+
+    <link name="rod_1_link">
+      <inertial>
+        <origin xyz="-0.0477809 0 0.0272644" rpy="0 0 0"/>
+        <mass value="0.012"/>
+        <inertia ixx="0.0016031" ixy="0" ixz="0" iyy="0.0004085" iyz="0.000657" izz="0.0011959"/>
+      </inertial>
+      <visual name="rod_1">
+        <origin xyz="-0.0479737 0 0.0301898" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/rod_1.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="rod_1_collision">
+        <origin xyz="-0.0477809 0 0.0272644" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/rod_1_collision.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- <link name="rod_2_dummy">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link> -->
+
+    <link name="rod_2_link">
+      <inertial>
+        <origin xyz="0.0011528 0 0.0549123" rpy="0 0 0"/>
+        <mass value="0.012"/>
+        <inertia ixx="0.0016147" ixy="0" ixz="0" iyy="0.0015792" iyz="-3.39e-05" izz="3.69e-05"/>
+      </inertial>
+      <visual name="rod_2">
+        <origin xyz="-0.0012722 0 0.0561361" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/rod_2.dae" scale="1.0000004 1.0 0.9999998"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="rod_2_collision">
+        <origin xyz="0.0011528 0 0.0549123" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/rod_2_collision.dae" scale="1.0000004 1.0 0.9999998"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- <link name="rod_3_dummy">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link> -->
+
+    <link name="rod_3_link">
+      <inertial>
+        <origin xyz="-0.0003574 9.5e-06 0.0001674" rpy="0 0 0"/>
+        <mass value="0.012"/>
+        <inertia ixx="0.0059201" ixy="0" ixz="0" iyy="0.005887" iyz="1.87e-05" izz="3.45e-05"/>
+      </inertial>
+      <visual name="rod_3">
+        <origin xyz="-0.0017304 0 0.0633558" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/rod_3.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="rod_3_collision">
+        <origin xyz="0.0004696 9.5e-06 0.0561803" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/rod_3_collision.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="rod_link">
+      <inertial>
+        <origin xyz="-8.11e-05 0.0023793 8.58e-05" rpy="0 0 0"/>
+        <mass value="0.011"/>
+        <inertia ixx="0.0009103" ixy="0" ixz="0" iyy="0.0002029" iyz="0.0003431" izz="0.0007136"/>
+      </inertial>
+      <visual name="rod">
+        <origin xyz="-0.0261857 0.0022566 0.0121229" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/rod.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="rod_collision">
+        <origin xyz="-0.02432 0.0022871 0.0136485" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/rod_collision.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- <link name="triangle_1_dummy">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link> -->
+
+    <!-- <link name="triangle_2_dummy">
+    </link> -->
+
+    <link name="triangle_link">
+      <inertial>
+        <origin xyz="0.1417841 0.0321051 -0.1257179" rpy="0 0 0"/>
+        <mass value="0.009"/>
+        <inertia ixx="0.0205056" ixy="0.0021202" ixz="-0.0023248" iyy="0.0097562" iyz="0.0101162" izz="0.0117256"/>
+      </inertial>
+      <visual name="triangle">
+        <origin xyz="-0.0095953 0 0.0131247" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/triangle.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <collision name="triangle_collision">
+        <origin xyz="-0.0091994 0 0.012377" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/triangle_collision.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="arm_1_joint" type="revolute">
+      <origin xyz="0.0103961 -0.0255713 0.030741" rpy="0 0 0"/>
+      <parent link="arm_base_link"/>
+      <child link="arm_1_link"/>
+      <axis xyz="0.0 1.0 0"/>
+      <limit effort="0" velocity="0" lower="-0.274" upper="1.384"/>
+    </joint>
+
+    <!-- <joint name="arm_2_dummy" type="floating">
+      <origin xyz="-0.0419304 0.0028425 0.0218356" rpy="0 0 0"/>
+      <parent link="arm_2_link"/>
+      <child link="arm_2_dummy"/>
+    </joint> -->
+
+    <joint name="arm_2_joint" type="continuous">
+      <origin xyz="0.0018704 0.0438659 0.1210238" rpy="0 0 0"/>
+      <parent link="arm_1_link"/>
+      <child link="arm_2_link"/>
+      <axis xyz="0.0 1.0 0"/>
+      <limit effort="0" velocity="0"/>
+      <mimic joint="rod_3_joint" multiplier="-1.0" offset="0.0"/>
+    </joint>
+
+    <!-- <joint name="arm_base_attachment_joint" type="fixed">
+      <origin xyz="0 0.0010384 0.0906477" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="arm_base_attachment_link"/>
+    </joint> -->
+
+    <joint name="arm_base_joint" type="fixed">
+      <origin xyz="0 0.0010384 0.0906477" rpy="0 0 0"/>
+      <parent link="chassis_base_link"/>
+      <child link="arm_base_link"/>
+    </joint>
+
+    <!-- <joint name="attachement_link" type="floating">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="arm_base_link"/>
+      <child link="attachement_link"/>
+    </joint> -->
+
+    <joint name="end_point_joint" type="fixed">
+      <origin xyz="0.0110125 -0.0270264 -0.0103816" rpy="0 0 0"/>
+      <parent link="endpoint_bracket_link"/>
+      <child link="end_point_link"/>
+    </joint>
+
+    <joint name="endpoint_bracket_joint" type="continuous">
+      <origin xyz="0.1058557 0.006752 -0.0561093" rpy="0 0 0"/>
+      <parent link="arm_2_link"/>
+      <child link="endpoint_bracket_link"/>
+      <axis xyz="0.0 1.0 0"/>
+      <mimic joint="rod_joint" multiplier="-1.0" offset="0.0"/>
+      <!-- <limit effort="0" velocity="0"/> -->
+    </joint>
+
+    <!-- <joint name="rod_1_dummy" type="floating">
+      <origin xyz="-0.1048751 0 0.0582511" rpy="0 0 0"/>
+      <parent link="rod_1_link"/>
+      <child link="rod_1_dummy"/>
+    </joint> -->
+
+    <joint name="rod_1_joint" type="continuous">
+      <origin xyz="0.0134583 -0.0540971 0.0213068" rpy="0 -0.021293 0"/>
+      <parent link="endpoint_bracket_link"/>
+      <child link="rod_1_link"/>
+      <axis xyz="0.0 1.0 0"/>
+      <mimic joint="rod_joint" multiplier="1.0" offset="0.0"/>
+      <!-- <limit effort="0" velocity="0"/> -->
+    </joint>
+
+    <!-- <joint name="rod_2_dummy" type="floating">
+      <origin xyz="0.0036225 0 0.1198535" rpy="0 0 0"/>
+      <parent link="rod_2_link"/>
+      <child link="rod_2_dummy"/>
+    </joint> -->
+
+    <joint name="rod_2_joint" type="continuous">
+      <origin xyz="-0.0224276 -0.0290701 0.0554782" rpy="0 -0.0094248 0"/>
+      <parent link="arm_base_link"/>
+      <child link="rod_2_link"/>
+      <axis xyz="0.0 1.0 0"/>
+      <mimic joint="arm_1_joint" multiplier="1.0" offset="0.0"/>
+      <!-- <limit effort="0" velocity="0"/> -->
+    </joint>
+
+    <!-- <joint name="rod_3_dummy" type="floating">
+      <origin xyz="0.0029281 -0.0007404 0.1193638" rpy="0 0 0"/>
+      <parent link="rod_3_link"/>
+      <child link="rod_3_dummy"/>
+    </joint> -->
+
+    <joint name="rod_3_joint" type="revolute">
+      <origin xyz="-0.042397 0.0004533 0.0223131" rpy="0 0 0"/>
+      <parent link="rod_link"/>
+      <child link="rod_3_link"/>
+      <axis xyz="0.0 1.0 0"/>
+      <limit effort="0" velocity="0" lower="-0.34732" upper="1.21475"/>
+    </joint>
+
+    <joint name="rod_joint" type="revolute">
+      <origin xyz="0.009805 0.0214241 0.0319234" rpy="0 0 0"/>
+      <parent link="arm_base_link"/>
+      <child link="rod_link"/>
+      <axis xyz="0.0 1.0 0"/>
+      <limit effort="0" velocity="0" lower="-0.79936" upper="1.73137"/>
+    </joint>
+
+    <!-- <joint name="triangle_1_dummy" type="floating">
+      <origin xyz="-0.037193 0 0.0147539" rpy="0 0 0"/>
+      <parent link="triangle_link"/>
+      <child link="triangle_1_dummy"/>
+    </joint> -->
+
+    <!-- <joint name="triangle_2_dummy" type="floating">
+      <origin xyz="0.0077464 6.66e-05 0.0235099" rpy="0 0 0"/>
+      <parent link="triangle_link"/>
+      <child link="triangle_2_dummy"/>
+    </joint> -->
+
+    <joint name="triangle_joint" type="continuous">
+      <origin xyz="0.0020224 -0.007103 0.1212334" rpy="0 0.2502802 0"/>
+      <parent link="arm_1_link"/>
+      <child link="triangle_link"/>
+      <axis xyz="0.0 1.0 0"/>
+      <mimic joint="arm_1_joint" multiplier="-1.0" offset="0.0"/>
+    </joint>
+
+    </xacro:macro>
+
+  </robot>

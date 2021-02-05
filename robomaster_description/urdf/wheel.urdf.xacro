@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_base">
+
+  <xacro:macro name="wheel" params="name xyz direction side">
+
+    <link name="${name}_wheel_link">
+      <inertial>
+        <origin xyz="-0.0002104 5.31e-05 -0.0004148" rpy="0 0 0"/>
+        <mass value="0.162"/>
+        <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.00012" iyz="0" izz="0.00012"/>
+      </inertial>
+      <visual name="${name}_wheel_bolt">
+        <origin xyz="0 ${side * 0.0145} 0" rpy="${pi/2} 0 0"/>
+        <geometry>
+          <cylinder radius="0.007" length="0.001"/>
+        </geometry>
+        <material name="bolt">
+          <color rgba="0.45 0.15 0.0 1.0"/>
+        </material>
+      </visual>
+      <visual name="${name}_wheel">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/wheel.dae" scale="1.0 ${direction} 1.0"/>
+        </geometry>
+        <material name="wheel_plastic"/>
+      </visual>
+      <collision name="${name}_wheel">
+        <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+        <geometry>
+          <cylinder radius="0.05" length="0.042"/>
+        </geometry>
+        <material name="collision">
+          <color rgba="0.8 0.0 0.0 1.0"/>
+        </material>
+      </collision>
+    </link>
+
+    <joint name="${name}_wheel_joint" type="continuous">
+      <origin xyz="${xyz}" rpy="0 0 0"/>
+      <parent link="chassis_base_link"/>
+      <child link="${name}_wheel_link"/>
+      <axis xyz="0 1.0 0"/>
+      <limit effort="0" velocity="0"/>
+    </joint>
+
+  </xacro:macro>
+
+</robot>

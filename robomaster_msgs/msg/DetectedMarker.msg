@@ -1,0 +1,2 @@
+robomaster_msgs/RegionOfInterest roi
+string kind

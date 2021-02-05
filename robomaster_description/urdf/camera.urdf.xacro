@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_base">
+
+  <xacro:macro name="camera" params="">
+
+    <link name="camera_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="camera">
+        <origin xyz="7.15e-05 0 -0.0004056" rpy="0 -1.7453293 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/camera.dae" scale="1.0 1.0 1.0000001"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+    </link>
+
+    <link name="camera_optical_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <joint name="camera_joint" type="fixed">
+      <origin xyz="0.0053865 -0.0195698 0.0473739" rpy="0 1.6898531 0"/>
+      <parent link="arm_2_link"/>
+      <child link="camera_link"/>
+    </joint>
+
+    <joint name="camera_optical_joint" type="fixed">
+      <origin xyz="0.002 0.00 0.004" rpy="0.0872663 0 ${-pi/2}"/>
+      <parent link="camera_link"/>
+      <child link="camera_optical_link"/>
+    </joint>
+
+
+    <!-- <joint name="camera_optical_link" type="fixed">
+      <origin xyz="0 0 0" rpy="0 -0.0872663 0"/>
+      <parent link="camera_link"/>
+      <child link="camera_optical_link"/>
+    </joint> -->
+
+  </xacro:macro>
+</robot>

@@ -1,0 +1,104 @@
+import robomaster.robot
+import robomaster.vision
+
+import robomaster_msgs.msg
+
+from typing import Tuple, List, Union, cast
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from ..client import RoboMasterROS
+
+from .. import Module
+
+ROI = Tuple[float, float, float, float]
+Line = Tuple[float, float, float, float]
+ROI_ID = Tuple[float, float, float, float, str]
+
+DetectionData = Union[int, Line, ROI, ROI_ID]
+Detection = Tuple[int, int, List[DetectionData]]
+
+
+def vision_data_info(self: robomaster.vision.VisionPushEvent) -> Detection:
+    return self._type, self._status, self._rect_info
+
+
+robomaster.vision.VisionPushEvent.data_info = vision_data_info
+
+
+# TODO(jerome) : tentative
+def roi(x: float, y: float, w: float, h: float) -> robomaster_msgs.msg.RegionOfInterest:
+    return robomaster_msgs.msg.RegionOfInterest(
+        x_offset=x, y_offset=y, width=w, height=h
+    )
+
+
+class Vision(Module):
+    def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
+        self.api = robot.vision
+        # DONE(jerome): expose as params or service
+        self.vision_targets: List[str] = node.declare_parameter(
+            'vision.targets', ["marker", "robot"]).value
+        # Alternatively, I could use vision_msgs/Detection2DArray
+        # But this requires a mapping between id and RM class types
+        self.vision_pub = node.create_publisher(
+            robomaster_msgs.msg.Detection, "vision", 10
+        )
+        self.vision_msg = robomaster_msgs.msg.Detection()
+        # self.vision_msg.header.frame_id = 'camera_optical_link'
+        for name in self.vision_targets:
+            self.api.sub_detect_info(name=name, callback=self.got_vision)
+
+    def stop(self) -> None:
+        for name in self.vision_targets:
+            self.api.unsub_detect_info(name=name)
+
+    def has_detected_people(self, values: List[ROI]) -> None:
+        msg = robomaster_msgs.msg.Detection()
+        for (x, y, w, h) in values:
+            msg.people.append(robomaster_msgs.msg.DetectedPerson(roi=roi(x, y, w, h)))
+        self.vision_pub.publish(msg)
+
+    def has_detected_robots(self, values: List[ROI]) -> None:
+        msg = robomaster_msgs.msg.Detection()
+        for (x, y, w, h) in values:
+            msg.robots.append(robomaster_msgs.msg.DetectedRobot(roi=roi(x, y, w, h)))
+        self.vision_pub.publish(msg)
+
+    def has_detected_markers(self, values: List[ROI_ID]) -> None:
+        msg = robomaster_msgs.msg.Detection()
+        for (x, y, w, h, kind) in values:
+            msg.markers.append(
+                robomaster_msgs.msg.DetectedMarker(kind=kind, roi=roi(x, y, w, h))
+            )
+        self.vision_pub.publish(msg)
+
+    def has_detected_gestures(self, values: List[ROI_ID]) -> None:
+        msg = robomaster_msgs.msg.Detection()
+        for (x, y, w, h, kind) in values:
+            msg.gestures.append(
+                robomaster_msgs.msg.DetectedGesture(kind=kind, roi=roi(x, y, w, h))
+            )
+        self.vision_pub.publish(msg)
+
+    def has_detected_lines(self, values: List[Line]) -> None:
+        msg = robomaster_msgs.msg.Detection()
+        for (x, y, curvature, angle) in values:
+            msg.lines.append(
+                robomaster_msgs.msg.DetectedLine(
+                    x=x, y=y, curvature=curvature, angle=angle
+                )
+            )
+        self.vision_pub.publish(msg)
+
+    def got_vision(self, msg: Detection) -> None:
+        kind, _, data = msg
+        if kind == 1:
+            self.has_detected_people(cast(List[ROI], data))
+        elif kind == 2:
+            self.has_detected_gestures(cast(List[ROI_ID], data))
+        elif kind == 4:
+            self.has_detected_lines(cast(List[Line], data[1:]))
+        elif kind == 5:
+            self.has_detected_markers(cast(List[ROI_ID], data))
+        elif kind == 7:
+            self.has_detected_robots(cast(List[ROI], data))

@@ -1,0 +1,11 @@
+<launch>
+
+  <include file="$(find-pkg-share robomaster_description)/launch/model.launch.py">
+  </include>
+
+  <!-- <node name="joint_state_publisher" exec="joint_state_publisher" pkg="joint_state_publisher"  output="screen"> -->
+  <node name="joint_state_publisher" exec="joint_state_publisher_gui" pkg="joint_state_publisher_gui"  output="screen">
+    <param name="source_list" value="joint_states_p" value-sep=","/> 
+  </node>
+
+</launch>

@@ -1,0 +1,14 @@
+uint8 PAUSE=0
+uint8 CLOSE=2
+uint8 OPEN=1
+
+# Request
+uint8 target_state
+# in [0, 1]
+float32 power 0.5
+---
+# Result
+# bool success
+---
+# Feedback
+uint8 current_state
