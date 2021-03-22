@@ -1,16 +1,15 @@
 <?xml version="1.0"?>
 
-  <robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_base">
+  <robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
 
   <xacro:include filename="led.urdf.xacro"/>
   <xacro:include filename="wheel.urdf.xacro"/>
-  <xacro:include filename="intelligent_controller.urdf.xacro"/>
 
-  <xacro:macro name="robomaster_ep_base">
+  <xacro:macro name="base" params="tf_prefix=''">
 
-    <link name="base_link"/>
+    <link name="${tf_prefix}base_link"/>
 
-    <link name="chassis_base_link">
+    <link name="${tf_prefix}chassis_base_link">
       <inertial>
         <origin xyz="-0.0058789 -0.0001128 0.0294307" rpy="0 0 0"/>
         <mass value="1.934"/>
@@ -73,55 +72,21 @@
       </collision>
     </link>
 
-    <joint name="chassis_base_joint" type="fixed">
+    <joint name="${tf_prefix}chassis_base_joint" type="fixed">
       <origin xyz="0 0 0.03465" rpy="0 0 0"/>
-      <parent link="base_link"/>
-      <child link="chassis_base_link"/>
+      <parent link="${tf_prefix}base_link"/>
+      <child link="${tf_prefix}chassis_base_link"/>
     </joint>
 
-    <link name="extension_base_link">
-      <inertial>
-        <origin xyz="0.0044194 -1.08e-05 0.00431" rpy="0 0 0"/>
-        <mass value="0.22"/>
-        <inertia ixx="0.00133" ixy="0" ixz="0" iyy="0.00092" iyz="0" izz="0.00224"/>
-      </inertial>
-      <visual name="extension_base">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://robomaster_description/meshes/extension_base.dae" scale="1.0 1.0 1.0"/>
-        </geometry>
-        <material name="metal"/>
-      </visual>
-      <visual name="extension_support">
-        <origin xyz="-0.078582 0.0075392 0.0046459" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://robomaster_description/meshes/extension_support.dae" scale="1.0 1.0 1.0"/>
-        </geometry>
-        <material name="metal"/>
-      </visual>
-      <collision name="ExtensionBase">
-        <origin xyz="0.0044194 -1.08e-05 0.00431" rpy="0 0 0"/>
-        <geometry>
-          <box size="0.2796935 0.2317787 0.013"/>
-        </geometry>
-      </collision>
-    </link>
+    <xacro:chassis_module tf_prefix="${tf_prefix}" name="front" xyz="0.1569985 -0.0004276 0.0432862" rpy="0 0 0"/>
+    <xacro:chassis_module tf_prefix="${tf_prefix}" name="left" xyz="-0.0024413 0.0886932 0.0298341" rpy="0 0 ${pi/2}"/>
+    <xacro:chassis_module tf_prefix="${tf_prefix}" name="rear" xyz="-0.1581827 -0.0027864 0.0303668" rpy="0 0 ${pi}"/>
+    <xacro:chassis_module tf_prefix="${tf_prefix}" name="right" xyz="-0.0024413 -0.0886932 0.0298341" rpy="0 0 ${-pi/2}"/>
+    <xacro:wheel tf_prefix="${tf_prefix}" name="front_left" xyz="0.1 0.1 0.01535" direction="1" side="1"/>
+    <xacro:wheel tf_prefix="${tf_prefix}" name="front_right" xyz="0.1 -0.1 0.01535" direction="-1" side="-1"/>
+    <xacro:wheel tf_prefix="${tf_prefix}" name="rear_left" xyz="-0.1 0.1 0.01535" direction="-1" side="1"/>
+    <xacro:wheel tf_prefix="${tf_prefix}" name="rear_right" xyz="-0.1 -0.1 0.01535" direction="1" side="-1"/>
 
-    <joint name="extension_base_joint" type="fixed">
-      <origin xyz="-0.0091948 0.0010492 0.070543" rpy="0 0 0"/>
-      <parent link="chassis_base_link"/>
-      <child link="extension_base_link"/>
-    </joint>
-
-    <xacro:chassis_module name="front" xyz="0.1569985 -0.0004276 0.0432862" rpy="0 0 0"/>
-    <xacro:chassis_module name="left" xyz="-0.0024413 0.0886932 0.0298341" rpy="0 0 ${pi/2}"/>
-    <xacro:chassis_module name="rear" xyz="-0.1581827 -0.0027864 0.0303668" rpy="0 0 ${pi}"/>
-    <xacro:chassis_module name="right" xyz="-0.0024413 -0.0886932 0.0298341" rpy="0 0 ${-pi/2}"/>
-    <xacro:wheel name="front_left" xyz="0.1 0.1 0.01535" direction="1" side="1"/>
-    <xacro:wheel name="front_right" xyz="0.1 -0.1 0.01535" direction="-1" side="-1"/>
-    <xacro:wheel name="rear_left" xyz="-0.1 0.1 0.01535" direction="-1" side="1"/>
-    <xacro:wheel name="rear_right" xyz="-0.1 -0.1 0.01535" direction="1" side="-1"/>
-    <xacro:intelligent_controller/>
 
     <material name="armor_plastic">
       <color rgba="0.2277128 0.2277128 0.2277128 0.8"/>
@@ -153,10 +118,6 @@
 
     <material name="wheel_plastic">
       <color rgba="0.2739087 0.2739087 0.2739087 1.0"/>
-    </material>
-
-    <material name="intelligent_controller">
-      <color rgba="0.8 0.8 0.8 1.0"/>
     </material>
 
     <material name="EP_up.001">

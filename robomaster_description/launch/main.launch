@@ -1,11 +1,18 @@
 <launch>
 
+  <arg name="name" default=""/>
+  <arg name="model" default="ep"/>
+  <arg name="gui" default="false"/>
+  <let name="js_suffix" value="" unless="$(var gui)"/>
+  <let name="js_suffix" value="_gui" if="$(var gui)"/>
+
   <include file="$(find-pkg-share robomaster_description)/launch/model.launch.py">
+    <arg name="name" value="$(var name)"/>
+    <arg name="model" value="$(var model)"/>
   </include>
 
-  <!-- <node name="joint_state_publisher" exec="joint_state_publisher" pkg="joint_state_publisher"  output="screen"> -->
-  <node name="joint_state_publisher" exec="joint_state_publisher_gui" pkg="joint_state_publisher_gui"  output="screen">
-    <param name="source_list" value="joint_states_p" value-sep=","/> 
+  <node name="joint_state_publisher" exec="joint_state_publisher$(var js_suffix)" pkg="joint_state_publisher$(var js_suffix)"  output="screen">
+    <param name="source_list" value="joint_states_p" value-sep=","/>
   </node>
 
 </launch>

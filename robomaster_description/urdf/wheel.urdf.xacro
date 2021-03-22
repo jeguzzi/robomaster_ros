@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
-<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_base">
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
 
-  <xacro:macro name="wheel" params="name xyz direction side">
+  <xacro:macro name="wheel" params="name xyz direction side tf_prefix=''">
 
-    <link name="${name}_wheel_link">
+    <link name="${tf_prefix}${name}_wheel_link">
       <inertial>
         <origin xyz="-0.0002104 5.31e-05 -0.0004148" rpy="0 0 0"/>
         <mass value="0.162"/>
@@ -37,10 +37,10 @@
       </collision>
     </link>
 
-    <joint name="${name}_wheel_joint" type="continuous">
+    <joint name="${tf_prefix}${name}_wheel_joint" type="continuous">
       <origin xyz="${xyz}" rpy="0 0 0"/>
-      <parent link="chassis_base_link"/>
-      <child link="${name}_wheel_link"/>
+      <parent link="${tf_prefix}chassis_base_link"/>
+      <child link="${tf_prefix}${name}_wheel_link"/>
       <axis xyz="0 1.0 0"/>
       <limit effort="0" velocity="0"/>
     </joint>

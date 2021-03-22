@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.79.0 commit date:2017-09-11, commit time:10:43, hash:5bd8ac9</authoring_tool>
+    </contributor>
+    <created>2021-03-22T18:21:30</created>
+    <modified>2021-03-22T18:21:30</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects>
+    <effect id="Collisions-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 6.15967e-4 0 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="Collisions-material" name="Collisions">
+      <instance_effect url="#Collisions-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="blaster_magazin_collision-mesh" name="blaster_magazin_collision">
+      <mesh>
+        <source id="blaster_magazin_collision-mesh-positions">
+          <float_array id="blaster_magazin_collision-mesh-positions-array" count="51">-0.0748499 0.01883363 0.01312398 0.0780453 0.01883363 0.01345509 0.07809364 0.02795785 -0.009196996 0.07810008 0.02141904 -0.01221126 -0.07643729 0.02730894 0.008068382 0.07805603 0.02730894 0.008402943 -0.08084094 0.02141904 -0.01255542 -0.08084094 0 -0.01255536 -0.08028042 0.02795785 -0.009539961 0.07804524 -0.01883369 0.01345509 0.07805603 -0.02730906 0.008402943 -0.08084094 -0.02141892 -0.01255536 -0.07643735 -0.02730888 0.008068382 -0.07484996 -0.01883351 0.01312398 0.07810008 -0.0214191 -0.01221126 -0.08028048 -0.02795773 -0.009539961 0.07809358 -0.02795797 -0.009196996</float_array>
+          <technique_common>
+            <accessor source="#blaster_magazin_collision-mesh-positions-array" count="17" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="blaster_magazin_collision-mesh-normals">
+          <float_array id="blaster_magazin_collision-mesh-normals-array" count="96">-0.002165257 0 0.9999977 0.002165377 0 -0.9999977 0.8661149 -0.2099596 -0.4536101 0.001250863 -0.8159179 -0.5781666 0.00196588 -0.4186348 -0.9081525 -0.001104056 0.8602386 0.5098908 -0.001859962 0.51203 0.8589656 -0.001859843 0.5120286 0.8589664 -0.1466951 -0.862257 0.4847612 0.1641345 -0.8406079 -0.5161767 -0.00110507 -0.8602377 0.5098921 -0.1287257 0.8203689 -0.5571576 0.8661153 0.2099563 -0.4536107 -0.9282236 0.2184403 -0.3011391 0.1641354 0.8406068 -0.5161781 -0.977001 1.18263e-6 0.2132348 -0.9644116 0 -0.264406 -0.9681964 0 -0.2501917 -0.9831611 8.86043e-7 0.1827409 -0.9831608 7.49046e-7 0.1827428 0.9999978 -9.96306e-7 0.002136528 -9.82483e-4 0.891149 0.45371 -0.7127026 -0.2560662 0.6530583 -0.9540745 6.98502e-7 0.2995696 -0.9540749 1.0056e-6 0.2995685 0.9999977 -1.2235e-6 0.002132654 0.9999978 -7.48083e-7 0.002129852 -0.001860499 -0.5120269 0.8589675 -0.002165257 0 0.9999977 0.002165257 -4.80178e-7 -0.9999977 -0.9770011 4.79002e-7 0.2132349 0.9999977 -1.18294e-6 0.00213772</float_array>
+          <technique_common>
+            <accessor source="#blaster_magazin_collision-mesh-normals-array" count="32" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="blaster_magazin_collision-mesh-map-0">
+          <float_array id="blaster_magazin_collision-mesh-map-0-array" count="180">0 0 0 0 0 0 0.0237714 0.9648346 0 0 0.4971448 0.7116328 0.0237714 0.9648346 0 0 0 0 0.01352053 0.5344485 0 0 0 0 0 0 0 0 0 0 0.8963297 0.01442503 0.4971448 0.7116328 0.9204552 0.00976336 0.0237714 0.9870861 0.0237714 0.9648346 0 0 0.0237714 0.9870861 0 0 0.4794468 0.6945313 0 0 0 0 0 0 0 0 0.990059 0.02751564 0.9204552 0.00976336 0.990059 0.02751564 0.8963297 0.01442503 0.9204552 0.00976336 0.990059 0.02751564 0 0 0 0 0.990059 0.02751564 0 0 0.8963297 0.01442503 0 0 0 0 0 0 0.01352095 0.01110613 0.4794468 0.6945313 0.8963297 0.01442503 0.8832543 0.07463115 0.9066942 0.09927952 0 0 0.8832543 0.07463115 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0237714 0.9648346 0 0 0 0 0.0237714 0.9648346 0.0237714 0.9870861 0 0 0.01352053 0.5344485 0 0 0 0 0 0 0 0 0 0 0.8963297 0.01442503 0.4794468 0.6945313 0.4971448 0.7116328 0 0 0.8963297 0.01442503 0 0 0 0 0.4794468 0.6945313 0 0 0.01352095 0.01110613 0.01352053 0.5344485 0.4794468 0.6945313 0 0 0 0 0 0</float_array>
+          <technique_common>
+            <accessor source="#blaster_magazin_collision-mesh-map-0-array" count="90" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="blaster_magazin_collision-mesh-colors-Col" name="Col">
+          <float_array id="blaster_magazin_collision-mesh-colors-Col-array" count="270">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#blaster_magazin_collision-mesh-colors-Col-array" count="90" stride="3">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="blaster_magazin_collision-mesh-vertices">
+          <input semantic="POSITION" source="#blaster_magazin_collision-mesh-positions"/>
+        </vertices>
+        <triangles material="Collisions-material" count="30">
+          <input semantic="VERTEX" source="#blaster_magazin_collision-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#blaster_magazin_collision-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#blaster_magazin_collision-mesh-map-0" offset="2" set="0"/>
+          <input semantic="COLOR" source="#blaster_magazin_collision-mesh-colors-Col" offset="3" set="0"/>
+          <p>0 0 0 0 9 0 1 1 1 0 2 2 14 1 3 3 6 1 4 4 3 1 5 5 14 2 6 6 15 3 7 7 11 4 8 8 5 5 9 9 0 6 10 10 1 7 11 11 12 8 12 12 16 9 13 13 10 10 14 14 8 11 15 15 3 12 16 16 6 13 17 17 16 9 18 18 14 2 19 19 3 12 20 20 16 9 21 21 3 12 22 22 2 14 23 23 4 15 24 24 15 15 25 25 12 15 26 26 11 16 27 27 7 17 28 28 6 13 29 29 7 17 30 30 8 11 31 31 6 13 32 32 7 18 33 33 11 18 34 34 15 18 35 35 7 19 36 36 15 19 37 37 8 19 38 38 16 20 39 39 5 20 40 40 10 20 41 41 4 21 42 42 2 14 43 43 8 11 44 44 12 8 45 45 13 22 46 46 0 23 47 47 12 24 48 48 0 24 49 49 4 24 50 50 1 25 51 51 9 25 52 52 10 25 53 53 1 26 54 54 10 26 55 55 5 26 56 56 13 22 57 57 10 10 58 58 9 27 59 59 0 28 60 60 13 28 61 61 9 28 62 62 14 29 63 63 11 29 64 64 6 29 65 65 14 2 66 66 16 9 67 67 15 3 68 68 5 5 69 69 4 21 70 70 0 6 71 71 12 8 72 72 15 3 73 73 16 9 74 74 8 11 75 75 2 14 76 76 3 12 77 77 4 30 78 78 8 30 79 79 15 30 80 80 16 31 81 81 2 31 82 82 5 31 83 83 4 21 84 84 5 5 85 85 2 14 86 86 13 22 87 87 12 8 88 88 10 10 89 89</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="blaster_magazin_collision" name="blaster_magazin_collision" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#blaster_magazin_collision-mesh" name="blaster_magazin_collision">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Collisions-material" target="#Collisions-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

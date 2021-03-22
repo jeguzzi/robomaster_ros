@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
+
+  <xacro:macro name="gimbal" params="tf_prefix=''">
+    <link name="${tf_prefix}blaster_link">
+      <inertial>
+        <origin xyz="0.03675 0.00135 -0.01024" rpy="0 0 0" />
+        <mass value="0.1" />
+        <inertia ixx="5e-05" ixy="0" ixz="0" iyy="0.00044" iyz="0" izz="0.00043" />
+      </inertial>
+      <visual name="blaster_bug">
+        <origin xyz="0.00029 -0.03927 0.00764" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/blaster_bug.dae" scale="0.7949 0.7949 0.7949" />
+        </geometry>
+        <material name="gimbal_armor" />
+      </visual>
+      <visual name="blaster_gun">
+        <origin xyz="0.03896 0.00326 -0.01071" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/blaster_gun.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+      </visual>
+      <visual name="blaster_magazin">
+        <origin xyz="-0.02031 1e-05 0.02866" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/blaster_magazin.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="plastic" />
+      </visual>
+      <visual name="blaster_top">
+        <origin xyz="0.0014 0.00082 0.01703" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/blaster_top.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="gimbal_top" />
+      </visual>
+      <collision name="blaster_gun_collision">
+        <origin xyz="0.03675 0.00135 -0.01024" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/blaster_gun_collision.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+      </collision>
+      <collision name="blaster_magazin_collision">
+        <origin xyz="-0.02168 1e-05 0.02911" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/blaster_magazin_collision.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+      </collision>
+      <collision name="blaster_top_collision">
+        <origin xyz="0.00347 0.0008 0.01134" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/blaster_top_collision.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${tf_prefix}gimbal_base_link">
+      <inertial>
+        <origin xyz="-0.00116 -0.00092 -0.00243" rpy="0 0 0" />
+        <mass value="0.03" />
+        <inertia ixx="4e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="6e-05" />
+      </inertial>
+      <visual name="gimbal_base">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_base.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="gimbal" />
+      </visual>
+      <collision name="gimbal_base_collision">
+        <origin xyz="-0.00116 -0.00092 -0.00243" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_base_collision.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${tf_prefix}gimbal_left_led_link">
+      <visual name="gimbal_left_led">
+        <origin xyz="-0.02463 0 0.01615" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_led.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="led_off" />
+      </visual>
+    </link>
+
+    <link name="${tf_prefix}gimbal_right_led_link">
+      <visual name="gimbal_right_led">
+        <origin xyz="-0.02364 -9e-05 -0.01734" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_led.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="led_off" />
+      </visual>
+    </link>
+
+    <link name="${tf_prefix}gimbal_link">
+      <inertial>
+        <origin xyz="-0.01647 -0.05644 0.05429" rpy="0 0 0" />
+        <mass value="0.4" />
+        <inertia ixx="0.00262" ixy="-0.00029" ixz="-5e-05" iyy="0.00098" iyz="-6e-05" izz="0.00221" />
+      </inertial>
+      <visual name="gimbal">
+        <origin xyz="-2e-05 -0.001 0.03369" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="gimbal" />
+      </visual>
+      <visual name="gimbal_left_armor">
+        <origin xyz="-0.00472 0.06418 0.07122" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_armor.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="gimbal_armor" />
+      </visual>
+      <visual name="gimbal_right_armor">
+        <origin xyz="-0.00527 -0.06277 0.07314" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_armor.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="gimbal_armor" />
+      </visual>
+      <visual name="gimbal_side">
+        <origin xyz="-0.00027 0.00034 0.08755" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_side.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="gimbal_side" />
+      </visual>
+      <collision name="gimbal_collision">
+        <origin xyz="-0.01647 -0.05644 0.05429" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_collision.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${tf_prefix}speaker_link">
+      <inertial>
+        <origin xyz="-0.00408 -0.00356 -0.00071" rpy="0 0 0" />
+        <mass value="0.06" />
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="4e-05" iyz="0" izz="4e-05" />
+      </inertial>
+      <visual name="speaker">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/speaker.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+        <material name="Material #32.001" />
+      </visual>
+      <collision name="speaker_collision">
+        <origin xyz="-0.00408 -0.00356 -0.00071" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/speaker_collision.dae" scale="1.0 1.0 1.0" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${tf_prefix}gimbal_base_joint" type="fixed">
+      <origin xyz="-0.002 0 0.118" rpy="0 0 0" />
+      <parent link="${tf_prefix}base_link" />
+      <child link="${tf_prefix}gimbal_base_link" />
+    </joint>
+
+    <joint name="${tf_prefix}blaster_joint" type="revolute">
+      <origin xyz="-0.00027 0.00034 0.08755" rpy="0 0 0" />
+      <parent link="${tf_prefix}gimbal_link" />
+      <child link="${tf_prefix}blaster_link" />
+      <axis xyz="0 1.0 0"/>
+      <!-- [-25, +30] degrees -->
+      <limit effort="0" velocity="0" lower="-0.4363" upper="0.5236"/>
+    </joint>
+
+    <joint name="${tf_prefix}gimbal_left_led_joint" type="fixed">
+      <origin xyz="0.00032 0.07079 0.08761" rpy="0 0 0" />
+      <parent link="${tf_prefix}gimbal_link" />
+      <child link="${tf_prefix}gimbal_left_led_link" />
+    </joint>
+
+    <joint name="${tf_prefix}gimbal_right_led_joint" type="fixed">
+      <origin xyz="0.00032 -0.06941 0.08761" rpy="0 0 0" />
+      <parent link="${tf_prefix}gimbal_link" />
+      <child link="${tf_prefix}gimbal_right_led_link" />
+    </joint>
+
+    <joint name="gimbal_joint" type="revolute">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="${tf_prefix}gimbal_base_link" />
+      <child link="${tf_prefix}gimbal_link" />
+      <axis xyz="0 0 1.0" />
+      <!-- [-250, +250] degrees -->
+      <limit effort="0" velocity="0" lower="-4.363" upper="4.363"/>
+    </joint>
+
+    <joint name="${tf_prefix}speaker_joint" type="fixed">
+      <origin xyz="-0.01301 0.00691 -0.06117" rpy="0 0 0" />
+      <parent link="${tf_prefix}blaster_link" />
+      <child link="${tf_prefix}speaker_link" />
+    </joint>
+
+    <material name="gimbal_top">
+      <color rgba="0.47861 0.47861 0.47861 1.0" />
+    </material>
+
+    <material name="led_off">
+      <color rgba="0.78118 0.78118 0.78118 1.0" />
+    </material>
+
+    <material name="gimbal_side">
+      <color rgba="0.01758 0.01758 0.01758 1.0" />
+    </material>
+
+    <material name="plastic">
+      <color rgba="0.76578 0.76578 0.76578 1.0" />
+    </material>
+
+    <material name="gimbal">
+      <color rgba="0.12595 0.12595 0.12595 1.0" />
+    </material>
+
+    <material name="gimbal_armor">
+      <color rgba="0.06401 0.06401 0.06401 1.0" />
+    </material>
+
+    </xacro:macro>
+
+  </robot>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.79.0 commit date:2017-09-11, commit time:10:43, hash:5bd8ac9</authoring_tool>
+    </contributor>
+    <created>2021-01-18T15:02:07</created>
+    <modified>2021-01-18T15:02:07</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects>
+    <effect id="colliision-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0 0 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="colliision-material" name="colliision">
+      <instance_effect url="#colliision-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="right_gripper_2_collision-mesh" name="right_gripper_2_collision">
+      <mesh>
+        <source id="right_gripper_2_collision-mesh-positions">
+          <float_array id="right_gripper_2_collision-mesh-positions-array" count="90">-0.01298469 -0.02754777 0.02212285 -0.01954704 0.001643478 0.02212285 0.002116858 0.00510323 0.02212285 0.005927622 3.56006e-4 0.02212285 -0.005942523 -0.02904838 0.02212285 -0.01298469 -0.02754777 0.03738468 -0.005942523 -0.02904838 0.03738468 0.005927622 3.56004e-4 0.03738468 0.002116858 0.00510323 0.03738468 -0.01954704 0.001643478 0.03738468 -0.01954704 0.001643478 0.02212285 -0.01298469 -0.02754777 0.02212285 -0.01298469 -0.02754777 0.03738468 -0.01954704 0.001643478 0.03738468 -0.01954704 0.001643478 0.02212285 -0.01954704 0.001643478 0.03738468 0.002116858 0.00510323 0.03738468 0.002116858 0.00510323 0.02212285 0.005927622 3.56006e-4 0.02212285 0.002116858 0.00510323 0.02212285 0.002116858 0.00510323 0.03738468 0.005927622 3.56004e-4 0.03738468 -0.005942523 -0.02904838 0.02212285 0.005927622 3.56006e-4 0.02212285 0.005927622 3.56004e-4 0.03738468 -0.005942523 -0.02904838 0.03738468 -0.01298469 -0.02754777 0.02212285 -0.005942523 -0.02904838 0.02212285 -0.005942523 -0.02904838 0.03738468 -0.01298469 -0.02754777 0.03738468</float_array>
+          <technique_common>
+            <accessor source="#right_gripper_2_collision-mesh-positions-array" count="30" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="right_gripper_2_collision-mesh-normals">
+          <float_array id="right_gripper_2_collision-mesh-normals-array" count="90">6.30657e-7 -1.36578e-7 1 0 -1.28815e-7 1 0 0 1 1.06631e-6 -1.38836e-7 1 0 0 1 -1.11243e-6 0 -1 -4.52962e-7 0 -1 -4.80654e-7 1.43271e-7 -1 -7.97269e-7 1.36462e-7 -1 -3.5541e-7 2.0907e-7 -1 0.9756506 0.2193305 -2.07187e-7 0.9756506 0.2193306 -1.5934e-7 0.9756507 0.2193304 -2.70832e-7 0.9756507 0.2193303 -3.1868e-7 0.1577033 -0.9874866 -2.12899e-7 0.1577034 -0.9874866 -2.05912e-7 0.1577033 -0.9874866 -2.10322e-7 0.1577033 -0.9874866 -2.17309e-7 -0.7798311 -0.6259902 2.26137e-7 -0.7798311 -0.62599 1.3705e-7 -0.9893036 -0.1458715 3.24866e-7 -0.9893036 -0.1458716 2.19601e-7 -0.9892998 -0.1458973 2.1357e-7 -0.9892998 -0.1458972 4.15074e-7 -0.9272924 0.3743377 5.67032e-7 -0.9272925 0.3743377 6.01379e-7 0.2084087 0.9780418 0 0.208409 0.9780418 -2.64847e-7 0.2084089 0.9780419 0 0.2084086 0.9780419 2.64847e-7</float_array>
+          <technique_common>
+            <accessor source="#right_gripper_2_collision-mesh-normals-array" count="30" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="right_gripper_2_collision-mesh-map-0">
+          <float_array id="right_gripper_2_collision-mesh-map-0-array" count="96">0 1 0 0 1 0 0.125 1 0 1 1 0 1 0.5 0.125 1 1 0 0.875 1 0 0.5 0 0 1 1 0.875 1 0 0 1 0 1 1 0 0 0 1 0 0 1 0 1 1 0 1 1 0 1 1 0 1 0 0 1 0 1 1 0 0 0 1 0 0 0.125 0 0.125 1 0 1 0.125 0 0.131958 0.5810547 -0.4931641 -0.4187012 1 0.5 0.5 1 0.131958 0.5810547 1 0.5 0.5 1 0.5 0 1 0 1 1 0.5 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#right_gripper_2_collision-mesh-map-0-array" count="48" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="right_gripper_2_collision-mesh-vertices">
+          <input semantic="POSITION" source="#right_gripper_2_collision-mesh-positions"/>
+        </vertices>
+        <triangles material="colliision-material" count="16">
+          <input semantic="VERTEX" source="#right_gripper_2_collision-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#right_gripper_2_collision-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#right_gripper_2_collision-mesh-map-0" offset="2" set="0"/>
+          <p>2 0 0 1 1 1 0 2 2 3 3 3 2 0 4 0 2 5 4 4 6 3 3 7 0 2 8 7 5 9 6 6 10 5 7 11 8 8 12 7 5 13 5 7 14 9 9 15 8 8 16 5 7 17 12 10 18 11 11 19 10 12 20 13 13 21 12 10 22 10 12 23 16 14 24 15 15 25 14 16 26 17 17 27 16 14 28 14 16 29 20 18 30 19 19 31 18 20 32 21 21 33 20 18 34 18 20 35 24 22 36 23 23 37 22 24 38 25 25 39 24 22 40 22 24 41 28 26 42 27 27 43 26 28 44 29 29 45 28 26 46 26 28 47</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="right_gripper_2_collision" name="right_gripper_2_collision" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#right_gripper_2_collision-mesh" name="right_gripper_2_collision">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="colliision-material" target="#colliision-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

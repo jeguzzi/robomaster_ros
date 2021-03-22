@@ -1,29 +1,27 @@
 <?xml version="1.0"?>
 <robot name="robomaster_ep" xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
+
+  <xacro:arg name="name" default=""/>
+  <xacro:property name="_name" value="$(arg name)"/>
+  <xacro:if value="${_name != ''}">
+    <xacro:property name="tf_prefix" value="${_name}/"/>
+  </xacro:if>
+  <xacro:if value="${_name == ''}">
+    <xacro:property name="tf_prefix" value=""/>
+  </xacro:if>
+
   <xacro:include filename="base.urdf.xacro"/>
   <xacro:include filename="arm.urdf.xacro"/>
   <xacro:include filename="camera.urdf.xacro"/>
   <xacro:include filename="gripper.urdf.xacro"/>
-  <xacro:robomaster_ep_base/>
-  <xacro:arm/>
-  <xacro:camera/>
-  <xacro:gripper/>
-<!-- 
-  <link name="sphere">
-    <visual>
-      <geometry>
-        <sphere radius="1.0"/>
-      </geometry>
-      <material name="wheel_bolt">
-        <color rgba="0.6 0.2 0.0 1.0"/>
-      </material>
-    </visual>
-  </link>
+  <xacro:include filename="intelligent_controller.urdf.xacro"/>
+  <xacro:include filename="extension.urdf.xacro"/>
 
-
-  <joint name="sphere_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="sphere"/>
-  </joint> -->
+  <xacro:base tf_prefix="${tf_prefix}"/>
+  <xacro:extension tf_prefix="${tf_prefix}" use_rear_extension="true"/>
+  <xacro:intelligent_controller tf_prefix="${tf_prefix}" mount="extension"/>
+  <xacro:arm tf_prefix="${tf_prefix}"/>
+  <xacro:camera tf_prefix="${tf_prefix}" mount="arm"/>
+  <xacro:gripper tf_prefix="${tf_prefix}"/>
 
 </robot>

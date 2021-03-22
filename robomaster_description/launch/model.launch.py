@@ -9,10 +9,10 @@ from launch.utilities import perform_substitutions
 from launch_ros.actions import Node
 
 
-def urdf() -> str:
+def urdf(name: str = '', model: str = 'ep') -> str:
     urdf_xacro = os.path.join(get_package_share_directory('robomaster_description'),
-                              'urdf', 'robomaster_ep.urdf.xacro')
-    xacro_keys = [k for k, _ in urdf.__annotations__.items() if k not in ('return', )]
+                              'urdf', f'robomaster_{model}.urdf.xacro')
+    xacro_keys = [k for k, _ in urdf.__annotations__.items() if k not in ('return', 'model')]
     kwargs = dict(locals())
     xacro_args = [f'{arg_name}:={kwargs.get(arg_name)}' for arg_name in xacro_keys]
     opts, input_file_name = xacro.process_args([urdf_xacro] + xacro_args)

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
-<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_base">
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
 
-  <xacro:macro name="chassis_module" params="name xyz rpy">
+  <xacro:macro name="chassis_module" params="name xyz rpy tf_prefix=''">
 
-  <link name="${name}_hit_sensor_link">
+  <link name="${tf_prefix}${name}_hit_sensor_link">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.001"/>
@@ -19,7 +19,7 @@
     </visual>
   </link>
 
-  <link name="${name}_led_link">
+  <link name="${tf_prefix}${name}_led_link">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <mass value="0.001"/>
@@ -34,16 +34,16 @@
     </visual>
   </link>
 
-  <joint name="${name}_hit_sensor_joint" type="fixed">
+  <joint name="${tf_prefix}${name}_hit_sensor_joint" type="fixed">
     <origin xyz="${xyz}" rpy="${rpy}"/>
-    <parent link="chassis_base_link"/>
-    <child link="${name}_hit_sensor_link"/>
+    <parent link="${tf_prefix}chassis_base_link"/>
+    <child link="${tf_prefix}${name}_hit_sensor_link"/>
   </joint>
 
-  <joint name="${name}_led_joint" type="fixed">
+  <joint name="${tf_prefix}${name}_led_joint" type="fixed">
     <origin xyz="0.0087428 -0.0012841 3.75e-05" rpy="0 0 0"/>
-    <parent link="${name}_hit_sensor_link"/>
-    <child link="${name}_led_link"/>
+    <parent link="${tf_prefix}${name}_hit_sensor_link"/>
+    <child link="${tf_prefix}${name}_led_link"/>
   </joint>
 
   </xacro:macro>

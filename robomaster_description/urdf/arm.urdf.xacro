@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
 
-  <xacro:macro name="arm">
+  <xacro:macro name="arm" params="tf_prefix=''">
 
-    <link name="arm_1_link">
+    <link name="${tf_prefix}arm_1_link">
       <inertial>
         <origin xyz="-0.0005586 0.023592 0.0011729" rpy="0 0 0"/>
         <mass value="0.056"/>
@@ -34,7 +34,7 @@
     <!-- <link name="arm_2_dummy">
     </link> -->
 
-    <link name="arm_2_link">
+    <link name="${tf_prefix}arm_2_link">
       <inertial>
         <origin xyz="0.0222614 -0.0202749 -0.008504" rpy="0 0 0"/>
         <mass value="0.08"/>
@@ -80,7 +80,7 @@
       </inertial>
     </link> -->
 
-    <link name="arm_base_link">
+    <link name="${tf_prefix}arm_base_link">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.3"/>
@@ -115,10 +115,10 @@
       </collision>
     </link>
 
-    <link name="end_point_link">
+    <link name="${tf_prefix}end_point_link">
     </link>
 
-    <link name="endpoint_bracket_link">
+    <link name="${tf_prefix}endpoint_bracket_link">
       <inertial>
         <origin xyz="0.0116468 -0.0288044 0.0041342" rpy="0 0 0"/>
         <mass value="0.028"/>
@@ -142,7 +142,7 @@
     <!-- <link name="rod_1_dummy">
     </link> -->
 
-    <link name="rod_1_link">
+    <link name="${tf_prefix}rod_1_link">
       <inertial>
         <origin xyz="-0.0477809 0 0.0272644" rpy="0 0 0"/>
         <mass value="0.012"/>
@@ -171,7 +171,7 @@
       </inertial>
     </link> -->
 
-    <link name="rod_2_link">
+    <link name="${tf_prefix}rod_2_link">
       <inertial>
         <origin xyz="0.0011528 0 0.0549123" rpy="0 0 0"/>
         <mass value="0.012"/>
@@ -200,7 +200,7 @@
       </inertial>
     </link> -->
 
-    <link name="rod_3_link">
+    <link name="${tf_prefix}rod_3_link">
       <inertial>
         <origin xyz="-0.0003574 9.5e-06 0.0001674" rpy="0 0 0"/>
         <mass value="0.012"/>
@@ -221,7 +221,7 @@
       </collision>
     </link>
 
-    <link name="rod_link">
+    <link name="${tf_prefix}rod_link">
       <inertial>
         <origin xyz="-8.11e-05 0.0023793 8.58e-05" rpy="0 0 0"/>
         <mass value="0.011"/>
@@ -253,7 +253,7 @@
     <!-- <link name="triangle_2_dummy">
     </link> -->
 
-    <link name="triangle_link">
+    <link name="${tf_prefix}triangle_link">
       <inertial>
         <origin xyz="0.1417841 0.0321051 -0.1257179" rpy="0 0 0"/>
         <mass value="0.009"/>
@@ -274,10 +274,10 @@
       </collision>
     </link>
 
-    <joint name="arm_1_joint" type="revolute">
+    <joint name="${tf_prefix}arm_1_joint" type="revolute">
       <origin xyz="0.0103961 -0.0255713 0.030741" rpy="0 0 0"/>
-      <parent link="arm_base_link"/>
-      <child link="arm_1_link"/>
+      <parent link="${tf_prefix}arm_base_link"/>
+      <child link="${tf_prefix}arm_1_link"/>
       <axis xyz="0.0 1.0 0"/>
       <limit effort="0" velocity="0" lower="-0.274" upper="1.384"/>
     </joint>
@@ -288,13 +288,13 @@
       <child link="arm_2_dummy"/>
     </joint> -->
 
-    <joint name="arm_2_joint" type="continuous">
+    <joint name="${tf_prefix}arm_2_joint" type="continuous">
       <origin xyz="0.0018704 0.0438659 0.1210238" rpy="0 0 0"/>
-      <parent link="arm_1_link"/>
-      <child link="arm_2_link"/>
+      <parent link="${tf_prefix}arm_1_link"/>
+      <child link="${tf_prefix}arm_2_link"/>
       <axis xyz="0.0 1.0 0"/>
       <limit effort="0" velocity="0"/>
-      <mimic joint="rod_3_joint" multiplier="-1.0" offset="0.0"/>
+      <mimic joint="${tf_prefix}rod_3_joint" multiplier="-1.0" offset="0.0"/>
     </joint>
 
     <!-- <joint name="arm_base_attachment_joint" type="fixed">
@@ -303,10 +303,10 @@
       <child link="arm_base_attachment_link"/>
     </joint> -->
 
-    <joint name="arm_base_joint" type="fixed">
+    <joint name="${tf_prefix}arm_base_joint" type="fixed">
       <origin xyz="0 0.0010384 0.0906477" rpy="0 0 0"/>
-      <parent link="chassis_base_link"/>
-      <child link="arm_base_link"/>
+      <parent link="${tf_prefix}chassis_base_link"/>
+      <child link="${tf_prefix}arm_base_link"/>
     </joint>
 
     <!-- <joint name="attachement_link" type="floating">
@@ -315,18 +315,18 @@
       <child link="attachement_link"/>
     </joint> -->
 
-    <joint name="end_point_joint" type="fixed">
+    <joint name="${tf_prefix}end_point_joint" type="fixed">
       <origin xyz="0.0110125 -0.0270264 -0.0103816" rpy="0 0 0"/>
-      <parent link="endpoint_bracket_link"/>
-      <child link="end_point_link"/>
+      <parent link="${tf_prefix}endpoint_bracket_link"/>
+      <child link="${tf_prefix}end_point_link"/>
     </joint>
 
-    <joint name="endpoint_bracket_joint" type="continuous">
+    <joint name="${tf_prefix}endpoint_bracket_joint" type="continuous">
       <origin xyz="0.1058557 0.006752 -0.0561093" rpy="0 0 0"/>
-      <parent link="arm_2_link"/>
-      <child link="endpoint_bracket_link"/>
+      <parent link="${tf_prefix}arm_2_link"/>
+      <child link="${tf_prefix}endpoint_bracket_link"/>
       <axis xyz="0.0 1.0 0"/>
-      <mimic joint="rod_joint" multiplier="-1.0" offset="0.0"/>
+      <mimic joint="${tf_prefix}rod_joint" multiplier="-1.0" offset="0.0"/>
       <!-- <limit effort="0" velocity="0"/> -->
     </joint>
 
@@ -336,12 +336,12 @@
       <child link="rod_1_dummy"/>
     </joint> -->
 
-    <joint name="rod_1_joint" type="continuous">
+    <joint name="${tf_prefix}rod_1_joint" type="continuous">
       <origin xyz="0.0134583 -0.0540971 0.0213068" rpy="0 -0.021293 0"/>
-      <parent link="endpoint_bracket_link"/>
-      <child link="rod_1_link"/>
+      <parent link="${tf_prefix}endpoint_bracket_link"/>
+      <child link="${tf_prefix}rod_1_link"/>
       <axis xyz="0.0 1.0 0"/>
-      <mimic joint="rod_joint" multiplier="1.0" offset="0.0"/>
+      <mimic joint="${tf_prefix}rod_joint" multiplier="1.0" offset="0.0"/>
       <!-- <limit effort="0" velocity="0"/> -->
     </joint>
 
@@ -351,12 +351,12 @@
       <child link="rod_2_dummy"/>
     </joint> -->
 
-    <joint name="rod_2_joint" type="continuous">
+    <joint name="${tf_prefix}rod_2_joint" type="continuous">
       <origin xyz="-0.0224276 -0.0290701 0.0554782" rpy="0 -0.0094248 0"/>
-      <parent link="arm_base_link"/>
-      <child link="rod_2_link"/>
+      <parent link="${tf_prefix}arm_base_link"/>
+      <child link="${tf_prefix}rod_2_link"/>
       <axis xyz="0.0 1.0 0"/>
-      <mimic joint="arm_1_joint" multiplier="1.0" offset="0.0"/>
+      <mimic joint="${tf_prefix}arm_1_joint" multiplier="1.0" offset="0.0"/>
       <!-- <limit effort="0" velocity="0"/> -->
     </joint>
 
@@ -366,18 +366,18 @@
       <child link="rod_3_dummy"/>
     </joint> -->
 
-    <joint name="rod_3_joint" type="revolute">
+    <joint name="${tf_prefix}rod_3_joint" type="revolute">
       <origin xyz="-0.042397 0.0004533 0.0223131" rpy="0 0 0"/>
-      <parent link="rod_link"/>
-      <child link="rod_3_link"/>
+      <parent link="${tf_prefix}rod_link"/>
+      <child link="${tf_prefix}rod_3_link"/>
       <axis xyz="0.0 1.0 0"/>
       <limit effort="0" velocity="0" lower="-0.34732" upper="1.21475"/>
     </joint>
 
-    <joint name="rod_joint" type="revolute">
+    <joint name="${tf_prefix}rod_joint" type="revolute">
       <origin xyz="0.009805 0.0214241 0.0319234" rpy="0 0 0"/>
-      <parent link="arm_base_link"/>
-      <child link="rod_link"/>
+      <parent link="${tf_prefix}arm_base_link"/>
+      <child link="${tf_prefix}rod_link"/>
       <axis xyz="0.0 1.0 0"/>
       <limit effort="0" velocity="0" lower="-0.79936" upper="1.73137"/>
     </joint>
@@ -394,12 +394,12 @@
       <child link="triangle_2_dummy"/>
     </joint> -->
 
-    <joint name="triangle_joint" type="continuous">
+    <joint name="${tf_prefix}triangle_joint" type="continuous">
       <origin xyz="0.0020224 -0.007103 0.1212334" rpy="0 0.2502802 0"/>
-      <parent link="arm_1_link"/>
-      <child link="triangle_link"/>
+      <parent link="${tf_prefix}arm_1_link"/>
+      <child link="${tf_prefix}triangle_link"/>
       <axis xyz="0.0 1.0 0"/>
-      <mimic joint="arm_1_joint" multiplier="-1.0" offset="0.0"/>
+      <mimic joint="${tf_prefix}arm_1_joint" multiplier="-1.0" offset="0.0"/>
     </joint>
 
     </xacro:macro>

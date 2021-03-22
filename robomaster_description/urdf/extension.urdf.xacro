@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+  <robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_extension">
+
+  <xacro:macro name="extension" params="tf_prefix='' use_rear_extension=false">
+
+    <link name="${tf_prefix}extension_base_link">
+      <inertial>
+        <origin xyz="0.0044194 -1.08e-05 0.00431" rpy="0 0 0"/>
+        <mass value="0.22"/>
+        <inertia ixx="0.00133" ixy="0" ixz="0" iyy="0.00092" iyz="0" izz="0.00224"/>
+      </inertial>
+      <visual name="extension_base">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/extension_base.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="metal"/>
+      </visual>
+      <xacro:if value="${use_rear_extension}">
+        <visual name="extension_support">
+          <origin xyz="-0.078582 0.0075392 0.0046459" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="package://robomaster_description/meshes/extension_support.dae" scale="1.0 1.0 1.0"/>
+          </geometry>
+          <material name="metal"/>
+        </visual>
+      </xacro:if>
+      <collision name="ExtensionBase" >
+        <origin xyz="0.0044194 -1.08e-05 0.00431" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.2796935 0.2317787 0.013"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${tf_prefix}extension_base_joint" type="fixed">
+      <origin xyz="-0.0091948 0.0010492 0.070543" rpy="0 0 0"/>
+      <parent link="${tf_prefix}chassis_base_link"/>
+      <child link="${tf_prefix}extension_base_link"/>
+    </joint>
+    <!-- <xacro:intelligent_controller tf_prefix="${tf_prefix}"/> -->
+
+
+  </xacro:macro>
+  </robot>

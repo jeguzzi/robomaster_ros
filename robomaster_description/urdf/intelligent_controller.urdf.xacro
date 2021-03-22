@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
-  <xacro:macro name="intelligent_controller">
-    <link name="intelligent_controller_link">
+
+  <xacro:macro name="intelligent_controller" params="tf_prefix='' mount=''">
+    <link name="${tf_prefix}intelligent_controller_link">
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <mass value="0.093"/>
@@ -35,10 +36,25 @@
         </geometry>
       </collision>
     </link>
-    <joint name="intelligent_controller_joint" type="fixed">
-      <origin xyz="-0.1348326 0.0024866 0.1329" rpy="0 0 0"/>
-      <parent link="chassis_base_link"/>
-      <child link="intelligent_controller_link"/>
-    </joint>
+
+    <xacro:if value="${mount == 'extension'}">
+      <joint name="${tf_prefix}intelligent_controller_joint" type="fixed">
+        <origin xyz="-0.1348326 0.0024866 0.1329" rpy="0 0 0"/>
+        <parent link="${tf_prefix}chassis_base_link"/>
+        <child link="${tf_prefix}intelligent_controller_link"/>
+      </joint>
+    </xacro:if>
+
+    <xacro:if value="${mount == 'gimbal'}">
+      <joint name="${tf_prefix}intelligent_controller_joint" type="fixed">
+        <origin xyz="-0.027 0.0 0.07" rpy="0 0 0"/>
+        <parent link="${tf_prefix}blaster_link"/>
+        <child link="${tf_prefix}intelligent_controller_link"/>
+      </joint>
+    </xacro:if>
+
+    <material name="intelligent_controller">
+      <color rgba="0.8 0.8 0.8 1.0"/>
+    </material>
   </xacro:macro>
 </robot>

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
-<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro" name="robomaster_ep_base">
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
 
-  <xacro:macro name="gripper" params="">
+  <xacro:macro name="gripper" params="tf_prefix=''">
 
-        <link name="left_gripper_link_1">
+        <link name="${tf_prefix}left_gripper_link_1">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -19,7 +19,7 @@
           </visual>
         </link>
 
-        <link name="left_gripper_link_2">
+        <link name="${tf_prefix}left_gripper_link_2">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -48,7 +48,7 @@
           </inertial>
         </link> -->
 
-        <link name="left_gripper_link_4">
+        <link name="${tf_prefix}left_gripper_link_4">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -69,7 +69,7 @@
           </collision>
         </link>
 
-        <link name="left_gripper_link_5">
+        <link name="${tf_prefix}left_gripper_link_5">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -90,7 +90,7 @@
           </collision>
         </link>
 
-        <link name="left_gripper_link_6">
+        <link name="${tf_prefix}left_gripper_link_6">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -111,7 +111,7 @@
           </collision>
         </link>
 
-        <link name="left_gripper_link_7">
+        <link name="${tf_prefix}left_gripper_link_7">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -132,7 +132,7 @@
           </collision>
         </link>
 
-        <link name="gripper_link">
+        <link name="${tf_prefix}gripper_link">
           <inertial>
             <origin xyz="0.0326578 -9.78e-05 -0.0327003" rpy="0 0 0"/>
             <mass value="0.15"/>
@@ -153,15 +153,15 @@
           </collision>
         </link>
 
-      <link name="gripper_m_link">
+      <link name="${tf_prefix}gripper_m_link">
 
       </link>
 
-      <joint name="gripper_m_joint" type="prismatic">
+      <joint name="${tf_prefix}gripper_m_joint" type="prismatic">
         <limit effort="0" velocity="0" lower="-0.023" upper="0.001"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <parent link="gripper_link"/>
-        <child link="gripper_m_link"/>
+        <parent link="${tf_prefix}gripper_link"/>
+        <child link="${tf_prefix}gripper_m_link"/>
         <axis xyz="-1 0 0"/>
       </joint>
 
@@ -176,7 +176,7 @@
           </inertial>
         </link> -->
 
-        <link name="right_gripper_link_1">
+        <link name="${tf_prefix}right_gripper_link_1">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -185,13 +185,13 @@
           <visual name="right_gripper_1">
             <origin xyz="-1.52e-05 -8.12e-05 -2.25e-05" rpy="0 0 0"/>
             <geometry>
-              <mesh filename="package://robomaster_description/meshes/EP_cilp_BB_R.001.dae" scale="1.0 1.0 1.0"/>
+              <mesh filename="package://robomaster_description/meshes/right_gripper_1.dae" scale="1.0 1.0 1.0"/>
             </geometry>
             <material name="EP_up.001"/>
           </visual>
         </link>
 
-        <link name="right_gripper_link_2">
+        <link name="${tf_prefix}right_gripper_link_2">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -220,7 +220,7 @@
           </inertial>
         </link> -->
 
-        <link name="right_gripper_link_4">
+        <link name="${tf_prefix}right_gripper_link_4">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -241,7 +241,7 @@
           </collision>
         </link>
 
-        <link name="right_gripper_link_5">
+        <link name="${tf_prefix}right_gripper_link_5">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -262,7 +262,7 @@
           </collision>
         </link>
 
-        <link name="right_gripper_link_6">
+        <link name="${tf_prefix}right_gripper_link_6">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -283,7 +283,7 @@
           </collision>
         </link>
 
-        <link name="right_gripper_link_7">
+        <link name="${tf_prefix}right_gripper_link_7">
           <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="0.001"/>
@@ -312,18 +312,18 @@
           </inertial>
         </link> -->
 
-        <joint name="left_gripper_joint_1" type="continuous">
+        <joint name="${tf_prefix}left_gripper_joint_1" type="continuous">
           <origin xyz="0.0163032 0.0212032 -0.0399201" rpy="0 0 0"/>
-          <parent link="gripper_m_link"/>
-          <child link="left_gripper_link_1"/>
+          <parent link="${tf_prefix}gripper_m_link"/>
+          <child link="${tf_prefix}left_gripper_link_1"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
 
-        <joint name="left_gripper_joint_2" type="continuous">
+        <joint name="${tf_prefix}left_gripper_joint_2" type="continuous">
           <origin xyz="0.0213495 0.0130363 0" rpy="0 0 0"/>
-          <parent link="left_gripper_link_1"/>
-          <child link="left_gripper_link_2"/>
+          <parent link="${tf_prefix}left_gripper_link_1"/>
+          <child link="${tf_prefix}left_gripper_link_2"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
@@ -334,26 +334,26 @@
           <child link="left_gripper_link_3_dummy"/>
         </joint> -->
 
-        <joint name="left_gripper_joint_4" type="continuous">
+        <joint name="${tf_prefix}left_gripper_joint_4" type="continuous">
           <origin xyz="0.00485 0.0204148 -5.8e-06" rpy="0 0 0"/>
-          <parent link="left_gripper_link_2"/>
-          <child link="left_gripper_link_4"/>
+          <parent link="${tf_prefix}left_gripper_link_2"/>
+          <child link="${tf_prefix}left_gripper_link_4"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
 
-        <joint name="left_gripper_joint_6" type="continuous">
+        <joint name="${tf_prefix}left_gripper_joint_6" type="continuous">
           <origin xyz="0.0051144 -0.0140851 0" rpy="0 0 0"/>
-          <parent link="left_gripper_link_5"/>
-          <child link="left_gripper_link_6"/>
+          <parent link="${tf_prefix}left_gripper_link_5"/>
+          <child link="${tf_prefix}left_gripper_link_6"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
 
-        <joint name="left_gripper_joint_7" type="continuous">
+        <joint name="${tf_prefix}left_gripper_joint_7" type="continuous">
           <origin xyz="-0.0148823 -0.0168513 0" rpy="0 0 0"/>
-          <parent link="left_gripper_link_6"/>
-          <child link="left_gripper_link_7"/>
+          <parent link="${tf_prefix}left_gripper_link_6"/>
+          <child link="${tf_prefix}left_gripper_link_7"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
@@ -364,32 +364,32 @@
           <child link="left_gripper_8_link_dummy"/>
         </joint> -->
 
-        <joint name="left_gripper_joint_5" type="continuous">
+        <joint name="${tf_prefix}left_gripper_joint_5" type="continuous">
           <origin xyz="0.0385916 0.0103143 1.6e-06" rpy="0 0 0"/>
-          <parent link="left_gripper_link_4"/>
-          <child link="left_gripper_link_5"/>
+          <parent link="${tf_prefix}left_gripper_link_4"/>
+          <child link="${tf_prefix}left_gripper_link_5"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
 
-        <joint name="gripper_link" type="fixed">
+        <joint name="${tf_prefix}gripper_link" type="fixed">
           <origin xyz="0.0002793 -0.027026 0.0001815" rpy="0 0 0"/>
-          <parent link="endpoint_bracket_link"/>
-          <child link="gripper_link"/>
+          <parent link="${tf_prefix}endpoint_bracket_link"/>
+          <child link="${tf_prefix}gripper_link"/>
         </joint>
 
-        <joint name="right_gripper_joint_1" type="continuous">
+        <joint name="${tf_prefix}right_gripper_joint_1" type="continuous">
           <origin xyz="0.0163034 -0.0209781 -0.0399201" rpy="0 0 0"/>
-          <parent link="gripper_m_link"/>
-          <child link="right_gripper_link_1"/>
+          <parent link="${tf_prefix}gripper_m_link"/>
+          <child link="${tf_prefix}right_gripper_link_1"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
 
-        <joint name="right_gripper_joint_2" type="continuous">
+        <joint name="${tf_prefix}right_gripper_joint_2" type="continuous">
           <origin xyz="0.0213495 -0.0130363 0" rpy="0 0 0"/>
-          <parent link="right_gripper_link_1"/>
-          <child link="right_gripper_link_2"/>
+          <parent link="${tf_prefix}right_gripper_link_1"/>
+          <child link="${tf_prefix}right_gripper_link_2"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
@@ -400,34 +400,34 @@
           <child link="right_gripper_link_3_dummy"/>
         </joint> -->
 
-        <joint name="right_gripper_joint_4" type="continuous">
+        <joint name="${tf_prefix}right_gripper_joint_4" type="continuous">
           <origin xyz="0.0047151 -0.0208481 -5.8e-06" rpy="0 0 0"/>
-          <parent link="right_gripper_link_2"/>
-          <child link="right_gripper_link_4"/>
+          <parent link="${tf_prefix}right_gripper_link_2"/>
+          <child link="${tf_prefix}right_gripper_link_4"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
 
-        <joint name="right_gripper_joint_5" type="continuous">
+        <joint name="${tf_prefix}right_gripper_joint_5" type="continuous">
           <origin xyz="0.0385916 -0.0103143 1.6e-06" rpy="0 0 0"/>
-          <parent link="right_gripper_link_4"/>
-          <child link="right_gripper_link_5"/>
+          <parent link="${tf_prefix}right_gripper_link_4"/>
+          <child link="${tf_prefix}right_gripper_link_5"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
 
-        <joint name="right_gripper_joint_6" type="continuous">
+        <joint name="${tf_prefix}right_gripper_joint_6" type="continuous">
           <origin xyz="0.0059278 0.0133069 0" rpy="0 0 0"/>
-          <parent link="right_gripper_link_5"/>
-          <child link="right_gripper_link_6"/>
+          <parent link="${tf_prefix}right_gripper_link_5"/>
+          <child link="${tf_prefix}right_gripper_link_6"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
 
-        <joint name="right_gripper_joint_7" type="continuous">
+        <joint name="${tf_prefix}right_gripper_joint_7" type="continuous">
           <origin xyz="-0.0156955 0.0176295 0" rpy="0 0 0"/>
-          <parent link="right_gripper_link_6"/>
-          <child link="right_gripper_link_7"/>
+          <parent link="${tf_prefix}right_gripper_link_6"/>
+          <child link="${tf_prefix}right_gripper_link_7"/>
           <axis xyz="0 0 1.0"/>
           <limit effort="0" velocity="0"/>
         </joint>
