@@ -21,8 +21,9 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 #
-find_package(urdf REQUIRED)
-find_package(xacro REQUIRED)
+
+# find_package(urdf REQUIRED)
+# find_package(xacro REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
