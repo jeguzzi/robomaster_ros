@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.79.0 commit date:2017-09-11, commit time:10:43, hash:5bd8ac9</authoring_tool>
+    </contributor>
+    <created>2021-03-23T11:48:58</created>
+    <modified>2021-03-23T11:48:58</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects>
+    <effect id="Material__29_001-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.7811767 0.7811767 0.7811767 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.1 0.1 0.1 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">103</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="Material__29_001-material" name="Material__29_001">
+      <instance_effect url="#Material__29_001-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="gimbal_left_led_5-mesh" name="gimbal_left_led_5">
+      <mesh>
+        <source id="gimbal_left_led_5-mesh-positions">
+          <float_array id="gimbal_left_led_5-mesh-positions-array" count="36">-0.005282759 -0.001325547 0.003580629 -0.007640361 -0.001325547 0.003662765 -0.007640361 0.001325547 7.57166e-4 -0.005356431 0.001325547 3.60797e-4 -0.00194329 -0.001325547 0.002954483 -0.00246936 0.001325547 -1.69161e-4 0.001253962 -0.001325547 0.001686692 2.91657e-4 0.001325547 -0.001129925 0.006374895 -0.001325547 -4.78909e-4 0.00445646 0.001325547 -0.002937138 0.008040368 0.001325547 -0.005405664 0.009915173 -0.001325547 -0.002881824</float_array>
+          <technique_common>
+            <accessor source="#gimbal_left_led_5-mesh-positions-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="gimbal_left_led_5-mesh-normals">
+          <float_array id="gimbal_left_led_5-mesh-normals-array" count="36">0.067281 0.7547709 0.6525291 0.06726551 0.7547635 0.6525393 0.0911023 0.7611045 0.6421996 0.09407824 0.7618603 0.6408731 0.1705833 0.7623304 0.6243027 0.176279 0.7616218 0.6235849 0.2451072 0.7512869 0.6127729 0.2458562 0.7511999 0.6125795 0.3179945 0.7577592 0.5698074 0.3098647 0.7566258 0.5757617 0.3649402 0.762784 0.5338346 0.3650312 0.7627348 0.5338426</float_array>
+          <technique_common>
+            <accessor source="#gimbal_left_led_5-mesh-normals-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="gimbal_left_led_5-mesh-map-0">
+          <float_array id="gimbal_left_led_5-mesh-map-0-array" count="60">0.02636289 0.7909384 0.03464818 0.7905154 0.03376585 0.7934793 0.02596658 0.7941764 0.02636289 0.7909384 0.03376585 0.7934793 0.03376585 0.7934793 0.03450328 0.8012025 0.02596658 0.7941764 0.03450328 0.8012025 0.026214 0.8014844 0.02596658 0.7941764 0.026214 0.8014844 0.03450328 0.8012025 0.0352407 0.8089258 0.02646142 0.8087923 0.026214 0.8014844 0.0352407 0.8089258 0.0352407 0.8089258 0.03310048 0.8167126 0.02646142 0.8087923 0.03310048 0.8167126 0.02469223 0.8169564 0.02646142 0.8087923 0.02469223 0.8169564 0.03310048 0.8167126 0.02298533 0.8248327 0.03310048 0.8167126 0.03143066 0.8227877 0.02298533 0.8248327</float_array>
+          <technique_common>
+            <accessor source="#gimbal_left_led_5-mesh-map-0-array" count="30" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="gimbal_left_led_5-mesh-colors-Col" name="Col">
+          <float_array id="gimbal_left_led_5-mesh-colors-Col-array" count="90">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#gimbal_left_led_5-mesh-colors-Col-array" count="30" stride="3">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="gimbal_left_led_5-mesh-vertices">
+          <input semantic="POSITION" source="#gimbal_left_led_5-mesh-positions"/>
+        </vertices>
+        <triangles material="Material__29_001-material" count="10">
+          <input semantic="VERTEX" source="#gimbal_left_led_5-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#gimbal_left_led_5-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#gimbal_left_led_5-mesh-map-0" offset="2" set="0"/>
+          <input semantic="COLOR" source="#gimbal_left_led_5-mesh-colors-Col" offset="3" set="0"/>
+          <p>2 0 0 0 1 1 1 1 0 2 2 2 3 3 3 3 2 0 4 4 0 2 5 5 0 2 6 6 4 4 7 7 3 3 8 8 4 4 9 9 5 5 10 10 3 3 11 11 5 5 12 12 4 4 13 13 6 6 14 14 7 7 15 15 5 5 16 16 6 6 17 17 6 6 18 18 8 8 19 19 7 7 20 20 8 8 21 21 9 9 22 22 7 7 23 23 9 9 24 24 8 8 25 25 10 10 26 26 8 8 27 27 11 11 28 28 10 10 29 29</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="gimbal_left_led_5" name="gimbal_left_led_5" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#gimbal_left_led_5-mesh" name="gimbal_left_led_5">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material__29_001-material" target="#Material__29_001-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

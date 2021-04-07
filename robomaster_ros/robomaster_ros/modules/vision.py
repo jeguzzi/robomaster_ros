@@ -3,7 +3,7 @@ import robomaster.vision
 
 import robomaster_msgs.msg
 
-from typing import Tuple, List, Union, cast
+from typing import Tuple, List, Union, Optional, cast
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
@@ -37,7 +37,7 @@ class Vision(Module):
         self.api = robot.vision
         # DONE(jerome): expose as params or service
         self.vision_targets: List[str] = node.declare_parameter(
-            'vision.targets', ["marker", "robot"]).value
+            'vision.targets', ["marker:red", "robot"]).value
         # Alternatively, I could use vision_msgs/Detection2DArray
         # But this requires a mapping between id and RM class types
         self.vision_pub = node.create_publisher(
@@ -46,7 +46,12 @@ class Vision(Module):
         self.vision_msg = robomaster_msgs.msg.Detection()
         # self.vision_msg.header.frame_id = 'camera_optical_link'
         for name in self.vision_targets:
-            self.api.sub_detect_info(name=name, callback=self.got_vision)
+            color: Optional[str]
+            try:
+                name, color = name.split(":")
+            except ValueError:
+                color = None
+            self.api.sub_detect_info(name=name, color=color, callback=self.got_vision)
 
     def stop(self) -> None:
         for name in self.vision_targets:

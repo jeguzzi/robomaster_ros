@@ -1,50 +1,81 @@
 <launch>
 
-  <arg name="axis_length" default="0.0935"/>
+  <arg name="name" default=""/>
+  <arg name="model" default="ep"/>
+  <arg name="serial_number" default=""/>
+  <arg name="conn_type" default="sta"/>
+
+  <arg name="arm" default="false"/>
+  <arg name="armor" default="true"/>
+  <arg name="battery" default="true"/>
+  <arg name="camera" default="true"/>
+  <arg name="gripper" default="false"/>
+  <arg name="sbus" default="false"/>
+  <arg name="pwm" default="true"/>
+  <arg name="servo" default="false"/>
+  <arg name="tof" default="false"/>
+  <arg name="uart" default="false"/>
+  <arg name="vision" default="true"/>
+  <arg name="gimbal" default="false"/>
+
+  <push-ros-namespace namespace="$(var name)"/>
 
   <node name="robomaster" pkg="robomaster_ros" exec="robomaster_driver" output="screen" args="--ros-args --log-level info">
+    <param name="tf_prefix" value="$(var name)"/>
+    <param name="serial_number" value="$(var serial_number)"/>
+    <param name="conn_type" value="$(var conn_type)"/>
+
     <param name="arm">
-      <param name="enabled" value="false"/>
+      <param name="enabled" value="$(var arm)"/>
     </param>
     <param name="armor">
-      <param name="enabled" value="false"/>
+      <param name="enabled" value="$(var armor)"/>
     </param>
     <param name="battery">
-      <param name="enabled" value="false"/>
+      <param name="enabled" value="$(var battery)"/>
     </param>
     <param name="camera">
-      <param name="enabled" value="false"/>
+      <param name="enabled" value="$(var camera)"/>
     </param>
     <param name="chassis">
-      <param name="enabled" value="false"/>
-    </param>
-    <param name="gripper">
-      <param name="enabled" value="false"/>
-    </param>
-    <param name="led">
-      <param name="enabled" value="false"/>
-    </param>
-    <param name="pwm">
-      <param name="enabled" value="false"/>
-    </param>
-    <param name="sbus">
       <param name="enabled" value="true"/>
     </param>
+    <param name="gripper">
+      <param name="enabled" value="$(var gripper)"/>
+    </param>
+    <param name="led">
+      <param name="enabled" value="true"/>
+    </param>
+    <param name="pwm">
+      <param name="enabled" value="$(var pwm)"/>
+    </param>
+    <param name="sbus">
+      <param name="enabled" value="$(var sbus)"/>
+    </param>
     <param name="servo">
-      <param name="enabled" value="false"/>
+      <param name="enabled" value="$(var servo)"/>
+      <param name="config" value="$(find-pkg-share robomaster_ros)/config/servos.yaml"/>
     </param>
     <param name="speaker">
       <param name="enabled" value="true"/>
     </param>
     <param name="tof">
-      <param name="enabled" value="true"/>
+      <param name="enabled" value="$(var tof)"/>
     </param>
     <param name="uart">
-      <param name="enabled" value="true"/>
+      <param name="enabled" value="$(var uart)"/>
     </param>
     <param name="vision">
-      <param name="enabled" value="true"/>
+      <param name="enabled" value="$(var vision)"/>
+    </param>
+    <param name="gimbal">
+      <param name="enabled" value="$(var gimbal)"/>
     </param>
   </node>
+
+  <include file="$(find-pkg-share robomaster_description)/launch/main.launch">
+    <arg name="name" value="$(var name)"/>
+    <arg name="model" value="$(var model)"/>
+  </include>
 
 </launch>

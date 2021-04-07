@@ -84,17 +84,124 @@
         </geometry>
         <material name="led_off" />
       </visual>
+      <visual name="gimbal_left_led_0">
+        <origin xyz="-0.02365 0 -0.01734" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_led_0.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_left_led_1">
+        <origin xyz="-0.00837 0 -0.02777" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_led_1.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_left_led_2">
+        <origin xyz="0.01027 0 -0.02687" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_led_2.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_left_led_3">
+        <origin xyz="0.02428 0 -0.01501" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_led_3.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_left_led_4">
+        <origin xyz="0.02289 -4e-05 0.01672" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_led_4.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_left_led_5">
+        <origin xyz="0.00874 0 0.02703" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_led_5.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_left_led_6">
+        <origin xyz="-0.00951 1e-05 0.02709" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_led_6.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_left_led_7">
+        <origin xyz="-0.02463 0 0.01615" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_left_led_7.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
     </link>
 
     <link name="${tf_prefix}gimbal_right_led_link">
-      <visual name="gimbal_right_led">
-        <origin xyz="-0.02364 -9e-05 -0.01734" rpy="0 0 0" />
+      <visual name="gimbal_right_led_0">
+        <origin xyz="-0.02364 -9e-05 -0.01734" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://robomaster_description/meshes/gimbal_right_led.dae" scale="1.0 1.0 1.0" />
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_led_0.dae" scale="1.0 1.0 1.0"/>
         </geometry>
-        <material name="led_off" />
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_right_led_1">
+        <origin xyz="-0.00837 -0.00011 -0.02778" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_led_1.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_right_led_2">
+        <origin xyz="0.01027 -0.00011 -0.02687" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_led_2.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_right_led_3">
+        <origin xyz="0.02428 -0.00011 -0.01501" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_led_3.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_right_led_4">
+        <origin xyz="0.0229 0.00017 0.01671" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_led_4.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_right_led_5">
+        <origin xyz="0.00874 8e-05 0.02709" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_led_5.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_right_led_6">
+        <origin xyz="-0.00957 8e-05 0.02706" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_led_6.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
+      </visual>
+      <visual name="gimbal_right_led_7">
+        <origin xyz="-0.02463 8e-05 0.01615" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://robomaster_description/meshes/gimbal_right_led7.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="led_off"/>
       </visual>
     </link>
+
+
 
     <link name="${tf_prefix}gimbal_link">
       <inertial>
@@ -171,7 +278,7 @@
       <child link="${tf_prefix}blaster_link" />
       <axis xyz="0 1.0 0"/>
       <!-- [-25, +30] degrees -->
-      <limit effort="0" velocity="0" lower="-0.4363" upper="0.5236"/>
+      <limit effort="0" velocity="0" lower="-0.5236" upper="0.4363"/>
     </joint>
 
     <joint name="${tf_prefix}gimbal_left_led_joint" type="fixed">

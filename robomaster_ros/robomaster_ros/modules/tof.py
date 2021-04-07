@@ -51,7 +51,7 @@ class ToF(Module):
         for i, (cmd_id, _, _, distance) in enumerate(readings):
             if cmd_id:
                 msg = self.range_msg
-                msg.header.frame_id = f'range_{i}_link'
+                msg.header.frame_id = self.node.tf_frame(f'range_{i}_link')
                 msg.header.stamp = self.clock.now().to_msg()
                 pub = self.range_pub(i)
                 pub.publish(msg)

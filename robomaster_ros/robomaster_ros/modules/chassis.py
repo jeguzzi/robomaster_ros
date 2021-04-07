@@ -48,6 +48,10 @@ def quaternion_from_euler(roll: float, pitch: float, yaw: float
     return quaternion.from_euler_angles(roll, pitch, yaw)
 
 
+WHEEL_FRAMES = ['front_right_wheel_joint', 'front_left_wheel_joint',
+                'rear_left_wheel_joint', 'rear_right_wheel_joint']
+
+
 class Chassis(Module):
 
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
@@ -56,16 +60,17 @@ class Chassis(Module):
         self.node = node
         self.timeout: Optional[float] = node.declare_parameter("chassis.timeout").value
         self.api = robot.chassis
+        odom_frame = node.tf_frame('odom')
+        base_link = node.tf_frame('base_link')
         self.odom_msg = nav_msgs.msg.Odometry()
-        self.odom_msg.header.frame_id = 'odom'
-        self.odom_msg.child_frame_id = 'odom'
+        self.odom_msg.header.frame_id = odom_frame
+        self.odom_msg.child_frame_id = odom_frame
         self.imu_msg = sensor_msgs.msg.Imu()
-        self.imu_msg.header.frame_id = 'base_link'
+        self.imu_msg.header.frame_id = base_link
         self.wheel_state_msg = sensor_msgs.msg.JointState(
-            name=['front_right_wheel_joint', 'front_left_wheel_joint',
-                  'rear_left_wheel_joint', 'rear_right_wheel_joint'])
-        self.transform_msg = geometry_msgs.msg.TransformStamped(child_frame_id='base_link')
-        self.transform_msg.header.frame_id = 'odom'
+            name=[node.tf_frame(name) for name in WHEEL_FRAMES])
+        self.transform_msg = geometry_msgs.msg.TransformStamped(child_frame_id=base_link)
+        self.transform_msg.header.frame_id = odom_frame
         self.odom_pub = node.create_publisher(nav_msgs.msg.Odometry, 'odom', 1)
         self.imu_pub = node.create_publisher(sensor_msgs.msg.Imu, 'imu', 1)
         self.chassis_state_pub = node.create_publisher(robomaster_msgs.msg.ChassisStatus, 'state', 1)
@@ -163,8 +168,8 @@ class Chassis(Module):
 
     def execute_move_callback(self, goal_handle: Any) -> robomaster_msgs.action.Move.Result:
         # TODO(jerome): Complete with failures, ...  and velocity parameters
-        self.logger.info('Executing Move goal...')
         request = goal_handle.request
+        self.logger.info(f'Start moving chassis with request {request}')
         action = self.api.move(
             x=request.x, y=-request.y, z=deg(request.theta), xy_speed=request.linear_speed,
             z_speed=deg(request.angular_speed))
@@ -178,4 +183,5 @@ class Chassis(Module):
         #     time.sleep(0.01)
         action.wait_for_completed()
         goal_handle.succeed()
+        self.logger.info('Done moving chassis')
         return robomaster_msgs.action.Move.Result()

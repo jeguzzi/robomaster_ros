@@ -40,11 +40,15 @@ class Arm(Module):
 
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.servos = {
-            'right_motor': RMServo(index=1, reference_angle=-0.274016, reference_value=1273),
-            'left_motor': RMServo(index=0, reference_angle=0.073304, reference_value=1242)
+            'right_motor': RMServo(
+                index=1, reference_angle=-0.274016, reference_value=1273, direction=-1,
+                name=node.tf_frame('arm_1_joint')),
+            'left_motor': RMServo(
+                index=0, reference_angle=0.073304, reference_value=1242, direction=-1,
+                name=node.tf_frame("rod_joint"))
         }
         self.arm_position_msg = geometry_msgs.msg.PointStamped()
-        self.arm_position_msg.header.frame_id = 'arm_base_link'
+        self.arm_position_msg.header.frame_id = node.tf_frame('arm_base_link')
         self.arm_position_msg.point.y = 0.0
         self.arm_position_pub = node.create_publisher(
             geometry_msgs.msg.PointStamped, 'arm_position', 1)
@@ -68,10 +72,10 @@ class Arm(Module):
     def updated_arm_servo(self, msg: ServoData) -> None:
         # print('arm servo', msg)
         for v in self.servos.values():
-            v.valid = (msg[0][v.index_] != 0)
+            v.valid = (msg[0][v.index] != 0)
             if v.valid:
                 # v.speed = msg[1][v.index_] * SERVO2RAD
-                v.value = msg[2][v.index_]
+                v.value = msg[2][v.index]
                 # print(v.value, v.bias, v.angle)
         right_motor = self.servos['right_motor']
         left_motor = self.servos['left_motor']
@@ -79,7 +83,7 @@ class Arm(Module):
             arm_state_msg = sensor_msgs.msg.JointState()
             arm_state_msg.header.stamp = self.clock.now().to_msg()
             joints = arm_joint_state(right_motor=right_motor.angle, left_motor=left_motor.angle)
-            arm_state_msg.name = list(joints.keys())
+            arm_state_msg.name = [self.node.tf_frame(name) for name in joints.keys()]
             arm_state_msg.position = list(joints.values())
             self.node.joint_state_pub.publish(arm_state_msg)
         for servo in self.servos.values():
@@ -90,8 +94,8 @@ class Arm(Module):
     # Actions should not block! ... I should keep receving and forwarding data
     def execute_move_arm_callback(self, goal_handle: Any) -> robomaster_msgs.action.MoveArm.Result:
         # TODO(jerome): Complete with failures, ...
-        self.logger.info('Executing Move Arm goal...')
         request = goal_handle.request
+        self.logger.info(f'Start moving arm with request {request}')
         if request.relative:
             f = self.api.move
         else:
@@ -105,6 +109,7 @@ class Arm(Module):
         add_cb(action, cb)
         action.wait_for_completed()
         goal_handle.succeed()
+        self.logger.info(f'Done moving arm')
         return robomaster_msgs.action.MoveArm.Result()
 
     # (x, z) in mm

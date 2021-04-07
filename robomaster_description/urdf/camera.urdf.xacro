@@ -38,8 +38,8 @@
 
     <xacro:if value="${mount == 'gimbal'}">
       <joint name="${tf_prefix}camera_joint" type="fixed">
-        <origin xyz="0.0725 0.0 0.119" rpy="0 1.5708 0"/>
-        <parent link="${tf_prefix}gimbal_link"/>
+        <origin xyz="0.0728 0.0 0.0315" rpy="0 1.5708 0"/>
+        <parent link="${tf_prefix}blaster_link"/>
         <child link="${tf_prefix}camera_link"/>
       </joint>
     </xacro:if>

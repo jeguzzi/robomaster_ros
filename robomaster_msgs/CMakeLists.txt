@@ -53,10 +53,16 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Detection.msg"
   "msg/RegionOfInterest.msg"
   "msg/Serial.msg"
+  "msg/ServoCommand.msg"
+  "msg/GimbalCommand.msg"
+  "msg/BlasterLED.msg"
+  "msg/Mode.msg"
   "action/Move.action"
   "action/MoveArm.action"
   "action/GripperControl.action"
   "action/PlaySound.action"
+  "action/MoveServo.action"
+  "action/MoveGimbal.action"
   DEPENDENCIES std_msgs
  )
 

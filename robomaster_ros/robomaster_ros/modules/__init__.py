@@ -15,6 +15,8 @@ from .speaker import Speaker  # noqa
 from .tof import ToF  # noqa
 from .uart import Uart  # noqa
 from .vision import Vision  # noqa
+from .gimbal import Gimbal  # noqa
+from .blaster import Blaster  # noqa
 
 
 modules: Dict[str, Type[Module]] = {
@@ -27,9 +29,11 @@ modules: Dict[str, Type[Module]] = {
     'led': LED,
     'pwm': PWM,
     'sbus': SBus,
-    'servo': Servo,
+    # 'servo': Servo,
     'speaker': Speaker,
     'tof': ToF,
     'uart': Uart,
-    'vision': Vision
+    'vision': Vision,
+    'gimbal': Gimbal,
+    'blaster': Blaster
 }

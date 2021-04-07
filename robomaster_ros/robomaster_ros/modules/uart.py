@@ -13,17 +13,17 @@ Serial = bytearray
 class Uart(Module):
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.api = robot.uart
-        baud_rate: int = node.declare_parameters('uart.baud_rate', 0).value
+        baud_rate: int = node.declare_parameter('uart.baud_rate', 0).value
         baud_rates = [9600, 19200, 38400, 57600, 115200]
         baud_rate = nearest_index(baud_rate, baud_rates)
         # TODO(jerome) : complete
-        data_bit = node.declare_parameters('uart.data_bit', 0).value
-        odd_even = node.declare_parameters('uart.odd_even', 0).value
-        stop_bit = node.declare_parameters('uart.stop_bit', 0).value
-        rx_en = node.declare_parameters('uart.rx.enable', True).value
-        tx_en = node.declare_parameters('uart.tx.enable', True).value
-        rx_size = node.declare_parameters('uart.rx.size', 50).value
-        tx_size = node.declare_parameters('uart.tx.size', 50).value
+        data_bit = node.declare_parameter('uart.data_bit', 0).value
+        odd_even = node.declare_parameter('uart.odd_even', 0).value
+        stop_bit = node.declare_parameter('uart.stop_bit', 0).value
+        rx_en = node.declare_parameter('uart.rx.enable', True).value
+        tx_en = node.declare_parameter('uart.tx.enable', True).value
+        rx_size = node.declare_parameter('uart.rx.size', 50).value
+        tx_size = node.declare_parameter('uart.tx.size', 50).value
         self.uart_rx_pub = node.create_publisher(
             robomaster_msgs.msg.Serial, "uart/rx", 10
         )
