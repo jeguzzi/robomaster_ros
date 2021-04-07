@@ -1,5 +1,11 @@
 import math
-from typing import cast, Literal, List
+from typing import cast, List
+
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal  # type: ignore
+
 
 import rclpy.node
 
