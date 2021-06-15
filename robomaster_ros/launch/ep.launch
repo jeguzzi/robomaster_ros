@@ -3,8 +3,10 @@
   <arg name="name" default=""/>
   <arg name="serial_number" default=""/>
   <arg name="conn_type" default="sta"/>
-  <arg name="resolution" default="360"/>
   <arg name="lib_log_level" default="ERROR"/>
+  <arg name="resolution" default="360"/>
+  <arg name="raw" default="true"/>
+  <arg name="h264" default="false"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
     <arg name="arm" value="true"/>
@@ -13,8 +15,10 @@
     <arg name="name" value="$(var name)"/>
     <arg name="serial_number" value="$(var serial_number)"/>
     <arg name="conn_type" value="$(var conn_type)"/>
-    <arg name="resolution" value="$(var resolution)"/>
     <arg name="lib_log_level" value="$(var lib_log_level)"/>
+    <arg name="resolution" value="$(var resolution)"/>
+    <arg name="raw" value="$(var raw)"/>
+    <arg name="h264" value="$(var h264)"/>
   </include>
 
 </launch>

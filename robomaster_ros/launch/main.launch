@@ -23,6 +23,8 @@
   <arg name="video" default="true"/>
   <arg name="resolution" default="360"/>
   <arg name="audio" default="true"/>
+  <arg name="raw" default="true"/>
+  <arg name="h264" default="false"/>
 
   <push-ros-namespace namespace="$(var name)"/>
 
@@ -49,6 +51,8 @@
       <param name="enabled" value="$(var camera)"/>
       <param name="video">
         <param name="enabled" value="$(var video)"/>
+        <param name="raw" value="$(var raw)"/>
+        <param name="h264" value="$(var h264)"/>
         <param name="resolution" value="$(var resolution)"/>
       </param>
       <param name="audio">
@@ -96,6 +100,6 @@
     <arg name="model" value="$(var model)"/>
   </include>
 
-  <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image compressed out:=/camera/image" />
+  <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out:=/camera/image_raw" />
 
 </launch>

@@ -35,7 +35,8 @@ def robot_state_publisher(context: LaunchContext,
         package='robot_state_publisher',
         executable='robot_state_publisher',
         name='robot_state_publisher',
-        parameters=[params], output='screen')
+        parameters=[params], output='screen',
+        arguments=["--ros-args", "--log-level", "warn"])
     return [node]
 
 

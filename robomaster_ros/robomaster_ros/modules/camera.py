@@ -8,6 +8,12 @@ import numpy as np
 import robomaster.media
 import robomaster_msgs.msg
 import sensor_msgs.msg
+try:
+    import h264_msgs.msg
+    H264_MSG_AVAILABLE = True
+except ImportError:
+    H264_MSG_AVAILABLE = False
+
 from typing import TYPE_CHECKING, Optional
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
@@ -37,6 +43,9 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         self.clock = node.get_clock()
         self.video: bool = node.declare_parameter("camera.video.enabled", True).value
         if self.video:
+            self.publish_raw_video: bool = node.declare_parameter("camera.video.raw", True).value
+            self.publish_h264_video: bool = (
+                H264_MSG_AVAILABLE and node.declare_parameter("camera.video.h264", True).value)
             protocol: str = node.declare_parameter("camera.video.protocol", "tcp").value
             height: int = node.declare_parameter("camera.video.resolution", 360).value
             node.create_subscription(
@@ -46,7 +55,10 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             if height not in (360, 540, 720):
                 node.get_logger().error("Resolution not supported. Should be 360, 540, or 720")
                 return
-            self.video_pub = node.create_publisher(sensor_msgs.msg.Image, 'camera/image', 1)
+            if self.publish_raw_video:
+                self.raw_video_pub = node.create_publisher(sensor_msgs.msg.Image, 'camera/image_raw', 1)
+            if self.publish_h264_video:
+                self.h264_video_pub = node.create_publisher(h264_msgs.msg.Packet, 'camera/image_h264', 1)
             self.frame_id = 'camera_optical_link'
             self.api.start_video_stream(display=False, resolution=f"{height}p")
         self.audio: bool = node.declare_parameter("camera.audio.enabled", True).value
@@ -82,6 +94,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
     # TODO(Jerome): why not switching back to the super class method?
     def _video_decoder_task(self) -> None:
         self._video_streaming = True
+        seq = 0
         while self._video_streaming:
             # blocking
             data = self._video_stream_conn._sock_queue.get()
@@ -94,18 +107,27 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                 except queue.Empty:
                     break
             if data:
-                frames = self._h264_decode(data)
-                self._video_frame_count += len(frames)
-                # self.logger.info(f"Got frames {len(frames)}")
-                for frame in frames[-1:]:
-                    # self.logger.info(f"SHAPE {frame.shape}")
-                    msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
+                if self.publish_h264_video:
+                    msg = h264_msgs.msg.Packet()
                     msg.header.stamp = self.clock.now().to_msg()
                     msg.header.frame_id = self.frame_id
-                    try:
-                        self._message_queue.put(msg, block=False)
-                    except queue.Full:
-                        pass
+                    msg.data = data
+                    msg.seq = seq
+                    seq += 1
+                    self.h264_video_pub.publish(msg)
+                if self.publish_raw_video:
+                    frames = self._h264_decode(data)
+                    self._video_frame_count += len(frames)
+                    # self.logger.info(f"Got frames {len(frames)}")
+                    for frame in frames[-1:]:
+                        # self.logger.info(f"SHAPE {frame.shape}")
+                        msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
+                        msg.header.stamp = self.clock.now().to_msg()
+                        msg.header.frame_id = self.frame_id
+                        try:
+                            self._message_queue.put(msg, block=False)
+                        except queue.Full:
+                            pass
 
     def _video_publisher_task(self) -> None:
         while self._video_streaming:
@@ -114,7 +136,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             except queue.Empty:
                 continue
             # self.logger.info("Got msg")
-            self.video_pub.publish(msg)
+            self.raw_video_pub.publish(msg)
             # self.logger.info("Sent msg")
 
     def start_audio_stream(self, addr: Optional[str] = None,
