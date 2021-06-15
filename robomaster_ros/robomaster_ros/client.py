@@ -1,8 +1,10 @@
 # flake8: noqa: E402
 import logging
+import time
 
 import robomaster
 import rclpy.logging
+import rclpy.executors
 
 # Disabled because it too expensive
 # robomaster.logger = rclpy.logging.get_logger('sdk')
@@ -11,6 +13,7 @@ import robomaster.robot
 import robomaster.protocol
 import robomaster.conn
 import robomaster.client
+
 
 from robomaster_ros.modules import modules
 
@@ -73,12 +76,13 @@ class FakeFtpConnection:
 
 class RoboMasterROS(rclpy.node.Node):  # type: ignore
 
-    def __init__(self) -> None:
+    def __init__(self, executor: Optional[rclpy.executors.Executor] = None) -> None:
         super(RoboMasterROS, self).__init__("robomaster_ros")
         # robomaster.logger.set_level(logging.ERROR)
-        robomaster.logger.setLevel(logging.WARN)
+        lib_log_level : str = self.declare_parameter("lib_log_level", "ERROR").value.upper()
+        robomaster.logger.setLevel(lib_log_level)
         conn_type: str = self.declare_parameter("conn_type", "sta").value[:]
-        sn: Optional[str] = self.declare_parameter("serial_number", None).value
+        sn: Optional[str] = self.declare_parameter("serial_number", "").value
         if sn:
             if len(sn) != SERIAL_NUMBER_LENGTH:
                 sn = pad_serial(sn)
@@ -89,7 +93,7 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
             sn = None
         robomaster.conn.FtpConnection = FakeFtpConnection
         self.ep_robot = robomaster.robot.Robot()
-        self.disconnection = rclpy.task.Future(executor=rclpy.get_global_executor())
+        self.disconnection = rclpy.task.Future(executor=executor or rclpy.get_global_executor())
         # For now, to handle simulations without FTP
         self.initialized = False
         self.get_logger().info(f"Try to connect via {conn_type} to robot with sn {sn}")
@@ -119,11 +123,20 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
         self.get_logger().info(f"Enabled modules: {module_string}")
 
     def __del__(self) -> None:
-        self.get_logger().info("Terminate client")
+        self.stop()
+
+    def stop(self) -> None:
         if self.initialized:
+            self.get_logger().info("Will stop client")
+            self.heartbeat_check_timer.cancel()
             for module in self.modules:
+                self.get_logger().info(f"Will stop module {module}")
                 module.stop()
+                self.get_logger().info(f"Stopped module {module}")
+            time.sleep(0.5)
             self.ep_robot.close()
+            self.initialized = False
+            self.get_logger().info("Stopped client")
 
     def tf_frame(self, name: str) -> str:
         if self._tf_name:
@@ -137,9 +150,9 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
         self.heartbeat_check_timer.reset()
         # print('heartbeat_check', time.time(), self._got_hb)
         if not self._got_hb:
-            self.disconnection.set_result(True)
+            self.disconnection.set_result(False)
             self.get_logger().warn("Disconnected")
-            self.get_logger().warn(f"{self.disconnection.done()}")
+            # self.get_logger().warn(f"{self.disconnection.done()}")
         self._got_hb = False
 
     def got_heart_beat(self, msg: Any) -> None:

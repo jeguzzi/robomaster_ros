@@ -71,6 +71,7 @@ class Gimbal(Module):
 
     def stop(self) -> None:
         self.api.unsub_angle()
+        self._move_gimbal_action_server.destroy()
 
     def set_status_cb(self, request: std_srvs.srv.SetBool.Request,
                       response: std_srvs.srv.SetBool.Response) -> std_srvs.srv.SetBool.Response:

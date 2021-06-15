@@ -97,6 +97,7 @@ class Servo(Module):
             node, robomaster_msgs.action.MoveServo, 'move_servo', self.execute_move_servo_callback)
 
     def stop(self) -> None:
+        self._move_servo_action_server.destroy()
         self.api.unsub_servo_info()
 
     def execute_move_servo_callback(self, goal_handle: Any

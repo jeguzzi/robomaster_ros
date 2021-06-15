@@ -112,6 +112,7 @@ class Gripper(Module):
             node, robomaster_msgs.action.GripperControl, 'gripper', self.execute_gripper_callback)
 
     def stop(self) -> None:
+        self._gripper_action_server.destroy()
         pass
 
     # 0 open -> 1 close

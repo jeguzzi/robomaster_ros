@@ -65,6 +65,7 @@ class Arm(Module):
             node, robomaster_msgs.action.MoveArm, 'move_arm', self.execute_move_arm_callback)
 
     def stop(self) -> None:
+        self._move_arm_action_server.destroy()
         self.api.unsub_position()
         self.robot.servo.unsub_servo_info()
 

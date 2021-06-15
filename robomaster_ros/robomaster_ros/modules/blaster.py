@@ -14,7 +14,7 @@ class Blaster(Module):
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.api = robot.blaster
         self.node = node
-        node.create_subscription(robomaster_msgs.msg.BlasterLED, 'baster_led',
+        node.create_subscription(robomaster_msgs.msg.BlasterLED, 'blaster_led',
                                  self.has_received_blaster_led, 1)
         robot.blaster.set_led(effect=robomaster.blaster.LED_OFF)
 

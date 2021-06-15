@@ -20,6 +20,9 @@ class Speaker(Module):
             node, robomaster_msgs.action.PlaySound, "play", self.execute_play_sound
         )
 
+    def stop(self) -> None:
+        self._sound_action_server.destroy()
+
     def execute_play_sound(self, goal_handle: Any) -> robomaster_msgs.action.PlaySound.Result:
         self.logger.info("[Action begin] play sound")
         request = goal_handle.request

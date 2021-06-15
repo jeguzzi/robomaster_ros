@@ -55,7 +55,10 @@ class Vision(Module):
 
     def stop(self) -> None:
         for name in self.vision_targets:
-            self.api.unsub_detect_info(name=name)
+            try:
+                self.api.unsub_detect_info(name=name)
+            except TypeError:
+                pass
 
     def has_detected_people(self, values: List[ROI]) -> None:
         msg = robomaster_msgs.msg.Detection()

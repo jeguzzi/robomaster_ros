@@ -58,7 +58,9 @@ class Chassis(Module):
         self.clock = node.get_clock()
         self.logger = node.get_logger()
         self.node = node
-        self.timeout: Optional[float] = node.declare_parameter("chassis.timeout").value
+        self.timeout: Optional[float] = node.declare_parameter("chassis.timeout", 0.0).value
+        if self.timeout == 0.0:
+            self.timeout = None
         self.api = robot.chassis
         odom_frame = node.tf_frame('odom')
         base_link = node.tf_frame('base_link')
@@ -100,6 +102,7 @@ class Chassis(Module):
         self.api.unsub_imu()
         self.api.unsub_esc()
         self.api.unsub_status()
+        self._move_action_server.destroy()
 
     def has_received_twist(self, msg: geometry_msgs.msg.Twist) -> None:
         self.api.drive_speed(
