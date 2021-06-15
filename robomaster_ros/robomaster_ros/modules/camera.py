@@ -63,7 +63,14 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             self.api.start_video_stream(display=False, resolution=f"{height}p")
         self.audio: bool = node.declare_parameter("camera.audio.enabled", True).value
         if self.audio:
-            self.audio_pub = node.create_publisher(robomaster_msgs.msg.AudioData, 'camera/audio', 1)
+            self.publish_raw_audio: bool = node.declare_parameter("camera.audio.raw", True).value
+            self.publish_opus_audio: bool = node.declare_parameter("camera.audio.opus", True).value
+            if self.publish_raw_audio:
+                self.audio_raw_pub = node.create_publisher(
+                    robomaster_msgs.msg.AudioData, 'camera/audio_raw', 1)
+            if self.publish_opus_audio:
+                self.audio_opus_pub = node.create_publisher(
+                    robomaster_msgs.msg.AudioOpus, 'camera/audio_opus', 1)
             self.audio_level_pub = node.create_publisher(
                 robomaster_msgs.msg.AudioLevel, 'camera/audio_level', 1)
             self.api.start_audio_stream()
@@ -150,6 +157,22 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         self._audio_publisher_thread = threading.Thread(target=self._audio_publisher_task)
         self._audio_publisher_thread.start()
 
+    def _audio_decoder_task(self) -> None:
+        self._audio_streaming = True
+        while self._audio_streaming:
+            data = self._audio_stream_conn.read_buf()
+            if self.publish_opus_audio:
+                msg = robomaster_msgs.msg.AudioOpus(buffer=data)
+                self.audio_opus_pub.publish(msg)
+            if data:
+                frame = self._audio_decoder.decode(data)
+                if frame:
+                    try:
+                        self._audio_frame_count += 1
+                        self._audio_frame_queue.put(frame, block=False)
+                    except queue.Full:
+                        pass
+
     def _audio_publisher_task(self) -> None:
         while self._audio_streaming:
             try:
@@ -157,7 +180,8 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             except queue.Empty:
                 continue
             frame = np.frombuffer(frame, np.int16)
-            msg = robomaster_msgs.msg.AudioData(data=frame)
-            self.audio_pub.publish(msg)
+            if self.publish_raw_audio:
+                msg = robomaster_msgs.msg.AudioData(data=frame)
+                self.audio_raw_pub.publish(msg)
             level_msg = robomaster_msgs.msg.AudioLevel(level=sound_level(frame))
             self.audio_level_pub.publish(level_msg)

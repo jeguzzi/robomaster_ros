@@ -21,10 +21,12 @@
   <arg name="gimbal" default="false"/>
 
   <arg name="video" default="true"/>
-  <arg name="resolution" default="360"/>
+  <arg name="video_resolution" default="360"/>
+  <arg name="video_raw" default="true"/>
+  <arg name="video_h264" default="false"/>
   <arg name="audio" default="true"/>
-  <arg name="raw" default="true"/>
-  <arg name="h264" default="false"/>
+  <arg name="audio_raw" default="true"/>
+  <arg name="audio_opus" default="true"/>
 
   <push-ros-namespace namespace="$(var name)"/>
 
@@ -51,12 +53,14 @@
       <param name="enabled" value="$(var camera)"/>
       <param name="video">
         <param name="enabled" value="$(var video)"/>
-        <param name="raw" value="$(var raw)"/>
-        <param name="h264" value="$(var h264)"/>
-        <param name="resolution" value="$(var resolution)"/>
+        <param name="raw" value="$(var video_raw)"/>
+        <param name="h264" value="$(var video_h264)"/>
+        <param name="resolution" value="$(var video_resolution)"/>
       </param>
       <param name="audio">
         <param name="enabled" value="$(var audio)"/>
+        <param name="raw" value="$(var audio_raw)"/>
+        <param name="opus" value="$(var audio_opus)"/>
       </param>
     </param>
     <param name="chassis">

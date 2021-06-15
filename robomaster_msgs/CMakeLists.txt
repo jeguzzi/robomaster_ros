@@ -59,6 +59,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Mode.msg"
   "msg/AudioData.msg"
   "msg/AudioLevel.msg"
+  "msg/AudioOpus.msg"
   "action/Move.action"
   "action/MoveArm.action"
   "action/GripperControl.action"

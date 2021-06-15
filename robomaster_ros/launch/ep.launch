@@ -4,9 +4,11 @@
   <arg name="serial_number" default=""/>
   <arg name="conn_type" default="sta"/>
   <arg name="lib_log_level" default="ERROR"/>
-  <arg name="resolution" default="360"/>
-  <arg name="raw" default="true"/>
-  <arg name="h264" default="false"/>
+  <arg name="video_resolution" default="360"/>
+  <arg name="video_raw" default="true"/>
+  <arg name="video_h264" default="false"/>
+  <arg name="audio_raw" default="true"/>
+  <arg name="audio_opus" default="false"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
     <arg name="arm" value="true"/>
@@ -16,9 +18,11 @@
     <arg name="serial_number" value="$(var serial_number)"/>
     <arg name="conn_type" value="$(var conn_type)"/>
     <arg name="lib_log_level" value="$(var lib_log_level)"/>
-    <arg name="resolution" value="$(var resolution)"/>
-    <arg name="raw" value="$(var raw)"/>
-    <arg name="h264" value="$(var h264)"/>
+    <arg name="video_resolution" value="$(var video_resolution)"/>
+    <arg name="video_raw" value="$(var video_raw)"/>
+    <arg name="video_h264" value="$(var video_h264)"/>
+    <arg name="audio_raw" value="$(var audio_raw)"/>
+    <arg name="audio_opus" value="$(var audio_opus)"/>
   </include>
 
 </launch>
