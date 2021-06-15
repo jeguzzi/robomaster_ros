@@ -4,10 +4,12 @@
   <arg name="model" default="ep"/>
   <arg name="serial_number" default=""/>
   <arg name="conn_type" default="sta"/>
+  <arg name="lib_log_level" default="ERROR"/>
 
   <arg name="arm" default="false"/>
   <arg name="armor" default="true"/>
   <arg name="battery" default="true"/>
+  <arg name="blaster" default="false"/>
   <arg name="camera" default="true"/>
   <arg name="gripper" default="false"/>
   <arg name="sbus" default="false"/>
@@ -18,12 +20,18 @@
   <arg name="vision" default="true"/>
   <arg name="gimbal" default="false"/>
 
+  <arg name="video" default="true"/>
+  <arg name="resolution" default="360"/>
+  <arg name="audio" default="true"/>
+
   <push-ros-namespace namespace="$(var name)"/>
 
-  <node name="robomaster" pkg="robomaster_ros" exec="robomaster_driver" output="screen" args="--ros-args --log-level info">
+  <node name="robomaster" pkg="robomaster_ros" exec="robomaster_driver" output="screen"
+    args="--ros-args --log-level info">
     <param name="tf_prefix" value="$(var name)"/>
     <param name="serial_number" value="$(var serial_number)"/>
     <param name="conn_type" value="$(var conn_type)"/>
+    <param name="lib_log_level" value="$(var lib_log_level)"/>
 
     <param name="arm">
       <param name="enabled" value="$(var arm)"/>
@@ -34,8 +42,18 @@
     <param name="battery">
       <param name="enabled" value="$(var battery)"/>
     </param>
+    <param name="blaster">
+      <param name="enabled" value="$(var blaster)"/>
+    </param>
     <param name="camera">
       <param name="enabled" value="$(var camera)"/>
+      <param name="video">
+        <param name="enabled" value="$(var video)"/>
+        <param name="resolution" value="$(var resolution)"/>
+      </param>
+      <param name="audio">
+        <param name="enabled" value="$(var audio)"/>
+      </param>
     </param>
     <param name="chassis">
       <param name="enabled" value="true"/>
@@ -77,5 +95,7 @@
     <arg name="name" value="$(var name)"/>
     <arg name="model" value="$(var model)"/>
   </include>
+
+  <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image compressed out:=/camera/image" />
 
 </launch>

@@ -3,13 +3,18 @@
   <arg name="name" default=""/>
   <arg name="serial_number" default=""/>
   <arg name="conn_type" default="sta"/>
+  <arg name="resolution" default="360"/>
+  <arg name="lib_log_level" default="ERROR"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
     <arg name="gimbal" value="true"/>
+    <arg name="blaster" value="true"/>
     <arg name="model" value="s1"/>
     <arg name="name" value="$(var name)"/>
     <arg name="serial_number" value="$(var serial_number)"/>
     <arg name="conn_type" value="$(var conn_type)"/>
+    <arg name="resolution" value="$(var resolution)"/>
+    <arg name="lib_log_level" value="$(var lib_log_level)"/>
   </include>
 
 </launch>

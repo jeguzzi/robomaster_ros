@@ -57,6 +57,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/GimbalCommand.msg"
   "msg/BlasterLED.msg"
   "msg/Mode.msg"
+  "msg/AudioData.msg"
+  "msg/AudioLevel.msg"
   "action/Move.action"
   "action/MoveArm.action"
   "action/GripperControl.action"
