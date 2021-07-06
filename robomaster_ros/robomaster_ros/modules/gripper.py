@@ -1,5 +1,6 @@
 import time
 import enum
+import threading
 
 import numpy as np
 
@@ -108,12 +109,13 @@ class Gripper(Module):
         self._gripper_state = -1
         self.query_gripper_state()
         # TODO(jerome): make it latched
+        self._gripper_action_lock = threading.Lock()
         self._gripper_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.GripperControl, 'gripper', self.execute_gripper_callback)
 
     def stop(self) -> None:
-        self._gripper_action_server.destroy()
-        pass
+        if self.node.connected:
+            self._gripper_action_server.destroy()
 
     # 0 open -> 1 close
     def joint_state(self, value: float) -> sensor_msgs.msg.JointState:
@@ -122,6 +124,9 @@ class Gripper(Module):
 
     def execute_gripper_callback(self, goal_handle: Any
                                  ) -> robomaster_msgs.action.GripperControl.Result:
+        if self._gripper_action_lock.locked():
+            goal_handle.abort()
+            return robomaster_msgs.action.GripperControl.Result()
         # TODO(jerome): Complete with failures, ...
         request = goal_handle.request
 
@@ -129,6 +134,7 @@ class Gripper(Module):
             goal_handle.succeed()
             self.logger.info('No need to move gripper')
             return robomaster_msgs.action.GripperControl.Result()
+        self._gripper_action_lock.acquire()
         self.logger.info(f'Start moving gripper with request {request}')
         feedback_msg = robomaster_msgs.action.GripperControl.Feedback()
         proto = robomaster.protocol.ProtoGripperCtrl()
@@ -158,6 +164,7 @@ class Gripper(Module):
         else:
             goal_handle.abort()
             self.logger.warn(f'Failed moving gripper state: current state [{self.gripper_state}] != target state [{request.target_state}]')
+        self._gripper_action_lock.release()
         return robomaster_msgs.action.GripperControl.Result()
 
     @property

@@ -35,6 +35,7 @@ def roi(x: float, y: float, w: float, h: float) -> robomaster_msgs.msg.RegionOfI
 class Vision(Module):
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.api = robot.vision
+        self.node = node
         # DONE(jerome): expose as params or service
         self.vision_targets: List[str] = node.declare_parameter(
             'vision.targets', ["marker:red", "robot"]).value
@@ -54,11 +55,12 @@ class Vision(Module):
             self.api.sub_detect_info(name=name, color=color, callback=self.got_vision)
 
     def stop(self) -> None:
-        for name in self.vision_targets:
-            try:
-                self.api.unsub_detect_info(name=name)
-            except TypeError:
-                pass
+        if self.node.connected:
+            for name in self.vision_targets:
+                try:
+                    self.api.unsub_detect_info(name=name)
+                except TypeError:
+                    pass
 
     def has_detected_people(self, values: List[ROI]) -> None:
         msg = robomaster_msgs.msg.Detection()

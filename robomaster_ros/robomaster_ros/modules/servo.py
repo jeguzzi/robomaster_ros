@@ -98,17 +98,23 @@ class Servo(Module):
 
     def stop(self) -> None:
         self._move_servo_action_server.destroy()
-        self.api.unsub_servo_info()
+        if self.node.connected:
+            self.api.unsub_servo_info()
 
     def execute_move_servo_callback(self, goal_handle: Any
                                     ) -> robomaster_msgs.action.MoveServo.Result:
         # TODO(jerome): Complete with failures, ...
         request = goal_handle.request
-        self.logger.info('Start moving servo with request {request}')
         servo = self.servos[request.index]
         feedback_msg = robomaster_msgs.action.MoveServo.Feedback()
-        action = self.api.moveto(
-            index=servo.index + 1, angle=round(deg(servo.external(request.angle))))
+        try:
+            action = self.api.moveto(
+                index=servo.index + 1, angle=round(deg(servo.external(request.angle))))
+        except RuntimeError as e:
+            self.logger.warning(f'Cannot move servo: {e}')
+            goal_handle.abort()
+            return robomaster_msgs.action.MoveServo.Result()
+        self.logger.info('Start moving servo with request {request}')
 
         def cb() -> None:
             feedback_msg.progress = action._percent * 0.01

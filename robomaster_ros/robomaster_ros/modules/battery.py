@@ -29,16 +29,18 @@ class Battery(Module):
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.battery_state_msg = sensor_msgs.msg.BatteryState()
         self.battery_state_msg.present = True
-        self.battery_state_msg.charge = float('nan')
-        self.battery_state_msg.capacity = float('nan')
+        self.battery_state_msg.charge = -1.0
+        self.battery_state_msg.capacity = -1.0
         self.battery_state_msg.design_capacity = 6.2
         self.battery_pub = node.create_publisher(sensor_msgs.msg.BatteryState, 'battery', 1)
         self.api = robot.battery
+        self.node = node
         self.clock = node.get_clock()
         self.api.sub_battery_info(freq=1, callback=self.updated_battery)
 
     def stop(self) -> None:
-        self.api.unsub_battery_info()
+        if self.node.connected:
+            self.api.unsub_battery_info()
 
     def updated_battery(self, msg: BatteryData) -> None:
         self.battery_state_msg.header.stamp = self.clock.now().to_msg()

@@ -38,7 +38,8 @@ class ToF(Module):
             self.api.sub_distance(freq=tof_rate, callback=self.got_range_reading)
 
     def stop(self) -> None:
-        self.api.unsub_distance()
+        if self.node.connected:
+            self.api.unsub_distance()
 
     def range_pub(self, index: int) -> rclpy.publisher.Publisher:
         if index not in self.range_pubs:

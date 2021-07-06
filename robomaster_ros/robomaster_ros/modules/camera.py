@@ -8,11 +8,6 @@ import numpy as np
 import robomaster.media
 import robomaster_msgs.msg
 import sensor_msgs.msg
-try:
-    import h264_msgs.msg
-    H264_MSG_AVAILABLE = True
-except ImportError:
-    H264_MSG_AVAILABLE = False
 
 from typing import TYPE_CHECKING, Optional
 if TYPE_CHECKING:
@@ -44,21 +39,23 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         self.video: bool = node.declare_parameter("camera.video.enabled", True).value
         if self.video:
             self.publish_raw_video: bool = node.declare_parameter("camera.video.raw", True).value
-            self.publish_h264_video: bool = (
-                H264_MSG_AVAILABLE and node.declare_parameter("camera.video.h264", True).value)
+            self.publish_h264_video: bool = node.declare_parameter("camera.video.h264", True).value
             protocol: str = node.declare_parameter("camera.video.protocol", "tcp").value
             height: int = node.declare_parameter("camera.video.resolution", 360).value
             node.create_subscription(
-                robomaster_msgs.msg.CameraConfig, 'camera/config', self.has_updated_camera_config, 1)
+                robomaster_msgs.msg.CameraConfig, 'camera/config',
+                self.has_updated_camera_config, 1)
             if protocol in ('udp', 'tcp'):
                 robomaster.config.ep_conf.video_stream_proto = protocol
             if height not in (360, 540, 720):
                 node.get_logger().error("Resolution not supported. Should be 360, 540, or 720")
                 return
             if self.publish_raw_video:
-                self.raw_video_pub = node.create_publisher(sensor_msgs.msg.Image, 'camera/image_raw', 1)
+                self.raw_video_pub = node.create_publisher(
+                    sensor_msgs.msg.Image, 'camera/image_raw', 1)
             if self.publish_h264_video:
-                self.h264_video_pub = node.create_publisher(h264_msgs.msg.Packet, 'camera/image_h264', 1)
+                self.h264_video_pub = node.create_publisher(
+                    robomaster_msgs.msg.H264Packet, 'camera/image_h264', 1)
             self.frame_id = 'camera_optical_link'
             self.api.start_video_stream(display=False, resolution=f"{height}p")
         self.audio: bool = node.declare_parameter("camera.audio.enabled", True).value
@@ -82,9 +79,11 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         self._video_publisher_thread.start()
 
     def stop_video_stream(self) -> None:
+        # self.logger.info("will stop_video_stream")
         super().stop_video_stream()
         self._message_queue.queue.clear()
         self._video_publisher_thread.join()
+        # self.logger.info("has stopped_video_stream")
 
     # TODO(jerome) Check because we are overwriting a method here!
     # def stop(self) -> None:
@@ -115,7 +114,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                     break
             if data:
                 if self.publish_h264_video:
-                    msg = h264_msgs.msg.Packet()
+                    msg = robomaster_msgs.msg.H264Packet()
                     msg.header.stamp = self.clock.now().to_msg()
                     msg.header.frame_id = self.frame_id
                     msg.data = data
@@ -128,11 +127,11 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                     # self.logger.info(f"Got frames {len(frames)}")
                     for frame in frames[-1:]:
                         # self.logger.info(f"SHAPE {frame.shape}")
-                        msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
-                        msg.header.stamp = self.clock.now().to_msg()
-                        msg.header.frame_id = self.frame_id
+                        i_msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
+                        i_msg.header.stamp = self.clock.now().to_msg()
+                        i_msg.header.frame_id = self.frame_id
                         try:
-                            self._message_queue.put(msg, block=False)
+                            self._message_queue.put(i_msg, block=False)
                         except queue.Full:
                             pass
 
@@ -159,10 +158,14 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
 
     def _audio_decoder_task(self) -> None:
         self._audio_streaming = True
+        seq = 0
         while self._audio_streaming:
             data = self._audio_stream_conn.read_buf()
-            if self.publish_opus_audio:
+            if data and self.publish_opus_audio:
                 msg = robomaster_msgs.msg.AudioOpus(buffer=data)
+                msg.header.stamp = self.clock.now().to_msg()
+                msg.seq = seq
+                seq += 1
                 self.audio_opus_pub.publish(msg)
             if data:
                 frame = self._audio_decoder.decode(data)
@@ -182,6 +185,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             frame = np.frombuffer(frame, np.int16)
             if self.publish_raw_audio:
                 msg = robomaster_msgs.msg.AudioData(data=frame)
+                msg.header.stamp = self.clock.now().to_msg()
                 self.audio_raw_pub.publish(msg)
             level_msg = robomaster_msgs.msg.AudioLevel(level=sound_level(frame))
             self.audio_level_pub.publish(level_msg)

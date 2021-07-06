@@ -26,7 +26,8 @@ class SBus(Module):
             self.api._sub_sbus(freq=sbus_rate, callback=self.updated_sbus)
 
     def stop(self) -> None:
-        self.api._unsub_sbus()
+        if self.node.connected:
+            self.api._unsub_sbus()
 
     # (connection, channels)
     def updated_sbus(self, msg: SBusData) -> None:

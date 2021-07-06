@@ -13,6 +13,7 @@ Serial = bytearray
 class Uart(Module):
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.api = robot.uart
+        self.node = node
         baud_rate: int = node.declare_parameter('uart.baud_rate', 0).value
         baud_rates = [9600, 19200, 38400, 57600, 115200]
         baud_rate = nearest_index(baud_rate, baud_rates)
@@ -44,8 +45,9 @@ class Uart(Module):
         self.api.sub_serial_msg(self.got_uart_rx, (), {})
 
     def stop(self) -> None:
-        self.api.unsub_serial_msg()
-        self.api.stop()
+        if self.node.connected:
+            self.api.unsub_serial_msg()
+            self.api.stop()
 
     def got_uart_tx(self, msg: robomaster_msgs.msg.Serial) -> None:
         self.api.serial_send_msg(bytearray(msg.data))

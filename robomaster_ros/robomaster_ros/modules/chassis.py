@@ -95,14 +95,15 @@ class Chassis(Module):
             node, robomaster_msgs.action.Move, 'move', self.execute_move_callback)
 
     def stop(self) -> None:
-        self.api.drive_wheels(0, 0, 0, 0)
-        self.api.unsub_position()
-        self.api.unsub_velocity()
-        self.api.unsub_attitude()
-        self.api.unsub_imu()
-        self.api.unsub_esc()
-        self.api.unsub_status()
         self._move_action_server.destroy()
+        if self.node.connected:
+            self.api.drive_wheels(0, 0, 0, 0)
+            self.api.unsub_position()
+            self.api.unsub_velocity()
+            self.api.unsub_attitude()
+            self.api.unsub_imu()
+            self.api.unsub_esc()
+            self.api.unsub_status()
 
     def has_received_twist(self, msg: geometry_msgs.msg.Twist) -> None:
         self.api.drive_speed(
@@ -172,10 +173,16 @@ class Chassis(Module):
     def execute_move_callback(self, goal_handle: Any) -> robomaster_msgs.action.Move.Result:
         # TODO(jerome): Complete with failures, ...  and velocity parameters
         request = goal_handle.request
+        try:
+            action = self.api.move(
+                x=request.x, y=-request.y, z=deg(request.theta), xy_speed=request.linear_speed,
+                z_speed=deg(request.angular_speed))
+        except RuntimeError as e:
+            self.logger.warning(f'Cannot move: {e}')
+            goal_handle.abort()
+            return robomaster_msgs.action.Move.Result()
+
         self.logger.info(f'Start moving chassis with request {request}')
-        action = self.api.move(
-            x=request.x, y=-request.y, z=deg(request.theta), xy_speed=request.linear_speed,
-            z_speed=deg(request.angular_speed))
         feedback_msg = robomaster_msgs.action.Move.Feedback()
 
         def cb() -> None:
