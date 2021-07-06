@@ -7,7 +7,7 @@ import sensor_msgs.msg
 
 from .servo import ServoData, RMServo
 
-from typing import Dict, Tuple, Any
+from typing import Dict, Tuple, Any, Optional
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
@@ -39,14 +39,20 @@ def arm_joint_state(left_motor: float, right_motor: float) -> Dict[str, float]:
 class Arm(Module):
 
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
+        self.node = node
+        right_motor_zero: int = node.declare_parameter('arm.right_motor.zero', 1273).value
+        left_motor_zero: int = node.declare_parameter('arm.left_motor.zero', 1242).value
+        right_motor_direction: int = node.declare_parameter('arm.right_motor.direction', -1).value
+        left_motor_direction: int = node.declare_parameter('arm.left_motor.direction', -1).value
         self.servos = {
             'right_motor': RMServo(
-                index=1, reference_angle=-0.274016, reference_value=1273, direction=-1,
-                name=node.tf_frame('arm_1_joint')),
+                index=1, reference_angle=-0.274016, reference_value=right_motor_zero,
+                direction=right_motor_direction, name=node.tf_frame('arm_1_joint')),
             'left_motor': RMServo(
-                index=0, reference_angle=0.073304, reference_value=1242, direction=-1,
-                name=node.tf_frame("rod_joint"))
+                index=0, reference_angle=0.073304, reference_value=left_motor_zero,
+                direction=left_motor_direction, name=node.tf_frame("rod_joint"))
         }
+        node.get_logger().info(f"use {left_motor_zero} - {right_motor_zero} as zeros")
         self.arm_position_msg = geometry_msgs.msg.PointStamped()
         self.arm_position_msg.header.frame_id = node.tf_frame('arm_base_link')
         self.arm_position_msg.point.y = 0.0
@@ -66,12 +72,13 @@ class Arm(Module):
 
     def stop(self) -> None:
         self._move_arm_action_server.destroy()
-        self.api.unsub_position()
-        self.robot.servo.unsub_servo_info()
+        if self.node.connected:
+            self.api.unsub_position()
+            self.robot.servo.unsub_servo_info()
 
     # (valid, speed, angle)
     def updated_arm_servo(self, msg: ServoData) -> None:
-        # print('arm servo', msg)
+        # self.logger.info(f'arm servo {msg}')
         for v in self.servos.values():
             v.valid = (msg[0][v.index] != 0)
             if v.valid:
@@ -96,21 +103,36 @@ class Arm(Module):
     def execute_move_arm_callback(self, goal_handle: Any) -> robomaster_msgs.action.MoveArm.Result:
         # TODO(jerome): Complete with failures, ...
         request = goal_handle.request
-        self.logger.info(f'Start moving arm with request {request}')
+        timeout: Optional[float] = None
         if request.relative:
             f = self.api.move
+            delta = max(abs(request.x), abs(request.z))
+            if delta == 0:
+                # HACK(Jerome): else it moves to an undefined target
+                goal_handle.succeed()
+                self.logger.info('No need to move arm')
+                return robomaster_msgs.action.MoveArm.Result()
+            # HACK(Jerome): else the teleop +/- x is not concluding the action
+            timeout = max(1.0, delta / 0.02)  # 2cm/s
         else:
-            f = self.api.move_to
-        action = f(x=int(request.x * 1000), y=int(request.z * 1000))
+            f = self.api.moveto
+        try:
+            action = f(x=int(request.x * 1000), y=int(request.z * 1000))
+        except RuntimeError as e:
+            self.logger.warning(f'Cannot move arm: {e}')
+            goal_handle.abort()
+            return robomaster_msgs.action.MoveArm.Result()
+        self.logger.info(f'Start moving arm with request {request}')
         feedback_msg = robomaster_msgs.action.MoveArm.Feedback()
 
         def cb() -> None:
+            # self.logger.info(f'Moving arm ... {action._percent}')
             feedback_msg.progress = action._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
         add_cb(action, cb)
-        action.wait_for_completed()
+        action.wait_for_completed(timeout=timeout)
         goal_handle.succeed()
-        self.logger.info(f'Done moving arm')
+        self.logger.info('Done moving arm')
         return robomaster_msgs.action.MoveArm.Result()
 
     # (x, z) in mm
