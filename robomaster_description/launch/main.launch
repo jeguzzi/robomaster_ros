@@ -3,6 +3,7 @@
   <arg name="name" default=""/>
   <arg name="model" default="ep"/>
   <arg name="gui" default="false"/>
+  <arg name="rate" default="10.0"/>
   <let name="js_suffix" value="" unless="$(var gui)"/>
   <let name="js_suffix" value="_gui" if="$(var gui)"/>
 
@@ -14,6 +15,7 @@
   <node name="joint_state_publisher" exec="joint_state_publisher$(var js_suffix)"
     pkg="joint_state_publisher$(var js_suffix)"  output="screen" args="--ros-args --log-level warn">
     <param name="source_list" value="joint_states_p" value-sep=","/>
+    <param name="rate" value="$(var rate)"/>
   </node>
 
 </launch>
