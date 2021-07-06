@@ -293,7 +293,7 @@
       <child link="${tf_prefix}gimbal_right_led_link" />
     </joint>
 
-    <joint name="gimbal_joint" type="revolute">
+    <joint name="${tf_prefix}gimbal_joint" type="revolute">
       <origin xyz="0 0 0" rpy="0 0 0" />
       <parent link="${tf_prefix}gimbal_base_link" />
       <child link="${tf_prefix}gimbal_link" />
