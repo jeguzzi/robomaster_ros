@@ -24,6 +24,10 @@ setup(
     entry_points={
         'console_scripts': [
             'robomaster_driver = robomaster_ros.robomaster_driver:main',
+            'h264_decoder = robomaster_ros.decompress_h264:main',
+            'play_audio = robomaster_ros.play_audio:main',
+            'play_opus = robomaster_ros.play_audio_opus:main',
+            'display_battery = robomaster_ros.display_battery:main',
         ],
     },
 )

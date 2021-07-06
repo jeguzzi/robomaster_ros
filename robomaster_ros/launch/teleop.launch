@@ -1,0 +1,18 @@
+<launch>
+
+  <arg name="name" default=""/>
+  <arg name="model" default="ep"/>
+  <arg name="joy_dev" default="0"/>
+
+  <push-ros-namespace namespace="$(var name)"/>
+
+  <node name="joy" pkg="joy" exec="joy_node" output="screen" args="--ros-args --log-level info">
+    <param name="device_id" value="$(var joy_dev)" />
+  </node>
+
+  <node pkg="joy_teleop" exec="joy_teleop" name="joy_teleop" output="screen" args="--ros-args --log-level info">
+    <param from="$(find-pkg-share robomaster_ros)/config/joy_config_$(var model).yaml"/>
+    <!-- <param from="$(find-pkg-share robomaster_apps)/config/joy_config_ad.yaml"/> -->
+  </node>
+
+</launch>

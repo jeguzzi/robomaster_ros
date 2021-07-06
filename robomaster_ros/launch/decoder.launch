@@ -1,0 +1,11 @@
+<launch>
+
+  <arg name="name" default=""/>
+
+  <push-ros-namespace namespace="$(var name)"/>
+
+  <node name="h264_decoder" pkg="robomaster_ros" exec="h264_decoder" output="screen" args="--ros-args --log-level info">
+    <remap from="image_h264" to="camera/image_h264" />
+  </node>
+
+</launch>

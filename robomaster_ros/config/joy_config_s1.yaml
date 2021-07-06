@@ -1,0 +1,124 @@
+# Logitech F710 wireless controller
+# Deadman (enable) button: Right Trigger
+# D<>X button (located on the back panel) must be set to D
+/**:
+  ros__parameters:
+    piloting:
+      type: topic
+      interface_type: "geometry_msgs/msg/Twist"
+      topic_name: cmd_vel
+      deadman_buttons: [7]  # RT
+      axis_mappings:
+        linear-x:
+          axis: 3
+          scale: 1.5
+          offset: 0
+        linear-y:
+          axis: 2
+          scale: -1.5
+          offset: 0
+        angular-z:
+          axis: 0
+          scale: -3
+          offset: 0
+    gimbal:
+      type: topic
+      interface_type: "robomaster_msgs/msg/GimbalCommand"
+      topic_name: cmd_gimbal
+      deadman_buttons: [6]  # RT
+      axis_mappings:
+        yaw_speed:
+          axis: 0
+          scale: -3
+          offset: 0
+        pitch_speed:
+          axis: 1
+          scale: -3
+          offset: 0
+    yellow:
+      type: topic
+      interface_type: "robomaster_msgs/msg/LEDEffect"
+      topic_name: leds/effect
+      deadman_buttons: [7, 3]  # RT
+      message_value:
+        color-r:
+          value: 1.0
+        color-g:
+          value: 1.0
+    blue:
+      type: topic
+      interface_type: "robomaster_msgs/msg/LEDEffect"
+      topic_name: leds/effect
+      deadman_buttons: [7, 0]  # RT
+      message_value:
+        color-b:
+          value: 1.0
+    green:
+      type: topic
+      interface_type: "robomaster_msgs/msg/LEDEffect"
+      topic_name: leds/effect
+      deadman_buttons: [7, 1]  # RT
+      message_value:
+        color-g:
+          value: 1.0
+    black:
+      type: topic
+      interface_type: "robomaster_msgs/msg/LEDEffect"
+      topic_name: leds/effect
+      deadman_buttons: [7, 5]  # RT
+      message_value:
+        color-g:
+          value: 0.0
+    red:
+      type: topic
+      interface_type: "robomaster_msgs/msg/LEDEffect"
+      topic_name: leds/effect
+      deadman_buttons: [7, 2]  # RT
+      message_value:
+        color-r:
+          value: 1.0
+    blaster-on:
+      type: topic
+      interface_type: "robomaster_msgs/msg/BlasterLED"
+      topic_name: blaster_led
+      deadman_buttons: [6, 1]  # RT
+      message_value:
+        brightness:
+          value: 1.0
+    blaster-off:
+      type: topic
+      interface_type: "robomaster_msgs/msg/BlasterLED"
+      topic_name: blaster_led
+      deadman_buttons: [6, 0]  # RT
+      message_value:
+        brightness:
+          value: 0.0
+    mode-chassis:
+      type: topic
+      interface_type: "robomaster_msgs/msg/Mode"
+      topic_name: mode
+      deadman_buttons: [5]  # RT
+      message_value:
+        mode:
+          value: 2
+    lock-gimbal:
+      type: topic
+      interface_type: "std_msgs/msg/Bool"
+      topic_name: lock
+      deadman_buttons: [7, 5]  # RT
+      message_value:
+        data:
+          value: true
+    mode-free:
+      type: topic
+      interface_type: "robomaster_msgs/msg/Mode"
+      topic_name: mode
+      deadman_buttons: [4]  # RT
+      message_value:
+        mode:
+          value: 0
+    recenter:
+      type: action
+      interface_type: robomaster_msgs/action/RecenterGimbal
+      action_name: recenter_gimbal
+      buttons: [8]

@@ -5,6 +5,7 @@
   <arg name="serial_number" default=""/>
   <arg name="conn_type" default="sta"/>
   <arg name="lib_log_level" default="ERROR"/>
+  <arg name="joint_state_rate" default="10.0"/>
 
   <arg name="arm" default="false"/>
   <arg name="armor" default="true"/>
@@ -20,6 +21,10 @@
   <arg name="vision" default="true"/>
   <arg name="gimbal" default="false"/>
 
+<!-- [0, 1, 5, 10, 20, 50] -->
+  <arg name="chassis_rate" default="10"/>
+  <arg name="gimbal_rate" default="10"/>
+
   <arg name="video" default="true"/>
   <arg name="video_resolution" default="360"/>
   <arg name="video_raw" default="true"/>
@@ -27,6 +32,12 @@
   <arg name="audio" default="true"/>
   <arg name="audio_raw" default="true"/>
   <arg name="audio_opus" default="true"/>
+  <arg name="video_compressed" default="false"/>
+
+  <arg name="left_motor_zero" default="1242"/>
+  <arg name="right_motor_zero" default="1273"/>
+  <arg name="left_motor_direction" default="-1"/>
+  <arg name="right_motor_direction" default="-1"/>
 
   <push-ros-namespace namespace="$(var name)"/>
 
@@ -39,6 +50,10 @@
 
     <param name="arm">
       <param name="enabled" value="$(var arm)"/>
+      <param name="right_motor.zero" value="$(var right_motor_zero)"/>
+      <param name="left_motor.zero" value="$(var left_motor_zero)"/>
+      <param name="right_motor.direction" value="$(var right_motor_direction)"/>
+      <param name="left_motor.direction" value="$(var left_motor_direction)"/>
     </param>
     <param name="armor">
       <param name="enabled" value="$(var armor)"/>
@@ -65,6 +80,7 @@
     </param>
     <param name="chassis">
       <param name="enabled" value="true"/>
+      <param name="rate" value="$(var chassis_rate)"/>
     </param>
     <param name="gripper">
       <param name="enabled" value="$(var gripper)"/>
@@ -96,14 +112,16 @@
     </param>
     <param name="gimbal">
       <param name="enabled" value="$(var gimbal)"/>
+      <param name="rate" value="$(var gimbal_rate)"/>
     </param>
   </node>
 
   <include file="$(find-pkg-share robomaster_description)/launch/main.launch">
     <arg name="name" value="$(var name)"/>
     <arg name="model" value="$(var model)"/>
+    <arg name="rate" value="$(var joint_state_rate)"/>
   </include>
 
-  <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out:=/camera/image_raw" />
+  <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out:=/camera/image_raw" if="$(var video_compressed)" />
 
 </launch>

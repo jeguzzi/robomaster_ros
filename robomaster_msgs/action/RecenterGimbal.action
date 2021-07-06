@@ -1,0 +1,8 @@
+float32 yaw_speed 1.04
+float32 pitch_speed 1.04
+---
+# Result
+# bool success
+---
+# Feedback
+float32 progress

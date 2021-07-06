@@ -7,8 +7,15 @@
   <arg name="video_resolution" default="360"/>
   <arg name="video_raw" default="true"/>
   <arg name="video_h264" default="false"/>
+  <arg name="video_compressed" default="false"/>
   <arg name="audio_raw" default="true"/>
   <arg name="audio_opus" default="false"/>
+  <arg name="chassis_rate" default="10"/>
+  <arg name="joint_state_rate" default="10.0"/>
+  <arg name="left_motor_zero" default="1242"/>
+  <arg name="right_motor_zero" default="1273"/>
+  <arg name="left_motor_direction" default="-1"/>
+  <arg name="right_motor_direction" default="-1"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
     <arg name="arm" value="true"/>
@@ -21,8 +28,15 @@
     <arg name="video_resolution" value="$(var video_resolution)"/>
     <arg name="video_raw" value="$(var video_raw)"/>
     <arg name="video_h264" value="$(var video_h264)"/>
+    <arg name="video_compressed" value="$(var video_compressed)"/>
     <arg name="audio_raw" value="$(var audio_raw)"/>
     <arg name="audio_opus" value="$(var audio_opus)"/>
+    <arg name="chassis_rate" value="$(var chassis_rate)"/>
+    <arg name="joint_state_rate" value="$(var joint_state_rate)"/>
+    <arg name="left_motor_zero" value="$(var left_motor_zero)"/>
+    <arg name="right_motor_zero" value="$(var right_motor_zero)"/>
+    <arg name="left_motor_direction" value="$(var left_motor_direction)"/>
+    <arg name="right_motor_direction" value="$(var right_motor_direction)"/>
   </include>
 
 </launch>
