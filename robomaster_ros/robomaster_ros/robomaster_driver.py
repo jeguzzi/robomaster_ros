@@ -3,6 +3,7 @@ import time
 
 import rclpy
 import rclpy.executors
+import rclpy.logging
 
 from robomaster_ros.client import RoboMasterROS
 
