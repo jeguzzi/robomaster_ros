@@ -1,6 +1,7 @@
 # Request
-uint8 sound_id
+uint8 sound_id 1
 uint8 times 1
+string file ""
 ---
 # Result
 # bool success
