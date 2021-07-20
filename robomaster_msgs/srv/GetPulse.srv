@@ -1,0 +1,5 @@
+uint8 id
+uint8 port
+---
+bool valid
+uint32 time_ms
