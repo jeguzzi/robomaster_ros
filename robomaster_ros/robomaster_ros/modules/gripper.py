@@ -176,7 +176,9 @@ class Gripper(Module):
         if value != self._gripper_state:
             # self.logger.info(f"Gripper state changed to {GripperState(value)}")
             self._gripper_state = value
-            self.gripper_pub.publish(robomaster_msgs.msg.GripperState(state=value))
+            msg = robomaster_msgs.msg.GripperState(state=value)
+            msg.header.stamp = self.clock.now().to_msg()
+            self.gripper_pub.publish(msg)
             if(value == robomaster_msgs.msg.GripperState.OPEN):
                 self.node.joint_state_pub.publish(self.joint_state(0))
             if(value == robomaster_msgs.msg.GripperState.CLOSE):

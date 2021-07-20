@@ -16,6 +16,8 @@
   <arg name="right_motor_zero" default="1273"/>
   <arg name="left_motor_direction" default="-1"/>
   <arg name="right_motor_direction" default="-1"/>
+  <arg name="sensor_adapter" default="false"/>
+  <arg name="sensor_adapter_rate" default="10"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
     <arg name="arm" value="true"/>
@@ -37,6 +39,8 @@
     <arg name="right_motor_zero" value="$(var right_motor_zero)"/>
     <arg name="left_motor_direction" value="$(var left_motor_direction)"/>
     <arg name="right_motor_direction" value="$(var right_motor_direction)"/>
+    <arg name="sensor_adapter" value="$(var sensor_adapter)"/>
+    <arg name="sensor_adapter_rate" value="$(var sensor_adapter_rate)"/>
   </include>
 
 </launch>

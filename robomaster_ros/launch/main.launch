@@ -20,10 +20,12 @@
   <arg name="uart" default="false"/>
   <arg name="vision" default="true"/>
   <arg name="gimbal" default="false"/>
+  <arg name="sensor_adapter" default="false"/>
 
 <!-- [0, 1, 5, 10, 20, 50] -->
   <arg name="chassis_rate" default="10"/>
   <arg name="gimbal_rate" default="10"/>
+  <arg name="sensor_adapter_rate" default="10"/>
 
   <arg name="video" default="true"/>
   <arg name="video_resolution" default="360"/>
@@ -113,6 +115,10 @@
     <param name="gimbal">
       <param name="enabled" value="$(var gimbal)"/>
       <param name="rate" value="$(var gimbal_rate)"/>
+    </param>
+    <param name="sensor_adapter">
+      <param name="enabled" value="$(var sensor_adapter)"/>
+      <param name="rate" value="$(var sensor_adapter_rate)"/>
     </param>
   </node>
 

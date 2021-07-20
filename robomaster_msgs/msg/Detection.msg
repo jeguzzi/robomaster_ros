@@ -1,5 +1,4 @@
-# TODO(jerome): Add Header
-
+std_msgs/Header header
 robomaster_msgs/DetectedPerson[]  people
 robomaster_msgs/DetectedRobot[]   robots
 robomaster_msgs/DetectedGesture[] gestures

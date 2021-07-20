@@ -1,3 +1,4 @@
+std_msgs/Header header
 bool is_static
 bool up_hill
 bool down_hill

@@ -36,6 +36,7 @@ class Vision(Module):
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.api = robot.vision
         self.node = node
+        self.clock = node.get_clock()
         # DONE(jerome): expose as params or service
         self.vision_targets: List[str] = node.declare_parameter(
             'vision.targets', ["marker:red", "robot"]).value
@@ -64,18 +65,21 @@ class Vision(Module):
 
     def has_detected_people(self, values: List[ROI]) -> None:
         msg = robomaster_msgs.msg.Detection()
+        msg.header.stamp = self.clock.now().to_msg()
         for (x, y, w, h) in values:
             msg.people.append(robomaster_msgs.msg.DetectedPerson(roi=roi(x, y, w, h)))
         self.vision_pub.publish(msg)
 
     def has_detected_robots(self, values: List[ROI]) -> None:
         msg = robomaster_msgs.msg.Detection()
+        msg.header.stamp = self.clock.now().to_msg()
         for (x, y, w, h) in values:
             msg.robots.append(robomaster_msgs.msg.DetectedRobot(roi=roi(x, y, w, h)))
         self.vision_pub.publish(msg)
 
     def has_detected_markers(self, values: List[ROI_ID]) -> None:
         msg = robomaster_msgs.msg.Detection()
+        msg.header.stamp = self.clock.now().to_msg()
         for (x, y, w, h, kind) in values:
             msg.markers.append(
                 robomaster_msgs.msg.DetectedMarker(kind=kind, roi=roi(x, y, w, h))
@@ -84,6 +88,7 @@ class Vision(Module):
 
     def has_detected_gestures(self, values: List[ROI_ID]) -> None:
         msg = robomaster_msgs.msg.Detection()
+        msg.header.stamp = self.clock.now().to_msg()
         for (x, y, w, h, kind) in values:
             msg.gestures.append(
                 robomaster_msgs.msg.DetectedGesture(kind=kind, roi=roi(x, y, w, h))
@@ -92,6 +97,7 @@ class Vision(Module):
 
     def has_detected_lines(self, values: List[Line]) -> None:
         msg = robomaster_msgs.msg.Detection()
+        msg.header.stamp = self.clock.now().to_msg()
         for (x, y, curvature, angle) in values:
             msg.lines.append(
                 robomaster_msgs.msg.DetectedLine(

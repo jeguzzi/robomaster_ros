@@ -33,4 +33,5 @@ class SBus(Module):
     def updated_sbus(self, msg: SBusData) -> None:
         if msg[0]:
             ros_msg = robomaster_msgs.msg.SBus(channels=msg[1])
+            ros_msg.header.stamp = self.clock.now().to_msg()
             self.sbus_pub.publish(ros_msg)

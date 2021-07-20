@@ -17,7 +17,7 @@ from .uart import Uart  # noqa
 from .vision import Vision  # noqa
 from .gimbal import Gimbal  # noqa
 from .blaster import Blaster  # noqa
-
+from .sensor_adapter import SensorAdapter  # noqa
 
 modules: Dict[str, Type[Module]] = {
     'arm': Arm,
@@ -35,5 +35,6 @@ modules: Dict[str, Type[Module]] = {
     'uart': Uart,
     'vision': Vision,
     'gimbal': Gimbal,
-    'blaster': Blaster
+    'blaster': Blaster,
+    'sensor_adapter': SensorAdapter
 }

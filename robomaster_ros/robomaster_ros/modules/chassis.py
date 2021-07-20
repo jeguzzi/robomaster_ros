@@ -168,6 +168,7 @@ class Chassis(Module):
         kwargs = {k: bool(value) for k, value
                   in zip(robomaster_msgs.msg.ChassisStatus._fields_and_field_types.keys(), msg)}
         ros_msg = robomaster_msgs.msg.ChassisStatus(**kwargs)
+        ros_msg.header.stamp = self.clock.now().to_msg()
         self.chassis_state_pub.publish(ros_msg)
 
     def execute_move_callback(self, goal_handle: Any) -> robomaster_msgs.action.Move.Result:

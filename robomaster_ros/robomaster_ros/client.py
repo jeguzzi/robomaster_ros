@@ -64,15 +64,15 @@ add_unknown_protocols()
 # add_unknown_protocol(0x3f, 0xb3)
 
 
-# class FakeFtpConnection:
-#     def connect(self, ip: str) -> None:
-#         robomaster.logger.info(f"Fake FtpConnection: connect ip: {ip}")
-#
-#     def upload(self, src_file: str, target_file: str) -> None:
-#         ...
-#
-#     def stop(self) -> None:
-#         ...
+class FakeFtpConnection:
+    def connect(self, ip: str) -> None:
+        robomaster.logger.info(f"Fake FtpConnection: connect ip: {ip}")
+
+    def upload(self, src_file: str, target_file: str) -> None:
+        ...
+
+    def stop(self) -> None:
+        ...
 
 
 class FtpConnection:
@@ -90,7 +90,7 @@ class FtpConnection:
     def connect(self, ip: str) -> None:
         robomaster.logger.info(f"FtpConnection: connect ip: {ip}")
         try:
-            self._ftp.connect(ip, 21)
+            self._ftp.connect(ip, 21, timeout=1.0)
             self._connected = True
         except:
             robomaster.logger.warning(f"FtpConnection: could not connect to {ip}")
@@ -137,11 +137,13 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
         self.connected = False
         self.get_logger().info(f"Try to connect via {conn_type} to robot with sn {sn}")
         try:
-            self.ep_robot.initialize(conn_type=conn_type, sn=sn)
+            self.ep_robot.initialize(conn_type="sta")
+            # self.ep_robot.initialize(conn_type=conn_type, sn=sn)
         except (AttributeError, TypeError):
             self.get_logger().error("Could not connect")
             self.disconnection.set_result(False)
             return
+        self.get_logger().info("Connected")
         self.connected = True
         self._tf_name = self.declare_parameter('tf_prefix', '').value
         self.initialized = True

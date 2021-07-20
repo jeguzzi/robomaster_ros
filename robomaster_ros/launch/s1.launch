@@ -12,6 +12,8 @@
   <arg name="audio_opus" default="false"/>
   <arg name="chassis_rate" default="10"/>
   <arg name="gimbal_rate" default="10"/>
+  <arg name="sensor_adapter" default="false"/>
+  <arg name="sensor_adapter_rate" default="10"/>
   <!-- off | right | left -->
   <arg name="display_battery" default="left"/>
   <arg name="joint_state_rate" default="10.0"/>
@@ -33,11 +35,13 @@
     <arg name="chassis_rate" value="$(var chassis_rate)"/>
     <arg name="joint_state_rate" value="$(var joint_state_rate)"/>
     <arg name="gimbal_rate" value="$(var gimbal_rate)"/>
+    <arg name="sensor_adapter" value="$(var sensor_adapter)"/>
+    <arg name="sensor_adapter_rate" value="$(var sensor_adapter_rate)"/>
   </include>
 
-  <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
-    args="--ros-args --log-level info">
+  <!-- <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
+     if="$(eval '$(var display_battery) != \"off\"'">
     <param name='side' value="$var(display_battery)"/>
-  </node>
+  </node> -->
 
 </launch>

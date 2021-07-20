@@ -61,6 +61,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/AudioLevel.msg"
   "msg/AudioOpus.msg"
   "msg/H264Packet.msg"
+  "msg/SensorAdapter.msg"
   "action/Move.action"
   "action/MoveArm.action"
   "action/GripperControl.action"
@@ -68,6 +69,9 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "action/MoveServo.action"
   "action/MoveGimbal.action"
   "action/RecenterGimbal.action"
+  "srv/GetADC.srv"
+  "srv/GetIO.srv"
+  "srv/GetPulse.srv"
   DEPENDENCIES std_msgs
  )
 
