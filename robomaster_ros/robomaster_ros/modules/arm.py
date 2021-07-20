@@ -52,7 +52,7 @@ class Arm(Module):
                 index=0, reference_angle=0.073304, reference_value=left_motor_zero,
                 direction=left_motor_direction, name=node.tf_frame("rod_joint"))
         }
-        node.get_logger().info(f"use {left_motor_zero} - {right_motor_zero} as zeros")
+        node.get_logger().info(f"[Arm] zeros: left {left_motor_zero}, right {right_motor_zero}")
         self.arm_position_msg = geometry_msgs.msg.PointStamped()
         self.arm_position_msg.header.frame_id = node.tf_frame('arm_base_link')
         self.arm_position_msg.point.y = 0.0
