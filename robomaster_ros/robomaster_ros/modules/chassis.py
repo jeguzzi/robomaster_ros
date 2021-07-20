@@ -75,7 +75,8 @@ class Chassis(Module):
         self.transform_msg.header.frame_id = odom_frame
         self.odom_pub = node.create_publisher(nav_msgs.msg.Odometry, 'odom', 1)
         self.imu_pub = node.create_publisher(sensor_msgs.msg.Imu, 'imu', 1)
-        self.chassis_state_pub = node.create_publisher(robomaster_msgs.msg.ChassisStatus, 'state', 1)
+        self.chassis_state_pub = node.create_publisher(
+            robomaster_msgs.msg.ChassisStatus, 'state', 1)
         chassis_rate = rate(node, 'chassis', 10)
         status_rate = rate(node, 'chassis.status', 1)
         if chassis_rate:
@@ -165,8 +166,9 @@ class Chassis(Module):
 
     # (speeds + angles + timestamps + states)
     def updated_status(self, msg: SaStatus) -> None:
-        kwargs = {k: bool(value) for k, value
-                  in zip(robomaster_msgs.msg.ChassisStatus._fields_and_field_types.keys(), msg)}
+        keys = [key for key in robomaster_msgs.msg.ChassisStatus._fields_and_field_types.keys()
+                if key != 'header']
+        kwargs = {k: bool(value) for k, value in zip(keys, msg)}
         ros_msg = robomaster_msgs.msg.ChassisStatus(**kwargs)
         ros_msg.header.stamp = self.clock.now().to_msg()
         self.chassis_state_pub.publish(ros_msg)
