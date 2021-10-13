@@ -31,7 +31,7 @@ sudo apt install \
 
 #### Robomaster SDK
 
-Install [this fork](https://github.com/jeguzzi/RoboMaster-SDK) of the official RoboMaster-SDK, which fixes some issues in the upstream repo.
+Install [this fork](https://github.com/jeguzzi/RoboMaster-SDK) of the official RoboMaster-SDK, which fixes some issues of  the upstream repo.
 
 First install its dependence `libopus-dev`
 ```bash
@@ -45,7 +45,7 @@ python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git#"egg=li
 
 ### ROS2 package
 
-Create a colcon package where you want to build the package, clone this repository, and built the packages.
+Create a `colcon` package where you want to build the packages, clone this repository, and built the packages.
 ```
 mkdir -p <ros2_ws>/src
 git clone https://github.com/jeguzzi/robomaster_ros.git
@@ -55,8 +55,7 @@ colcon build
 
 ## Usage
 
-Use the two launch files `robomaster_ros/launch/{s1|ep}.launch` to launch the driver and the robot model.
-
+Use one of the two launch files `{s1|ep}.launch` to launch the driver and the robot model.
 ```bash
 cd <ros2_ws>
 source install/setup.bash
