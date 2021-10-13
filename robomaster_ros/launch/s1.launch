@@ -11,11 +11,16 @@
   <arg name="audio_raw" default="true"/>
   <arg name="audio_opus" default="false"/>
   <arg name="chassis_rate" default="10"/>
+  <!-- the rate [Hz] at which to gather the gimbal state -->
   <arg name="gimbal_rate" default="10"/>
   <arg name="sensor_adapter" default="false"/>
   <arg name="sensor_adapter_rate" default="10"/>
-  <!-- off | right | left -->
-  <arg name="display_battery" default="left"/>
+  <!-- wheter and where to diplay the battery state; one of
+    - off: do not display
+    - right: display on the right gimbal led
+    - left: display on the left gimbal led
+   -->
+  <arg name="display_battery" default="off"/>
   <arg name="joint_state_rate" default="10.0"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
@@ -39,9 +44,11 @@
     <arg name="sensor_adapter_rate" value="$(var sensor_adapter_rate)"/>
   </include>
 
-  <!-- <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
+  <push-ros-namespace namespace="$(var name)"/>
+
+  <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
      if="$(eval '$(var display_battery) != \"off\"'">
-    <param name='side' value="$var(display_battery)"/>
-  </node> -->
+    <param name='side' value="$(var display_battery)"/>
+  </node>
 
 </launch>

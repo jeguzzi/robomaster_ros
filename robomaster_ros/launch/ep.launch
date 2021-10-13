@@ -1,22 +1,54 @@
 <launch>
 
+  <!-- a name used as ROS namespace -->
   <arg name="name" default=""/>
+  <!-- the serial number of the robot, leave empty to connect to the first found -->
   <arg name="serial_number" default=""/>
+  <!-- the connection type; one of
+    - sta (managed network)
+    - ap (robot's access point network)
+    - rndis (usb)
+  -->
   <arg name="conn_type" default="sta"/>
+  <!-- the log-level used by the internal robomaster API -->
   <arg name="lib_log_level" default="ERROR"/>
+  <!-- the video [vertical] resolution; one of
+    - 360 (640x360)
+    - 540 (960x540)
+    - 720 (1280x640)
+ -->
   <arg name="video_resolution" default="360"/>
+  <!-- whether to publish the raw [decompressed] images to the topic `<name>/camera/image_raw` -->
   <arg name="video_raw" default="true"/>
+  <!-- whether to publish the original h264 video stream to the topic `<name>/camera/image_h264` -->
   <arg name="video_h264" default="false"/>
+  <!-- whether to publish the compressed [jpeg] images to the topic `<name>/camera/image_compressed` -->
   <arg name="video_compressed" default="false"/>
+  <!-- whether to publish the raw [decompressed] audio to the topic `<name>/camera/audio` -->
   <arg name="audio_raw" default="true"/>
+  <!-- whether to publish the original [compressed] opus audio stream to the topic `<name>/camera/audio_opus` -->
   <arg name="audio_opus" default="false"/>
+  <!-- the rate [Hz] to publish the odometry -->
   <arg name="chassis_rate" default="10"/>
+  <!-- the rate [Hz] to publish aggregated joint states -->
   <arg name="joint_state_rate" default="10.0"/>
+  <!-- the [arm] left motor encoder value at zero angle -->
   <arg name="left_motor_zero" default="1242"/>
+  <!-- the [arm] right motor encoder value at zero angle -->
   <arg name="right_motor_zero" default="1273"/>
+  <!-- the [arm] left motor direction; one of
+    - +1 for angle increases when encoder increases
+    - -1 for angle decreases when encoder increases
+   -->
   <arg name="left_motor_direction" default="-1"/>
+  <!-- the [arm] right motor direction; one of
+    - +1 for angle increases when encoder increases
+    - -1 for angle decreases when encoder increases
+   -->
   <arg name="right_motor_direction" default="-1"/>
+  <!-- Whether at least one sensor adapter (IO) is connected and should be published to `<name>/...`  -->
   <arg name="sensor_adapter" default="false"/>
+  <!-- the rate [Hz] at which to publish the sensor adapter values -->
   <arg name="sensor_adapter_rate" default="10"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
