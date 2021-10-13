@@ -50,6 +50,7 @@ Create a `colcon` package where you want to build the packages, clone this repos
 mkdir -p <ros2_ws>/src
 git clone https://github.com/jeguzzi/robomaster_ros.git
 cd <ros2_ws>
+source /opt/ros/<ROS_DISTRO>/setup.bash
 colcon build
 ```
 
