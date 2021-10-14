@@ -11,8 +11,12 @@ This repository contains a ROS2 driver for the DJI Robomaster family of robots (
 #### ROS2
 
 Install a current version of ROS2 (foxy or galactic), following the [official instructions](https://docs.ros.org/en/galactic/Installation.html).
+and then install colcon
+```bash
+sudo apt install python3-colcon-common-extensions
+```
 
-If you just install ROS2-base, add the following packages:
+If you just install ROS2-base, add also the following packages:
 ```
 xacro, launch-xml, cv-bridge, launch-testing-ament-cmake, robot-state-publisher, joint-state-publisher-gui, joy, joy-teleop
 ```
