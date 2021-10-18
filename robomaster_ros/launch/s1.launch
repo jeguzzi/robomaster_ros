@@ -46,9 +46,9 @@
 
   <push-ros-namespace namespace="$(var name)"/>
 
-  <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
+  <!-- <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
      if="$(eval '$(var display_battery) != \"off\"'">
     <param name='side' value="$(var display_battery)"/>
-  </node>
+  </node> -->
 
 </launch>
