@@ -64,7 +64,7 @@ Use one of the two launch files `{s1|ep}.launch` to launch the driver and the ro
 ```bash
 cd <ros2_ws>
 source install/setup.bash
-ros2 launch ros2 launch robomaster_ros {s1|ep}.launch
+ros2 launch robomaster_ros {s1|ep}.launch
 ```
 
 We also provide docker images. Check [the documentation](docker.md) for their usage.
