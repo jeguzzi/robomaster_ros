@@ -2,6 +2,9 @@ version: '3'
 services:
   driver:
     image: jeguzzi/robomaster_ros:galactic
+    build:
+      context: ..
+      dockerfile: Dockerfile
     network_mode: host
     command: ros2 launch robomaster_ros s1.launch name:=rm_s1
   teleop:
