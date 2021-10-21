@@ -41,6 +41,7 @@ Install [this fork](https://github.com/jeguzzi/RoboMaster-SDK) of the official R
 First install its dependence `libopus-dev`
 ```bash
 sudo apt install libopus-dev python3-pip
+python3 -m pip install -U numpy numpy-quaternion pyyaml
 ```
 then install the RoboMaster-SDK
 ```bash
