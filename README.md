@@ -27,6 +27,7 @@ sudo apt install \
   ros-<ROS_DISTRO>-cv-bridge \
   ros-<ROS_DISTRO>-launch-testing-ament-cmake \
   ros-<ROS_DISTRO>-robot-state-publisher \
+  ros-<ROS_DISTRO>-joint-state-publisher \
   ros-<ROS_DISTRO>-joint-state-publisher-gui \
   ros-<ROS_DISTRO>-joy \
   ros-<ROS_DISTRO>-joy-teleop \
