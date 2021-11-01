@@ -27,6 +27,7 @@ sudo apt install \
   ros-<ROS_DISTRO>-cv-bridge \
   ros-<ROS_DISTRO>-launch-testing-ament-cmake \
   ros-<ROS_DISTRO>-robot-state-publisher \
+  ros-<ROS_DISTRO>-joint-state-publisher \
   ros-<ROS_DISTRO>-joint-state-publisher-gui \
   ros-<ROS_DISTRO>-joy \
   ros-<ROS_DISTRO>-joy-teleop \
@@ -37,9 +38,13 @@ sudo apt install \
 
 Install [this fork](https://github.com/jeguzzi/RoboMaster-SDK) of the official RoboMaster-SDK, which fixes some issues of  the upstream repo.
 
-First install its dependence `libopus-dev`
+First install its dependencies `libopus-dev`
 ```bash
 sudo apt install libopus-dev python3-pip
+```
+and
+```bash
+python3 -m pip install -U numpy numpy-quaternion pyyaml
 ```
 then install the RoboMaster-SDK
 ```bash
