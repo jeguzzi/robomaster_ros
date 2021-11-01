@@ -47,6 +47,7 @@ class Vision(Module):
         )
         self.vision_msg = robomaster_msgs.msg.Detection()
         # self.vision_msg.header.frame_id = 'camera_optical_link'
+        node.get_logger().info(f"Enabling vision to detect {self.vision_targets}")
         for name in self.vision_targets:
             color: Optional[str]
             try:

@@ -19,6 +19,7 @@ class PWM(Module):
         if len(pwm_frequency_values) < 6:
             pwm_frequency_values += [None] * (6 - len(pwm_frequency_values))
         self.api = robot.chassis
+        node.get_logger().info(f"Setting PWM frequencies {pwm_frequency_values}")
         self.api.set_pwm_freq(*pwm_frequency_values)
         node.create_subscription(
             robomaster_msgs.msg.PWM, 'cmd_pwm', self.has_received_pwm, 1)
