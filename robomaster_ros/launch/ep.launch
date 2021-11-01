@@ -60,11 +60,9 @@
     <arg name="conn_type" value="$(var conn_type)"/>
     <arg name="lib_log_level" value="$(var lib_log_level)"/>
     <arg name="video_resolution" value="$(var video_resolution)"/>
-    <arg name="video" value="$(eval '\'$(var video_raw)\' in (\'true\', \'True\') or \'$(var video_h264)\' in (\'true\', \'True\')')"/>
     <arg name="video_raw" value="$(var video_raw)"/>
     <arg name="video_h264" value="$(var video_h264)"/>
     <arg name="video_compressed" value="$(var video_compressed)"/>
-    <arg name="audio" value="$(eval '\'$(var audio_raw)\' in (\'true\', \'True\') or \'$(var audio_opus)\' in (\'true\', \'True\')')"/>
     <arg name="audio_raw" value="$(var audio_raw)"/>
     <arg name="audio_opus" value="$(var audio_opus)"/>
     <arg name="chassis_rate" value="$(var chassis_rate)"/>

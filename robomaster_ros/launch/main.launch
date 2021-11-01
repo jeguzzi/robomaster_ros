@@ -1,50 +1,87 @@
 <launch>
 
-  <arg name="name" default=""/>
+  <arg name="name" default="" description="a name used as ROS namespace"/>
   <arg name="model" default="ep"/>
+  <arg name="with_model_description" default="true"/>
   <arg name="serial_number" default=""/>
   <arg name="conn_type" default="sta"/>
+  <arg name="log_level" default="info"/>
   <arg name="lib_log_level" default="ERROR"/>
   <arg name="joint_state_rate" default="10.0"/>
 
-  <arg name="arm" default="false"/>
-  <arg name="armor" default="true"/>
-  <arg name="battery" default="true"/>
-  <arg name="blaster" default="false"/>
-  <arg name="camera" default="true"/>
-  <arg name="gripper" default="false"/>
-  <arg name="sbus" default="false"/>
-  <arg name="pwm" default="true"/>
-  <arg name="servo" default="false"/>
-  <arg name="tof" default="false"/>
-  <arg name="uart" default="false"/>
-  <arg name="vision" default="true"/>
-  <arg name="gimbal" default="false"/>
-  <arg name="sensor_adapter" default="false"/>
-
-<!-- [0, 1, 5, 10, 20, 50] -->
-  <arg name="chassis_rate" default="10"/>
-  <arg name="gimbal_rate" default="10"/>
-  <arg name="sensor_adapter_rate" default="10"/>
-
-  <arg name="video" default="true"/>
-  <arg name="video_resolution" default="360"/>
-  <arg name="video_raw" default="true"/>
-  <arg name="video_h264" default="false"/>
-  <arg name="audio" default="true"/>
-  <arg name="audio_raw" default="true"/>
-  <arg name="audio_opus" default="true"/>
-  <arg name="video_compressed" default="false"/>
-
+  <arg name="arm" default="$(eval '\'$(var model)\' == \'ep\'')"/>
   <arg name="left_motor_zero" default="1242"/>
   <arg name="right_motor_zero" default="1273"/>
   <arg name="left_motor_direction" default="-1"/>
   <arg name="right_motor_direction" default="-1"/>
 
+  <arg name="armor" default="false"/>
+  <arg name="armor_sensitivity" default="0.5"/>
+
+  <arg name="battery" default="true"/>
+
+  <arg name="led" default="true"/>
+
+  <arg name="speaker" default="true"/>
+
+  <arg name="blaster" default="$(eval '\'$(var model)\' == \'s1\'')"/>
+
+  <arg name="gripper" default="$(eval '\'$(var model)\' == \'ep\'')"/>
+
+  <arg name="sbus" default="false"/>
+
+  <arg name="servo" default="false"/>
+
+  <arg name="tof" default="false"/>
+
+  <!-- e.g., marker:red, robot -->
+  <arg name="vision_targets" default="[]"/>
+  <let name="vision" value="$(eval 'len($(var vision_targets)) > 0')"/>
+
+  <arg name="sensor_adapter" default="false"/>
+  <!-- [0, 1, 5, 10, 20, 50] -->
+  <arg name="sensor_adapter_rate" default="10"/>
+
+  <arg name="uart_data_bit" default="0"/>
+  <arg name="uart_odd_even" default="0"/>
+  <arg name="uart_stop_bit" default="0"/>
+  <arg name="uart_rx_enable" default="false"/>
+  <arg name="uart_tx_enable" default="false"/>
+  <arg name="uart_rx_size" default="50"/>
+  <arg name="uart_tx_size" default="50"/>
+  <let name="uart" value="$(eval '\'$(var uart_rx_enable)\' in (\'true\', \'True\') or \'$(var uart_tx_enable)\' in (\'true\', \'True\')')"/>
+
+  <!-- e.g., <= 0 -> None -->
+  <arg name="pwm_frequencies" default="[-1,-1,-1,-1,-1,-1]"/>
+  <let name="pwm" value="$(eval 'max($(var pwm_frequencies)) > 0')"/>
+
+  <arg name="chassis" default="true"/>
+  <!-- [0, 1, 5, 10, 20, 50] -->
+  <arg name="chassis_rate" default="10"/>
+  <arg name="chassis_timeout" default="0.0"/>
+
+  <arg name="gimbal" default="$(eval '\'$(var model)\' == \'s1\'')"/>
+  <!-- [0, 1, 5, 10, 20, 50] -->
+  <arg name="gimbal_rate" default="10"/>
+  <!-- 0: FREE, 1: GIMBAL_LEAD, 2: CHASSIS_LEAD -->
+  <arg name="gimbal_mode" default="2"/>
+
+  <arg name="video_resolution" default="360"/>
+  <arg name="video_raw" default="true"/>
+  <arg name="video_h264" default="false"/>
+  <arg name="video_compressed" default="false"/>
+  <arg name="audio_raw" default="false"/>
+  <arg name="audio_opus" default="false"/>
+  <let name="video" value="$(eval '\'$(var video_raw)\' in (\'true\', \'True\') or \'$(var video_h264)\' in (\'true\', \'True\')')"/>
+  <let name="audio" value="$(eval '\'$(var audio_raw)\' in (\'true\', \'True\') or \'$(var audio_opus)\' in (\'true\', \'True\')')"/>
+  <let name="camera" value="$(eval '$(var audio) or $(var video)')"/>
+
+  <arg name="display_battery" default="off"/>
+
   <push-ros-namespace namespace="$(var name)"/>
 
   <node name="robomaster" pkg="robomaster_ros" exec="robomaster_driver" output="screen"
-    args="--ros-args --log-level info">
+    args="--ros-args --log-level $(var log_level)">
     <param name="tf_prefix" value="$(var name)"/>
     <param name="serial_number" value="$(var serial_number)"/>
     <param name="conn_type" value="$(var conn_type)"/>
@@ -59,6 +96,7 @@
     </param>
     <param name="armor">
       <param name="enabled" value="$(var armor)"/>
+      <param name="sensitivity" value="$(var armor_sensitivity)"/>
     </param>
     <param name="battery">
       <param name="enabled" value="$(var battery)"/>
@@ -81,17 +119,19 @@
       </param>
     </param>
     <param name="chassis">
-      <param name="enabled" value="true"/>
+      <param name="enabled" value="$(var chassis)"/>
       <param name="rate" value="$(var chassis_rate)"/>
+      <param name="timeout" value="$(var chassis_timeout)"/>
     </param>
     <param name="gripper">
       <param name="enabled" value="$(var gripper)"/>
     </param>
     <param name="led">
-      <param name="enabled" value="true"/>
+      <param name="enabled" value="$(var led)"/>
     </param>
     <param name="pwm">
       <param name="enabled" value="$(var pwm)"/>
+      <param name="frequencies" value="$(var pwm_frequencies)"/>
     </param>
     <param name="sbus">
       <param name="enabled" value="$(var sbus)"/>
@@ -101,16 +141,28 @@
       <param name="config" value="$(find-pkg-share robomaster_ros)/config/servos.yaml"/>
     </param>
     <param name="speaker">
-      <param name="enabled" value="true"/>
+      <param name="enabled" value="$(var speaker)"/>
     </param>
     <param name="tof">
       <param name="enabled" value="$(var tof)"/>
     </param>
     <param name="uart">
       <param name="enabled" value="$(var uart)"/>
+      <param name="data_bit" value="$(var uart_data_bit)"/>
+      <param name="odd_even" value="$(var uart_odd_even)"/>
+      <param name="stop_bit" value="$(var uart_stop_bit)"/>
+      <param name="rx">
+        <param name="enabled" value="$(var uart_rx_enable)"/>
+        <param name="size" value="$(var uart_rx_size)"/>
+      </param>
+      <param name="tx">
+        <param name="enabled" value="$(var uart_tx_enable)"/>
+        <param name="size" value="$(var uart_tx_size)"/>
+      </param>
     </param>
     <param name="vision">
       <param name="enabled" value="$(var vision)"/>
+      <param name="targets" value="$(var vision_targets)"/>
     </param>
     <param name="gimbal">
       <param name="enabled" value="$(var gimbal)"/>
@@ -122,12 +174,17 @@
     </param>
   </node>
 
-  <include file="$(find-pkg-share robomaster_description)/launch/main.launch">
+  <include file="$(find-pkg-share robomaster_description)/launch/main.launch" if="$(var with_model_description)">
     <arg name="name" value="$(var name)"/>
     <arg name="model" value="$(var model)"/>
     <arg name="rate" value="$(var joint_state_rate)"/>
   </include>
 
   <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out:=/camera/image_raw" if="$(var video_compressed)" />
+
+  <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
+     if="$(eval '\'$(var display_battery)\' != \'off\' and \'$(var gimbal)\' in (\'true\', \'True\')')">
+    <param name='side' value="$(var display_battery)"/>
+  </node>
 
 </launch>
