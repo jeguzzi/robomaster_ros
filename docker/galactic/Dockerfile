@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     ros-galactic-cv-bridge \
     ros-galactic-launch-testing-ament-cmake \
     ros-galactic-robot-state-publisher \
+    ros-galactic-joint-state-publisher \
     ros-galactic-joint-state-publisher-gui \
     ros-galactic-joy \
     ros-galactic-joy-teleop \
@@ -34,13 +35,13 @@ RUN cd /ros_ws && \
   colcon build --merge-install --packages-select rosidl_generator_py sensor_msgs std_msgs geometry_msgs test_interface_files std_srvs nav_msgs && \
   rm -r build log
 
+RUN /bin/sed -i \
+  '/source "\/opt\/ros\/$ROS_DISTRO\/setup.bash"/a source "\/ros_ws\/install\/local_setup.bash"' \
+  /ros_entrypoint.sh
+
 RUN cd /ros_ws/src && \
   git clone https://github.com/jeguzzi/robomaster_ros.git && \
   cd .. && \
   source /ros_entrypoint.sh && \
   colcon build --merge-install --packages-select robomaster_ros robomaster_msgs robomaster_description && \
   rm -r build log
-
-RUN /bin/sed -i \
-  '/source "\/opt\/ros\/$ROS_DISTRO\/setup.bash"/a source "\/ros_ws\/install\/local_setup.bash"' \
-  /ros_entrypoint.sh

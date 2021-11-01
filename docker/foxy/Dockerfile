@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     ros-foxy-cv-bridge \
     ros-foxy-launch-testing-ament-cmake \
     ros-foxy-robot-state-publisher \
+    ros-foxy-joint-state-publisher \
     ros-foxy-joint-state-publisher-gui \
     ros-foxy-joy \
     ros-foxy-joy-teleop \
