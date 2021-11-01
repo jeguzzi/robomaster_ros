@@ -180,7 +180,7 @@
     <arg name="rate" value="$(var joint_state_rate)"/>
   </include>
 
-  <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out:=/camera/image_raw" if="$(var video_compressed)" />
+  <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out/compressed:=/camera/image_raw" if="$(var video_compressed)" />
 
   <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
      if="$(eval '\'$(var display_battery)\' != \'off\' and \'$(var gimbal)\' in (\'true\', \'True\')')">
