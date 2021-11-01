@@ -137,8 +137,7 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
         self.connected = False
         self.get_logger().info(f"Try to connect via {conn_type} to robot with sn {sn}")
         try:
-            self.ep_robot.initialize(conn_type="sta")
-            # self.ep_robot.initialize(conn_type=conn_type, sn=sn)
+            self.ep_robot.initialize(conn_type=conn_type, sn=sn)
         except (AttributeError, TypeError):
             self.get_logger().error("Could not connect")
             self.disconnection.set_result(False)
