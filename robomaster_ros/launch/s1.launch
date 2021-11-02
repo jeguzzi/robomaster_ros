@@ -8,7 +8,7 @@
   <arg name="video_raw" default="true"/>
   <arg name="video_h264" default="false"/>
   <arg name="video_compressed" default="false"/>
-  <arg name="audio_raw" default="true"/>
+  <arg name="audio_raw" default="false"/>
   <arg name="audio_opus" default="false"/>
   <arg name="chassis_rate" default="10"/>
   <!-- the rate [Hz] at which to gather the gimbal state -->

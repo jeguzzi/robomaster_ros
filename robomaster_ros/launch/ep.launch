@@ -25,7 +25,7 @@
   <!-- whether to publish the compressed [jpeg] images to the topic `<name>/camera/image_compressed` -->
   <arg name="video_compressed" default="false"/>
   <!-- whether to publish the raw [decompressed] audio to the topic `<name>/camera/audio` -->
-  <arg name="audio_raw" default="true"/>
+  <arg name="audio_raw" default="false"/>
   <!-- whether to publish the original [compressed] opus audio stream to the topic `<name>/camera/audio_opus` -->
   <arg name="audio_opus" default="false"/>
   <!-- the rate [Hz] to publish the odometry -->

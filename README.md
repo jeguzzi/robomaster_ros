@@ -122,3 +122,26 @@ Some configurations are specific for the Robomaster EP.
 | right_motor_zero      | int  |              | 1273    | the [arm] right servo motor encoder value at zero angle                                                                          |
 | left_motor_direction  | int  | -1, 1        | -1      | the [arm] left servo motor direction: angle increases when encoder increases (+1);  angle decreases when encoder increases (-1)  |
 | right_motor_direction | int  | -1, 1        | -1      | the [arm] right servo motor direction: angle increases when encoder increases (+1);  angle decreases when encoder increases (-1) |
+
+
+### Multiple robots
+
+If you want to control multiple robots through ROS, you need to know their serial numbers and set a different name for each of them (names are used as ROS namespaces and as `tf` prefixes). For physical robots, the serial number is written on top of the intelligent controller. For simulated robots, you set the serial number when you launch the simulation.
+
+For example, we assume that you are using two [simulated] S1 robots with serial numbers `"RM0"` and `"RM1"`, and that you want to use the serial numbers also as names. In two consoles, launch
+```bash
+cd <ros2_ws>
+source install/setup.bash
+ros2 launch robomaster_ros s1.launch name:=RM0 serial_number:=RM0
+```
+and
+```bash
+cd <ros2_ws>
+source install/setup.bash
+ros2 launch robomaster_ros s1.launch name:=RM1 serial_number:=RM1
+```
+Then, for instance, you can make the robots spin in opposite direction by publishing to their respective topics:
+```
+ros2 topic pub /RM0/cmd_vel geometry_msgs/msg/Twist "{angular: {z: -0.5}}" --once
+ros2 topic pub /RM1/cmd_vel geometry_msgs/msg/Twist "{angular: {z: 0.5}}" --once
+```
