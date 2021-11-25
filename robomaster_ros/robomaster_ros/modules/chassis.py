@@ -108,7 +108,7 @@ class Chassis(Module):
 
     def has_received_twist(self, msg: geometry_msgs.msg.Twist) -> None:
         self.api.drive_speed(
-            x=msg.linear.x, y=msg.linear.y, z=deg(msg.angular.z), timeout=self.timeout)
+            x=msg.linear.x, y=-msg.linear.y, z=-deg(msg.angular.z), timeout=self.timeout)
 
     def has_received_wheel_speeds(self, msg: robomaster_msgs.msg.WheelSpeeds) -> None:
         self.api.drive_wheels(
