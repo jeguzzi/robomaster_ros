@@ -115,7 +115,8 @@ class Gripper(Module):
 
     def stop(self) -> None:
         if self.node.connected:
-            self._gripper_action_server.destroy()
+            ...
+        self._gripper_action_server.destroy()
 
     # 0 open -> 1 close
     def joint_state(self, value: float) -> sensor_msgs.msg.JointState:
