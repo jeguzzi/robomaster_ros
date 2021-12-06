@@ -15,11 +15,11 @@
           offset: 0
         linear-y:
           axis: 2
-          scale: -1.5
+          scale: 1.5
           offset: 0
         angular-z:
           axis: 0
-          scale: -3
+          scale: 3
           offset: 0
     gimbal:
       type: topic

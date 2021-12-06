@@ -10,16 +10,16 @@
       deadman_buttons: [7]  # RT
       axis_mappings:
         linear-x:
-          axis: 3
-          scale: 2.8
+          axis: 1
+          scale: 1.5
           offset: 0
         linear-y:
-          axis: 2
-          scale: -2.8
+          axis: 1
+          scale: 1.5
           offset: 0
         angular-z:
           axis: 0
-          scale: -5
+          scale: 2
           offset: 0
     yellow:
       type: topic
