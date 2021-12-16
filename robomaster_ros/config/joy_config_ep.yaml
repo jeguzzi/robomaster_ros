@@ -10,11 +10,11 @@
       deadman_buttons: [7]  # RT
       axis_mappings:
         linear-x:
-          axis: 1
+          axis: 3
           scale: 1.5
           offset: 0
         linear-y:
-          axis: 1
+          axis: 2
           scale: 1.5
           offset: 0
         angular-z:
