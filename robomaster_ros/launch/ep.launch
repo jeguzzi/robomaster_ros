@@ -66,7 +66,24 @@
   <!-- the rate [Hz] at which to publish the sensor adapter values -->
   <arg name="sensor_adapter_rate" default="10"/>
 
-  <arg name="tof" default="false"/>
+  <arg name="tof_0" default="False"/>
+  <arg name="tof_0_parent" default="base_link"/>
+  <arg name="tof_0_xyz" default="0 0 0"/>
+  <arg name="tof_0_rpy" default="0 0 0"/>
+  <arg name="tof_1" default="False"/>
+  <arg name="tof_1_parent" default="base_link"/>
+  <arg name="tof_1_xyz" default="0 0 0"/>
+  <arg name="tof_1_rpy" default="0 0 0"/>
+  <arg name="tof_2" default="False"/>
+  <arg name="tof_2_parent" default="base_link"/>
+  <arg name="tof_2_xyz" default="0 0 0"/>
+  <arg name="tof_2_rpy" default="0 0 0"/>
+  <arg name="tof_3" default="False"/>
+  <arg name="tof_3_parent" default="base_link"/>
+  <arg name="tof_3_xyz" default="0 0 0"/>
+  <arg name="tof_3_rpy" default="0 0 0"/>
+  <arg name="tof_rate" default="10"/>
+
   <!-- the rate [Hz] at which to publish the sensor adapter values -->
   <arg name="tof_rate" default="10"/>
 
@@ -99,7 +116,22 @@
     <arg name="right_motor_angle" value="$(var right_motor_angle)"/>
     <arg name="sensor_adapter" value="$(var sensor_adapter)"/>
     <arg name="sensor_adapter_rate" value="$(var sensor_adapter_rate)"/>
-    <arg name="tof" value="$(var tof)"/>
+    <arg name="tof_0" value="$(var tof_0)"/>
+    <arg name="tof_0_parent" value="$(var tof_0_parent)"/>
+    <arg name="tof_0_xyz" value="$(var tof_0_xyz)"/>
+    <arg name="tof_0_rpy" value="$(var tof_0_rpy)"/>
+    <arg name="tof_1" value="$(var tof_1)"/>
+    <arg name="tof_1_parent" value="$(var tof_1_parent)"/>
+    <arg name="tof_1_xyz" value="$(var tof_1_xyz)"/>
+    <arg name="tof_1_rpy" value="$(var tof_1_rpy)"/>
+    <arg name="tof_2" value="$(var tof_2)"/>
+    <arg name="tof_2_parent" value="$(var tof_2_parent)"/>
+    <arg name="tof_2_xyz" value="$(var tof_2_xyz)"/>
+    <arg name="tof_2_rpy" value="$(var tof_2_rpy)"/>
+    <arg name="tof_3" value="$(var tof_3)"/>
+    <arg name="tof_3_parent" value="$(var tof_3_parent)"/>
+    <arg name="tof_3_xyz" value="$(var tof_3_xyz)"/>
+    <arg name="tof_3_rpy" value="$(var tof_3_rpy)"/>
     <arg name="tof_rate" value="$(var tof_rate)"/>
     <arg name="camera_calibration_suffix" value="$(var camera_calibration_suffix)"/>
   </include>
