@@ -42,6 +42,9 @@ class Battery(Module):
         if self.node.connected:
             self.api.unsub_battery_info()
 
+    def abort(self) -> None:
+        pass
+
     def updated_battery(self, msg: BatteryData) -> None:
         self.battery_state_msg.header.stamp = self.clock.now().to_msg()
         self.battery_state_msg.voltage = float(VOLTAGE_F * msg[0])

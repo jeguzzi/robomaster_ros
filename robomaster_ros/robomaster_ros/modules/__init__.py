@@ -29,7 +29,7 @@ modules: Dict[str, Type[Module]] = {
     'led': LED,
     'pwm': PWM,
     'sbus': SBus,
-    # 'servo': Servo,
+    'servo': Servo,
     'speaker': Speaker,
     'tof': ToF,
     'uart': Uart,

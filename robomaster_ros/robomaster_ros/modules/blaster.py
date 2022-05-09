@@ -21,6 +21,9 @@ class Blaster(Module):
     def stop(self) -> None:
         pass
 
+    def abort(self) -> None:
+        pass
+
     def has_received_blaster_led(self, msg: robomaster_msgs.msg.BlasterLED) -> None:
         if msg.brightness:
             self.api.set_led(brightness=min(255, max(0, msg.brightness * 255)),

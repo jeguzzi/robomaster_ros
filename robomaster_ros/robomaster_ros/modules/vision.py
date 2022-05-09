@@ -64,6 +64,9 @@ class Vision(Module):
                 except TypeError:
                     pass
 
+    def abort(self) -> None:
+        pass
+
     def has_detected_people(self, values: List[ROI]) -> None:
         msg = robomaster_msgs.msg.Detection()
         msg.header.stamp = self.clock.now().to_msg()

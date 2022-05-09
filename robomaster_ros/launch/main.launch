@@ -12,8 +12,12 @@
   <arg name="arm" default="$(eval '\'$(var model)\' == \'ep\'')"/>
   <arg name="left_motor_zero" default="1242"/>
   <arg name="right_motor_zero" default="1273"/>
-  <arg name="left_motor_direction" default="-1"/>
-  <arg name="right_motor_direction" default="-1"/>
+  <arg name="left_motor_k" default="-325.95"/>
+  <arg name="right_motor_k" default="-325.95"/>
+  <arg name="left_motor_angle" default="0.073304"/>
+  <arg name="right_motor_angle" default="-0.274016"/>
+
+  <arg name="arm_rate" default="10"/>
 
   <arg name="armor" default="false"/>
   <arg name="armor_sensitivity" default="0.5"/>
@@ -32,7 +36,28 @@
 
   <arg name="servo" default="false"/>
 
-  <arg name="tof" default="false"/>
+  <arg name="tof_0" default="False"/>
+  <arg name="tof_0_parent" default="base_link"/>
+  <arg name="tof_0_xyz" default="0 0 0"/>
+  <arg name="tof_0_rpy" default="0 0 0"/>
+  <arg name="tof_1" default="False"/>
+  <arg name="tof_1_parent" default="base_link"/>
+  <arg name="tof_1_xyz" default="0 0 0"/>
+  <arg name="tof_1_rpy" default="0 0 0"/>
+  <arg name="tof_2" default="False"/>
+  <arg name="tof_2_parent" default="base_link"/>
+  <arg name="tof_2_xyz" default="0 0 0"/>
+  <arg name="tof_2_rpy" default="0 0 0"/>
+  <arg name="tof_3" default="False"/>
+  <arg name="tof_3_parent" default="base_link"/>
+  <arg name="tof_3_xyz" default="0 0 0"/>
+  <arg name="tof_3_rpy" default="0 0 0"/>
+  <arg name="tof_rate" default="10"/>
+  <let name="tof"
+    value="$(eval '\'$(var tof_0)\' in (\'true\', \'True\') or
+                   \'$(var tof_1)\' in (\'true\', \'True\') or
+                   \'$(var tof_2)\' in (\'true\', \'True\') or
+                   \'$(var tof_3)\' in (\'true\', \'True\')')"/>
 
   <!-- e.g., marker:red, robot -->
   <arg name="vision_targets" default="[]"/>
@@ -75,7 +100,7 @@
   <let name="video" value="$(eval '\'$(var video_raw)\' in (\'true\', \'True\') or \'$(var video_h264)\' in (\'true\', \'True\')')"/>
   <let name="audio" value="$(eval '\'$(var audio_raw)\' in (\'true\', \'True\') or \'$(var audio_opus)\' in (\'true\', \'True\')')"/>
   <let name="camera" value="$(eval '$(var audio) or $(var video)')"/>
-
+  <arg name="camera_calibration_suffix" default=""/>
   <arg name="display_battery" default="off"/>
 
   <push-ros-namespace namespace="$(var name)"/>
@@ -89,10 +114,13 @@
 
     <param name="arm">
       <param name="enabled" value="$(var arm)"/>
+      <param name="rate" value="$(var arm_rate)"/>
       <param name="right_motor.zero" value="$(var right_motor_zero)"/>
       <param name="left_motor.zero" value="$(var left_motor_zero)"/>
-      <param name="right_motor.direction" value="$(var right_motor_direction)"/>
-      <param name="left_motor.direction" value="$(var left_motor_direction)"/>
+      <param name="right_motor.k" value="$(var right_motor_k)"/>
+      <param name="left_motor.k" value="$(var left_motor_k)"/>
+      <param name="right_motor.angle" value="$(var right_motor_angle)"/>
+      <param name="left_motor.angle" value="$(var left_motor_angle)"/>
     </param>
     <param name="armor">
       <param name="enabled" value="$(var armor)"/>
@@ -111,6 +139,7 @@
         <param name="raw" value="$(var video_raw)"/>
         <param name="h264" value="$(var video_h264)"/>
         <param name="resolution" value="$(var video_resolution)"/>
+        <param name="calibration_file" value="$(env HOME)/.ros/rm_camera_calibration_$(var video_resolution)$(var camera_calibration_suffix).yaml"/>
       </param>
       <param name="audio">
         <param name="enabled" value="$(var audio)"/>
@@ -145,6 +174,7 @@
     </param>
     <param name="tof">
       <param name="enabled" value="$(var tof)"/>
+      <param name="rate" value="$(var tof_rate)"/>
     </param>
     <param name="uart">
       <param name="enabled" value="$(var uart)"/>
@@ -176,15 +206,39 @@
 
   <include file="$(find-pkg-share robomaster_description)/launch/main.launch" if="$(var with_model_description)">
     <arg name="name" value="$(var name)"/>
+    <arg name="gui" value="false"/>
     <arg name="model" value="$(var model)"/>
     <arg name="rate" value="$(var joint_state_rate)"/>
+
+    <arg name="tof_0" value="$(var tof_0)"/>
+    <arg name="tof_0_parent" value="$(var tof_0_parent)"/>
+    <arg name="tof_0_xyz" value="$(var tof_0_xyz)"/>
+    <arg name="tof_0_rpy" value="$(var tof_0_rpy)"/>
+    <arg name="tof_1" value="$(var tof_1)"/>
+    <arg name="tof_1_parent" value="$(var tof_1_parent)"/>
+    <arg name="tof_1_xyz" value="$(var tof_1_xyz)"/>
+    <arg name="tof_1_rpy" value="$(var tof_1_rpy)"/>
+    <arg name="tof_2" value="$(var tof_2)"/>
+    <arg name="tof_2_parent" value="$(var tof_2_parent)"/>
+    <arg name="tof_2_xyz" value="$(var tof_2_xyz)"/>
+    <arg name="tof_2_rpy" value="$(var tof_2_rpy)"/>
+    <arg name="tof_3" value="$(var tof_3)"/>
+    <arg name="tof_3_parent" value="$(var tof_3_parent)"/>
+    <arg name="tof_3_xyz" value="$(var tof_3_xyz)"/>
+    <arg name="tof_3_rpy" value="$(var tof_3_rpy)"/>
   </include>
 
-  <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out/compressed:=/camera/image_raw" if="$(var video_compressed)" />
+  <!-- <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out/compressed:=/camera/image_raw" if="$(var video_compressed)" /> -->
 
   <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
      if="$(eval '\'$(var display_battery)\' != \'off\' and \'$(var gimbal)\' in (\'true\', \'True\')')">
     <param name='side' value="$(var display_battery)"/>
   </node>
+
+  <push-ros-namespace namespace="camera"/>
+
+  <!-- <include file="$(find-pkg-share robomaster_ros)/launch/camera_proc.launch.py" if="$(var video_raw)">
+  </include> -->
+
 
 </launch>

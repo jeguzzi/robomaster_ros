@@ -29,9 +29,11 @@ class ToF(Module):
         # TODO(jerome): tentative
         self.range_msg = sensor_msgs.msg.Range(
             radiation_type=sensor_msgs.msg.Range.INFRARED,
-            min_range=0.01,
-            max_range=4.0,
-            field_of_view=0.1,
+            # see https://www.dji.com/ch/robomaster-ep-core/specs
+            min_range=0.1,
+            max_range=10.0,
+            # 20 degrees,
+            field_of_view=0.34,
         )
         tof_rate = rate(node, 'tof', 10)
         if tof_rate:
@@ -41,6 +43,9 @@ class ToF(Module):
         if self.node.connected:
             self.api.unsub_distance()
 
+    def abort(self) -> None:
+        pass
+
     def range_pub(self, index: int) -> rclpy.publisher.Publisher:
         if index not in self.range_pubs:
             self.range_pubs[index] = self.node.create_publisher(
@@ -49,10 +54,15 @@ class ToF(Module):
         return self.range_pubs[index]
 
     def got_range_reading(self, readings: RangeReading) -> None:
-        for i, (cmd_id, _, _, distance) in enumerate(readings):
+        for i, (cmd_id, _, valid, distance) in enumerate(readings):
             if cmd_id:
                 msg = self.range_msg
-                msg.header.frame_id = self.node.tf_frame(f'range_{i}_link')
+                msg.header.frame_id = self.node.tf_frame(f'tof_{i}_link')
                 msg.header.stamp = self.clock.now().to_msg()
+                if valid > 0:
+                    msg.range = distance * 1e-3
+                else:
+                    # TODO(Jerome): check if this means that is out of range
+                    msg.range = msg.max_range
                 pub = self.range_pub(i)
                 pub.publish(msg)

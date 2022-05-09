@@ -111,6 +111,11 @@ class FtpConnection:
             self._ftp.close()
 
 
+def wait_for_robot(serial_number: Optional[str]) -> None:
+    while not robomaster.conn.scan_robot_ip(user_sn=serial_number):
+        pass
+
+
 class RoboMasterROS(rclpy.node.Node):  # type: ignore
 
     def __init__(self, executor: Optional[rclpy.executors.Executor] = None) -> None:
@@ -119,6 +124,7 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
         lib_log_level : str = self.declare_parameter("lib_log_level", "ERROR").value.upper()
         robomaster.logger.setLevel(lib_log_level)
         conn_type: str = self.declare_parameter("conn_type", "sta").value[:]
+        self.reconnect: bool = self.declare_parameter("reconnect", True).value
         sn: Optional[str] = self.declare_parameter("serial_number", "").value
         if sn:
             if len(sn) != SERIAL_NUMBER_LENGTH:
@@ -128,13 +134,16 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
                     f"trasformed to {sn}")
         else:
             sn = None
+        self.initialized = False
+        self.connected = False
+        self.get_logger().info("Waiting for a robot")
+        wait_for_robot(sn)
+        self.get_logger().info("Found a robot")
         robomaster.conn.FtpConnection = FtpConnection
         # robomaster.conn.FtpConnection = FakeFtpConnection
         self.ep_robot = robomaster.robot.Robot()
         self.disconnection = rclpy.task.Future(executor=executor or rclpy.get_global_executor())
         # For now, to handle simulations without FTP
-        self.initialized = False
-        self.connected = False
         self.get_logger().info(f"Try to connect via {conn_type} to robot with sn {sn}")
         try:
             self.ep_robot.initialize(conn_type=conn_type, sn=sn)
@@ -163,6 +172,12 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
 
     def __del__(self) -> None:
         self.stop()
+
+    def abort(self) -> None:
+        if self.initialized:
+            self.get_logger().info("Will abort any action")
+            for module in self.modules:
+                module.abort()
 
     def stop(self) -> None:
         if self.initialized:

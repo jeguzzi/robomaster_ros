@@ -29,6 +29,9 @@ class SBus(Module):
         if self.node.connected:
             self.api._unsub_sbus()
 
+    def abort(self) -> None:
+        pass
+
     # (connection, channels)
     def updated_sbus(self, msg: SBusData) -> None:
         if msg[0]:

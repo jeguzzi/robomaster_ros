@@ -1,5 +1,8 @@
+import time
+
 import rclpy.action
 import robomaster.robot
+import robomaster.action
 
 import geometry_msgs.msg
 import robomaster_msgs.action
@@ -42,17 +45,22 @@ class Arm(Module):
         self.node = node
         right_motor_zero: int = node.declare_parameter('arm.right_motor.zero', 1273).value
         left_motor_zero: int = node.declare_parameter('arm.left_motor.zero', 1242).value
-        right_motor_direction: int = node.declare_parameter('arm.right_motor.direction', -1).value
-        left_motor_direction: int = node.declare_parameter('arm.left_motor.direction', -1).value
+        right_motor_angle: float = node.declare_parameter('arm.right_motor.angle', -0.274016).value
+        left_motor_angle: float = node.declare_parameter('arm.left_motor.angle', 0.073304).value
+        right_motor_slope: int = node.declare_parameter('arm.right_motor.k', -325.95).value
+        left_motor_slope: int = node.declare_parameter('arm.left_motor.k', -325.95).value
         self.servos = {
             'right_motor': RMServo(
-                index=1, reference_angle=-0.274016, reference_value=right_motor_zero,
-                direction=right_motor_direction, name=node.tf_frame('arm_1_joint')),
+                index=1, reference_angle=right_motor_angle, reference_value=right_motor_zero,
+                slope=right_motor_slope, name=node.tf_frame('arm_1_joint')),
             'left_motor': RMServo(
-                index=0, reference_angle=0.073304, reference_value=left_motor_zero,
-                direction=left_motor_direction, name=node.tf_frame("rod_joint"))
+                index=0, reference_angle=left_motor_angle, reference_value=left_motor_zero,
+                slope=left_motor_slope, name=node.tf_frame("rod_joint"))
         }
-        node.get_logger().info(f"[Arm] zeros: left {left_motor_zero}, right {right_motor_zero}")
+        node.get_logger().info(
+            f"[Arm] zeros: left {left_motor_zero}, right {right_motor_zero}"
+            f"[Arm] angle: left {left_motor_angle}, right {right_motor_angle}"
+            f"[Arm] slope: left {left_motor_slope}, right {right_motor_slope}")
         self.arm_position_msg = geometry_msgs.msg.PointStamped()
         self.arm_position_msg.header.frame_id = node.tf_frame('arm_base_link')
         self.arm_position_msg.point.y = 0.0
@@ -66,15 +74,37 @@ class Arm(Module):
         arm_rate = rate(node, 'arm', 10)
         if arm_rate:
             self.api.sub_position(freq=arm_rate, callback=self.updated_arm_position)
-        self.robot.servo.sub_servo_info(freq=arm_rate, callback=self.updated_arm_servo)
+            self.robot.servo.sub_servo_info(freq=arm_rate, callback=self.updated_arm_servo)
+            self.servo_raw_state_pub = node.create_publisher(
+                robomaster_msgs.msg.ServoRawState, 'servo_raw_state', 1)
         self._move_arm_action_server = rclpy.action.ActionServer(
-            node, robomaster_msgs.action.MoveArm, 'move_arm', self.execute_move_arm_callback)
+            node, robomaster_msgs.action.MoveArm, 'move_arm', self.execute_move_arm_callback,
+            cancel_callback=self.cancel_move_arm_callback)
+        # self.goal_handle: Optional[rclpy.action.server.ServerGoalHandle] = None
+        self.action: Optional[robomaster.action.Action] = None
 
     def stop(self) -> None:
         self._move_arm_action_server.destroy()
         if self.node.connected:
             self.api.unsub_position()
             self.robot.servo.unsub_servo_info()
+
+    def abort(self) -> None:
+        if self.action:
+            self.action._abort()
+            while self.action is not None:
+                self.logger.info("wait for the action to terminate")
+                time.sleep(0.1)
+
+    def publish_sensor_raw_state(self, msg: ServoData) -> None:
+        # self.logger.info(f'publish_sensor_raw_state servo {msg}')
+        omsg = robomaster_msgs.msg.ServoRawState()
+        for i in range(4):
+            omsg.valid[i] = (msg[0][i] != 0)
+            omsg.speed[i] = msg[1][i]
+            omsg.value[i] = msg[2][i]
+        # self.logger.info(f"publish_sensor_raw_state -> {omsg}")
+        self.servo_raw_state_pub.publish(omsg)
 
     # (valid, speed, angle)
     def updated_arm_servo(self, msg: ServoData) -> None:
@@ -96,6 +126,11 @@ class Arm(Module):
             self.node.joint_state_pub.publish(arm_state_msg)
         for servo in self.servos.values():
             servo.valid = False
+        self.publish_sensor_raw_state(msg)
+
+    def cancel_move_arm_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
+        self.logger.warn('It is not possible to cancel onboard actions')
+        return rclpy.action.CancelResponse.REJECT
 
     # TODO: actions are NOT threaded -> they block other callbacks
     # so the hearbeat deadman trigger and the node exit
@@ -117,7 +152,7 @@ class Arm(Module):
         else:
             f = self.api.moveto
         try:
-            action = f(x=int(request.x * 1000), y=int(request.z * 1000))
+            self.action = f(x=int(request.x * 1000), y=int(request.z * 1000))
         except RuntimeError as e:
             self.logger.warning(f'Cannot move arm: {e}')
             goal_handle.abort()
@@ -127,12 +162,18 @@ class Arm(Module):
 
         def cb() -> None:
             # self.logger.info(f'Moving arm ... {action._percent}')
-            feedback_msg.progress = action._percent * 0.01
+            feedback_msg.progress = self.action._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
-        add_cb(action, cb)
-        action.wait_for_completed(timeout=timeout)
-        goal_handle.succeed()
+        add_cb(self.action, cb)
+        self.action.wait_for_completed(timeout=timeout)
+        if self.action.has_succeeded:
+            goal_handle.succeed()
+        elif goal_handle.is_cancel_requested:
+            goal_handle.canceled()
+        else:
+            goal_handle.abort()
         self.logger.info('Done moving arm')
+        self.action = None
         return robomaster_msgs.action.MoveArm.Result()
 
     # (x, z) in mm

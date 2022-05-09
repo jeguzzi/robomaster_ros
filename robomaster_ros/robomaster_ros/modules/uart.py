@@ -49,6 +49,9 @@ class Uart(Module):
             self.api.unsub_serial_msg()
             self.api.stop()
 
+    def abort(self) -> None:
+        pass
+
     def got_uart_tx(self, msg: robomaster_msgs.msg.Serial) -> None:
         self.api.serial_send_msg(bytearray(msg.data))
 

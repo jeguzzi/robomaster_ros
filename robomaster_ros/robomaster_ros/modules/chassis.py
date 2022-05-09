@@ -1,5 +1,6 @@
 import math
 import quaternion
+import time
 
 import rclpy.action
 
@@ -9,6 +10,7 @@ import robomaster_msgs.msg
 import nav_msgs.msg
 
 import robomaster.robot
+import robomaster.action
 
 from typing import Optional, List, Tuple, Any
 from typing import TYPE_CHECKING
@@ -92,8 +94,18 @@ class Chassis(Module):
         node.create_subscription(
             robomaster_msgs.msg.WheelSpeeds, 'cmd_wheels', self.has_received_wheel_speeds, 1)
 
+        # self.goal_handle: Optional[rclpy.action.server.ServerGoalHandle] = None
+        self.action: Optional[robomaster.action.Action] = None
         self._move_action_server = rclpy.action.ActionServer(
-            node, robomaster_msgs.action.Move, 'move', self.execute_move_callback)
+            node, robomaster_msgs.action.Move, 'move', self.execute_move_callback,
+            cancel_callback=self.cancel_move_callback)
+
+    def abort(self) -> None:
+        if self.action:
+            self.action._abort()
+            while self.action is not None:
+                self.logger.info("wait for the action to terminate")
+                time.sleep(0.1)
 
     def stop(self) -> None:
         self._move_action_server.destroy()
@@ -174,10 +186,11 @@ class Chassis(Module):
         self.chassis_state_pub.publish(ros_msg)
 
     def execute_move_callback(self, goal_handle: Any) -> robomaster_msgs.action.Move.Result:
-        # TODO(jerome): Complete with failures, ...  and velocity parameters
+        # TODO(jerome): Complete with ... velocity parameters
+        # DONE(jerome): Complete with failures
         request = goal_handle.request
         try:
-            action = self.api.move(
+            self.action = self.api.move(
                 x=request.x, y=-request.y, z=deg(request.theta), xy_speed=request.linear_speed,
                 z_speed=deg(request.angular_speed))
         except RuntimeError as e:
@@ -189,12 +202,30 @@ class Chassis(Module):
         feedback_msg = robomaster_msgs.action.Move.Feedback()
 
         def cb() -> None:
-            feedback_msg.progress = action._percent * 0.01
+            # if self.action._percent > 50:
+            #     self.action._abort()
+            #     return
+            feedback_msg.progress = self.action._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
-        add_cb(action, cb)
+
+        add_cb(self.action, cb)
         # while action.is_running:
         #     time.sleep(0.01)
-        action.wait_for_completed()
-        goal_handle.succeed()
+        self.action.wait_for_completed()
+        if self.action.has_succeeded:
+            goal_handle.succeed()
+        elif goal_handle.is_cancel_requested:
+            goal_handle.canceled()
+        else:
+            goal_handle.abort()
         self.logger.info('Done moving chassis')
+        self.action = None
         return robomaster_msgs.action.Move.Result()
+
+    def cancel_move_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
+        self.logger.warn('It is not possible to cancel onboard actions')
+        return rclpy.action.CancelResponse.REJECT
+        # if self.action:
+        #     self.logger.info('Canceling move action')
+        #     self.action._abort()
+        # return rclpy.action.CancelResponse.ACCEPT

@@ -8,11 +8,12 @@ import rclpy.action
 
 import robomaster.robot
 import robomaster.gripper
+import robomaster.action
 
 import robomaster_msgs.msg
 import sensor_msgs.msg
 
-from typing import Any
+from typing import Any, Optional
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
@@ -20,7 +21,7 @@ if TYPE_CHECKING:
 from .. import Module
 
 
-_joint_data = np.array([
+_joint_data: np.ndarray = np.array([
     [0.000000, 0.000001, 0.000002, -0.000000, -0.000001, 0.000001, 0.000000, 0.000001, -0.000001, -0.000001, 0.000000, -0.000000, -0.000000],
     [-0.000500, 0.021745, -0.052589, 0.001998, 0.019252, -0.015623, -0.007750, -0.021849, 0.052777, -0.001530, -0.019611, 0.015616, 0.007618],
     [-0.001000, 0.047151, -0.116532, 0.004799, 0.050170, -0.040639, -0.019933, -0.047891, 0.118524, -0.004238, -0.051579, 0.041027, 0.019779],
@@ -109,14 +110,23 @@ class Gripper(Module):
         self._gripper_state = -1
         self.query_gripper_state()
         # TODO(jerome): make it latched
+        self.should_abort = False
         self._gripper_action_lock = threading.Lock()
         self._gripper_action_server = rclpy.action.ActionServer(
-            node, robomaster_msgs.action.GripperControl, 'gripper', self.execute_gripper_callback)
+            node, robomaster_msgs.action.GripperControl, 'gripper', self.execute_gripper_callback,
+            cancel_callback=self.cancel_gripper_callback)
 
     def stop(self) -> None:
         if self.node.connected:
             ...
         self._gripper_action_server.destroy()
+
+    def abort(self) -> None:
+        if self._gripper_action_lock.locked():
+            self.should_abort = True
+            while self._gripper_action_lock.locked():
+                self.logger.info("wait for the action to terminate")
+                time.sleep(0.1)
 
     # 0 open -> 1 close
     def joint_state(self, value: float) -> sensor_msgs.msg.JointState:
@@ -138,6 +148,7 @@ class Gripper(Module):
         self._gripper_action_lock.acquire()
         self.logger.info(f'Start moving gripper with request {request}')
         feedback_msg = robomaster_msgs.action.GripperControl.Feedback()
+        self.should_abort = False
         proto = robomaster.protocol.ProtoGripperCtrl()
         proto._control = request.target_state
         proto._power = robomaster.util.GRIPPER_POWER_CHECK.val2proto(100 * request.power)
@@ -153,20 +164,32 @@ class Gripper(Module):
         self.gripper.sub_status(freq=10, callback=cb)
 
         deadline = self.clock.now() + rclpy.duration.Duration(seconds=5)
-        while feedback_msg.current_state != request.target_state:
+        while (feedback_msg.current_state != request.target_state and not self.should_abort and
+               not goal_handle.is_cancel_requested):
             if(self.clock.now() > deadline):
-                self.logger.warning(f'Deadline to reach gripper target state {request.target_state} elapsed')
+                self.logger.warning(
+                    f'Deadline to reach gripper target state {request.target_state} elapsed')
                 break
             time.sleep(1 / 10)
         self.gripper.unsub_status()
-        if feedback_msg.current_state == request.target_state:
+        if goal_handle.is_cancel_requested:
+            self.logger.warn('Canceled gripping')
+            goal_handle.canceled()
+        elif self.should_abort or feedback_msg.current_state != request.target_state:
+            goal_handle.abort()
+            self.logger.warn(f'Failed moving gripper state: current state '
+                             f'[{self.gripper_state}] != target state [{request.target_state}]')
+        else:
             goal_handle.succeed()
             self.logger.info('Done moving gripper')
-        else:
-            goal_handle.abort()
-            self.logger.warn(f'Failed moving gripper state: current state [{self.gripper_state}] != target state [{request.target_state}]')
         self._gripper_action_lock.release()
         return robomaster_msgs.action.GripperControl.Result()
+
+    def cancel_gripper_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
+        self.logger.info('Canceling gripper action')
+        self.gripper.pause()
+        self.should_abort = True
+        return rclpy.action.CancelResponse.ACCEPT
 
     @property
     def gripper_state(self) -> int:

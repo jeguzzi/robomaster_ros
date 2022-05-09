@@ -4,12 +4,14 @@ import queue
 
 from cv_bridge import CvBridge
 import numpy as np
+import yaml
 
 import robomaster.media
 import robomaster_msgs.msg
 import sensor_msgs.msg
+# import rclpy.duration
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Dict, Any
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
 
@@ -23,6 +25,20 @@ MAX_LEVEL = 10 * 2 * 14 * np.log10(2)
 def sound_level(samples: np.ndarray) -> float:
     rms = np.mean(np.power(samples.astype(float), 2))
     return 10 * np.log10(rms) - MAX_LEVEL
+
+
+def camera_info_from_calibration(calibration: Dict[str, Any], frame_id: str
+                                 ) -> sensor_msgs.msg.CameraInfo:
+    msg = sensor_msgs.msg.CameraInfo()
+    msg.header.frame_id = frame_id
+    msg.height = calibration['image_height']
+    msg.width = calibration['image_width']
+    msg.distortion_model = calibration['distortion_model']
+    msg.d = calibration['distortion_coefficients']['data']
+    msg.k = calibration['camera_matrix']['data']
+    msg.r = calibration['rectification_matrix']['data']
+    msg.p = calibration['projection_matrix']['data']
+    return msg
 
 
 class Camera(robomaster.media.LiveView, Module):  # type: ignore
@@ -52,11 +68,22 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                 return
             if self.publish_raw_video:
                 self.raw_video_pub = node.create_publisher(
-                    sensor_msgs.msg.Image, 'camera/image_raw', 1)
+                    sensor_msgs.msg.Image, 'camera/image_color', 1)
             if self.publish_h264_video:
                 self.h264_video_pub = node.create_publisher(
                     robomaster_msgs.msg.H264Packet, 'camera/image_h264', 1)
-            self.frame_id = 'camera_optical_link'
+            self.frame_id = node.tf_frame('camera_optical_link')
+            calibration_path = node.declare_parameter("camera.video.calibration_file", '').value
+            self.publish_camera_info = False
+            if calibration_path:
+                with open(calibration_path, 'r') as f:
+                    calibration = yaml.load(f, yaml.SafeLoader)
+                    if calibration:
+                        self.camera_info_msg = camera_info_from_calibration(
+                            calibration, self.frame_id)
+                        self.camera_info_pub = node.create_publisher(
+                            sensor_msgs.msg.CameraInfo, 'camera/camera_info', 1)
+                        self.publish_camera_info = True
             self.api.start_video_stream(display=False, resolution=f"{height}p")
         self.audio: bool = node.declare_parameter("camera.audio.enabled", True).value
         if self.audio:
@@ -128,7 +155,9 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                     for frame in frames[-1:]:
                         # self.logger.info(f"SHAPE {frame.shape}")
                         i_msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
-                        i_msg.header.stamp = self.clock.now().to_msg()
+                        capture_time = self.clock.now()
+                        # + rclpy.duration.Duration(nanoseconds=3e8)
+                        i_msg.header.stamp = capture_time.to_msg()
                         i_msg.header.frame_id = self.frame_id
                         try:
                             self._message_queue.put(i_msg, block=False)
@@ -143,6 +172,9 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                 continue
             # self.logger.info("Got msg")
             self.raw_video_pub.publish(msg)
+            if self.publish_camera_info:
+                self.camera_info_msg.header.stamp = msg.header.stamp
+                self.camera_info_pub.publish(self.camera_info_msg)
             # self.logger.info("Sent msg")
 
     def start_audio_stream(self, addr: Optional[str] = None,

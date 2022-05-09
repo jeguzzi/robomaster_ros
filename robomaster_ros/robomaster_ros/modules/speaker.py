@@ -1,4 +1,5 @@
 import os
+import time
 
 import rclpy.action
 import robomaster.robot
@@ -6,7 +7,7 @@ import robomaster_msgs.msg
 
 from ..action import add_cb
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
@@ -18,9 +19,10 @@ class Speaker(Module):
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.api = robot
         self.logger = node.get_logger()
+        self.action: Optional[robomaster.action.Action] = None
         self._sound_action_server = rclpy.action.ActionServer(
-            node, robomaster_msgs.action.PlaySound, "play", self.execute_play_sound
-        )
+            node, robomaster_msgs.action.PlaySound, "play", self.execute_play_sound,
+            cancel_callback=self.cancel_callback)
         self._audio_files: Dict[int, str] = {}
         self._audio_id = 0
 
@@ -46,6 +48,13 @@ class Speaker(Module):
     def stop(self) -> None:
         self._sound_action_server.destroy()
 
+    def abort(self) -> None:
+        if self.action:
+            self.action._abort()
+            while self.action is not None:
+                self.logger.info("wait for the action to terminate")
+                time.sleep(0.1)
+
     def execute_play_sound(self, goal_handle: Any) -> robomaster_msgs.action.PlaySound.Result:
         request = goal_handle.request
         if request.file:
@@ -57,7 +66,7 @@ class Speaker(Module):
             self.logger.warning('Cannot play sound')
             return robomaster_msgs.action.PlaySound.Result()
         try:
-            action = self.api.play_sound(sound_id=sound_id, times=request.times)
+            self.action = self.api.play_sound(sound_id=sound_id, times=request.times)
         except RuntimeError as e:
             self.logger.warning(f'Cannot play sound: {e}')
             goal_handle.abort()
@@ -68,14 +77,24 @@ class Speaker(Module):
         progress = [2.0]
 
         def cb() -> None:
-            feedback_msg.progress = action._percent * 0.01
+            feedback_msg.progress = self.action._percent * 0.01
             if feedback_msg.progress < progress[0]:
                 feedback_msg.time += 1
             progress[0] = feedback_msg.progress
             goal_handle.publish_feedback(feedback_msg)
 
-        add_cb(action, cb)
-        action.wait_for_completed()
-        goal_handle.succeed()
+        add_cb(self.action, cb)
+        self.action.wait_for_completed()
+        if self.action.has_succeeded:
+            goal_handle.succeed()
+        elif goal_handle.is_cancel_requested:
+            goal_handle.canceled()
+        else:
+            goal_handle.abort()
+        self.action = None
         self.logger.info("Done playing sound")
         return robomaster_msgs.action.PlaySound.Result()
+
+    def cancel_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
+        self.logger.warn('It is not possible to cancel onboard actions')
+        return rclpy.action.CancelResponse.REJECT

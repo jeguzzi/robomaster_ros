@@ -32,6 +32,9 @@ class Armor(Module):
     def stop(self) -> None:
         pass
 
+    def abort(self) -> None:
+        pass
+
     def has_been_hit(self, msg: ArmorHit) -> None:
         ros_msg = robomaster_msgs.msg.ArmorHit(location=msg[0], type=msg[1], level=msg[2])
         self.hit_pub.publish(ros_msg)

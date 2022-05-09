@@ -18,5 +18,8 @@ if Protocol:
 
         def stop(self) -> None:
             ...
+
+        def abort(self) -> None:
+            ...
 else:
     Module = 'Module'  # type: ignore

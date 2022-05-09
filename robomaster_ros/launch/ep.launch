@@ -9,6 +9,7 @@
     - ap (robot's access point network)
     - rndis (usb)
   -->
+  <arg name="with_model_description" default="true"/>
   <arg name="conn_type" default="sta"/>
   <!-- the log-level used by the internal robomaster API -->
   <arg name="lib_log_level" default="ERROR"/>
@@ -40,19 +41,42 @@
     - +1 for angle increases when encoder increases
     - -1 for angle decreases when encoder increases
    -->
-  <arg name="left_motor_direction" default="-1"/>
+  <!-- <arg name="left_motor_direction" default="-1"/> -->
   <!-- the [arm] right motor direction; one of
     - +1 for angle increases when encoder increases
     - -1 for angle decreases when encoder increases
    -->
-  <arg name="right_motor_direction" default="-1"/>
+  <!-- <arg name="right_motor_direction" default="-1"/> -->
+
+  <arg name="left_motor_k" default="-325.95"/>
+  <arg name="right_motor_k" default="-325.95"/>
+  <arg name="left_motor_angle" default="0.073304"/>
+  <arg name="right_motor_angle" default="-0.274016"/>
+
   <!-- Whether at least one sensor adapter (IO) is connected and should be published to `<name>/...`  -->
+
+
+
+
+  <arg name="arm_rate" default="10"/>
+  <arg name="arm" default="true"/>
+  <arg name="servo" default="false"/>
+
   <arg name="sensor_adapter" default="false"/>
   <!-- the rate [Hz] at which to publish the sensor adapter values -->
   <arg name="sensor_adapter_rate" default="10"/>
 
+  <arg name="tof" default="false"/>
+  <!-- the rate [Hz] at which to publish the sensor adapter values -->
+  <arg name="tof_rate" default="10"/>
+
+  <arg name="camera_calibration_suffix" default=""/>
+
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
-    <arg name="arm" value="true"/>
+    <arg name="with_model_description" value="$(var with_model_description)"/>
+    <arg name="arm" value="$(var arm)"/>
+    <arg name="servo" value="$(var servo)"/>
+    <arg name="arm_rate" value="$(var arm_rate)"/>
     <arg name="gripper" value="true"/>
     <arg name="model" value="ep"/>
     <arg name="name" value="$(var name)"/>
@@ -69,10 +93,15 @@
     <arg name="joint_state_rate" value="$(var joint_state_rate)"/>
     <arg name="left_motor_zero" value="$(var left_motor_zero)"/>
     <arg name="right_motor_zero" value="$(var right_motor_zero)"/>
-    <arg name="left_motor_direction" value="$(var left_motor_direction)"/>
-    <arg name="right_motor_direction" value="$(var right_motor_direction)"/>
+    <arg name="left_motor_k" value="$(var left_motor_k)"/>
+    <arg name="right_motor_k" value="$(var right_motor_k)"/>
+    <arg name="left_motor_angle" value="$(var left_motor_angle)"/>
+    <arg name="right_motor_angle" value="$(var right_motor_angle)"/>
     <arg name="sensor_adapter" value="$(var sensor_adapter)"/>
     <arg name="sensor_adapter_rate" value="$(var sensor_adapter_rate)"/>
+    <arg name="tof" value="$(var tof)"/>
+    <arg name="tof_rate" value="$(var tof_rate)"/>
+    <arg name="camera_calibration_suffix" value="$(var camera_calibration_suffix)"/>
   </include>
 
 </launch>

@@ -37,6 +37,9 @@ class SensorAdapter(Module):
     def stop(self) -> None:
         self.api.unsub_adapter()
 
+    def abort(self) -> None:
+        pass
+
     def updated_reading(self, msg: SensorAdapterData) -> None:
         ros_msg = robomaster_msgs.msg.SensorAdapter(io=msg[0], adc=msg[1])
         ros_msg.header.stamp = self.clock.now().to_msg()

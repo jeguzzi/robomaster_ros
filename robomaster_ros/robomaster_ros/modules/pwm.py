@@ -27,6 +27,9 @@ class PWM(Module):
     def stop(self) -> None:
         pass
 
+    def abort(self) -> None:
+        pass
+
     def has_received_pwm(self, msg: robomaster_msgs.msg.PWM) -> None:
         self.api.set_pwm_value(
             *[None if v < 0 else min(100, max(0, 100 * v)) for v in msg.fraction_of_duty_cycle])

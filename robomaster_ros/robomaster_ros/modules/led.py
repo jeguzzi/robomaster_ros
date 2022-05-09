@@ -28,6 +28,9 @@ class LED(Module):
         if self.node.connected:
             self.api.set_led(comp=robomaster.led.COMP_ALL, effect=robomaster.led.EFFECT_OFF)
 
+    def abort(self) -> None:
+        pass
+
     def has_received_led_effect(self, msg: robomaster_msgs.msg.LEDEffect) -> None:
         proto = robomaster.protocol.ProtoSetSystemLed()
         proto._ctrl_mode = 7
