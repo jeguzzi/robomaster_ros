@@ -22,6 +22,8 @@
    -->
   <arg name="display_battery" default="off"/>
   <arg name="joint_state_rate" default="10.0"/>
+  <arg name="camera_calibration_suffix" default=""/>
+  <arg name="camera_calibration_directory" default="$(find-pkg-share robomaster_ros)/config"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
     <arg name="gimbal" value="true"/>
@@ -42,6 +44,8 @@
     <arg name="gimbal_rate" value="$(var gimbal_rate)"/>
     <arg name="sensor_adapter" value="$(var sensor_adapter)"/>
     <arg name="sensor_adapter_rate" value="$(var sensor_adapter_rate)"/>
+    <arg name="camera_calibration_suffix" value="$(var camera_calibration_suffix)"/>
+    <arg name="camera_calibration_directory" value="$(var camera_calibration_directory)"/>
   </include>
 
   <push-ros-namespace namespace="$(var name)"/>

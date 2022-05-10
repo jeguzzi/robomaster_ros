@@ -76,14 +76,17 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             calibration_path = node.declare_parameter("camera.video.calibration_file", '').value
             self.publish_camera_info = False
             if calibration_path:
-                with open(calibration_path, 'r') as f:
-                    calibration = yaml.load(f, yaml.SafeLoader)
-                    if calibration:
-                        self.camera_info_msg = camera_info_from_calibration(
-                            calibration, self.frame_id)
-                        self.camera_info_pub = node.create_publisher(
-                            sensor_msgs.msg.CameraInfo, 'camera/camera_info', 1)
-                        self.publish_camera_info = True
+                try:
+                    with open(calibration_path, 'r') as f:
+                        calibration = yaml.load(f, yaml.SafeLoader)
+                        if calibration:
+                            self.camera_info_msg = camera_info_from_calibration(
+                                calibration, self.frame_id)
+                            self.camera_info_pub = node.create_publisher(
+                                sensor_msgs.msg.CameraInfo, 'camera/camera_info', 1)
+                            self.publish_camera_info = True
+                except FileNotFoundError:
+                    self.logger.warn(f"Calibration file not found at {calibration_path}")
             self.api.start_video_stream(display=False, resolution=f"{height}p")
         self.audio: bool = node.declare_parameter("camera.audio.enabled", True).value
         if self.audio:

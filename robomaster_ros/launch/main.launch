@@ -103,6 +103,9 @@
   <arg name="camera_calibration_suffix" default=""/>
   <arg name="display_battery" default="off"/>
 
+  <arg name="camera_calibration_directory" default="$(find-pkg-share robomaster_ros)/config"/>
+  <!-- $(env HOME)/.ros -->
+
   <push-ros-namespace namespace="$(var name)"/>
 
   <node name="robomaster" pkg="robomaster_ros" exec="robomaster_driver" output="screen"
@@ -139,7 +142,7 @@
         <param name="raw" value="$(var video_raw)"/>
         <param name="h264" value="$(var video_h264)"/>
         <param name="resolution" value="$(var video_resolution)"/>
-        <param name="calibration_file" value="$(env HOME)/.ros/rm_camera_calibration_$(var video_resolution)$(var camera_calibration_suffix).yaml"/>
+        <param name="calibration_file" value="$(var camera_calibration_directory)/rm_camera_calibration_$(var video_resolution)$(var camera_calibration_suffix).yaml"/>
       </param>
       <param name="audio">
         <param name="enabled" value="$(var audio)"/>
