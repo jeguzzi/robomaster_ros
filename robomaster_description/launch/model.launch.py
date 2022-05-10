@@ -9,7 +9,16 @@ from launch.utilities import perform_substitutions
 from launch_ros.actions import Node
 
 
-def urdf(name: str = '', model: str = 'ep') -> str:
+def urdf(name: str = '', model: str = 'ep',
+         tof_0: bool = False, tof_0_parent: str = 'base_link',
+         tof_0_xyz: str = '0 0 0', tof_0_rpy: str = '0 0 0',
+         tof_1: bool = False, tof_1_parent: str = 'base_link',
+         tof_1_xyz: str = '0 0 0', tof_1_rpy: str = '0 0 0',
+         tof_2: bool = False, tof_2_parent: str = 'base_link',
+         tof_2_xyz: str = '0 0 0', tof_2_rpy: str = '0 0 0',
+         tof_3: bool = False, tof_3_parent: str = 'base_link',
+         tof_3_xyz: str = '0 0 0', tof_3_rpy: str = '0 0 0'
+         ) -> str:
     urdf_xacro = os.path.join(get_package_share_directory('robomaster_description'),
                               'urdf', f'robomaster_{model}.urdf.xacro')
     xacro_keys = [k for k, _ in urdf.__annotations__.items() if k not in ('return', 'model')]
@@ -28,7 +37,7 @@ def robot_state_publisher(context: LaunchContext,
                           **substitutions: launch.substitutions.LaunchConfiguration
                           ) -> List[Node]:
     kwargs = {k: perform_substitutions(context, [v]) for k, v in substitutions.items()}
-    params = {'robot_description': urdf(**kwargs)}
+    params = {'robot_description': urdf(**kwargs), 'publish_frequency': 100.0}
     # with open('test.urdf', 'w+') as f:
     #     f.write(params['robot_description'])
     node = Node(

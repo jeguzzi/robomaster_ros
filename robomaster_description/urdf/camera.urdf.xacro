@@ -45,7 +45,9 @@
     </xacro:if>
 
     <joint name="${tf_prefix}camera_optical_joint" type="fixed">
-      <origin xyz="0.002 0.00 0.004" rpy="0.0872663 0 ${-pi/2}"/>
+      <!-- <origin xyz="0.002 0.00 0.004" rpy="0.0872663 0 ${-pi/2}"/> -->
+      <!-- <origin xyz="0.002 0.00 0.004" rpy="0.0072663 0 ${-pi/2}"/> -->
+      <origin xyz="0.002 0.00 0.004" rpy="0.041623 0 ${-pi/2}"/>
       <parent link="${tf_prefix}camera_link"/>
       <child link="${tf_prefix}camera_optical_link"/>
     </joint>

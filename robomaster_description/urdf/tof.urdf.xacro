@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
+
+  <xacro:arg name="tof_0" default="false"/>
+  <xacro:arg name="tof_0_parent" default="base_link"/>
+  <xacro:arg name="tof_0_xyz" default="0 0 0"/>
+  <xacro:arg name="tof_0_rpy" default="0 0 0"/>
+  <xacro:arg name="tof_1" default="false"/>
+  <xacro:arg name="tof_1_parent" default="base_link"/>
+  <xacro:arg name="tof_1_xyz" default="0 0 0"/>
+  <xacro:arg name="tof_1_rpy" default="0 0 0"/>
+  <xacro:arg name="tof_2" default="false"/>
+  <xacro:arg name="tof_2_parent" default="base_link"/>
+  <xacro:arg name="tof_2_xyz" default="0 0 0"/>
+  <xacro:arg name="tof_2_rpy" default="0 0 0"/>
+  <xacro:arg name="tof_3" default="false"/>
+  <xacro:arg name="tof_3_parent" default="base_link"/>
+  <xacro:arg name="tof_3_xyz" default="0 0 0"/>
+  <xacro:arg name="tof_3_rpy" default="0 0 0"/>
+
+  <xacro:macro name="tof" params="tf_prefix='' index='0' parent='base_link' xyz='0 0 0' rpy='0 0 0'">
+
+    <link name="${tf_prefix}tof_${index}_link">
+      <visual name="tof">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.015 0.056 0.029"/>
+        </geometry>
+        <material name="hit_detector"/>
+      </visual>
+    </link>
+
+    <joint name="${tf_prefix}${parent}_tof_${index}_joint" type="fixed">
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <parent link="${tf_prefix}${parent}"/>
+      <child link="${tf_prefix}tof_${index}_link"/>
+    </joint>
+
+  </xacro:macro>
+
+  <xacro:macro name="add_tof" params="index tf_prefix=''">
+    <xacro:if value="$(arg tof_${index})">
+      <xacro:tof tf_prefix="${tf_prefix}" index="${index}" parent='$(arg tof_${index}_parent)'
+        xyz='$(arg tof_${index}_xyz)' rpy='$(arg tof_${index}_rpy)'/>
+    </xacro:if>
+  </xacro:macro>
+
+</robot>

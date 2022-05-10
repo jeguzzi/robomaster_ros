@@ -157,6 +157,10 @@
 
       </link>
 
+      <link name="${tf_prefix}gripper_t_link">
+
+      </link>
+
       <joint name="${tf_prefix}gripper_m_joint" type="prismatic">
         <limit effort="0" velocity="0" lower="-0.023" upper="0.001"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -437,6 +441,12 @@
           <parent link="right_gripper_link_7"/>
           <child link="right_gripper_link_8_dummy"/>
         </joint> -->
+
+        <joint name="${tf_prefix}gripper_joint_t" type="fixed">
+          <origin xyz="0.124 0 -0.039" rpy="0 0 0"/>
+          <parent link="${tf_prefix}gripper_link"/>
+          <child link="${tf_prefix}gripper_t_link"/>
+        </joint>
 
   </xacro:macro>
 </robot>

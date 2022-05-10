@@ -14,10 +14,16 @@
   <xacro:include filename="gimbal.urdf.xacro"/>
   <xacro:include filename="camera.urdf.xacro"/>
   <xacro:include filename="intelligent_controller.urdf.xacro"/>
+  <xacro:include filename="tof.urdf.xacro"/>
 
   <xacro:base tf_prefix="${tf_prefix}"/>
   <xacro:gimbal tf_prefix="${tf_prefix}"/>
   <xacro:camera tf_prefix="${tf_prefix}" mount="gimbal"/>
   <xacro:intelligent_controller tf_prefix="${tf_prefix}" mount="gimbal"/>
+
+  <xacro:add_tof index="0" tf_prefix="${tf_prefix}"/>
+  <xacro:add_tof index="1" tf_prefix="${tf_prefix}"/>
+  <xacro:add_tof index="2" tf_prefix="${tf_prefix}"/>
+  <xacro:add_tof index="3" tf_prefix="${tf_prefix}"/>
 
 </robot>

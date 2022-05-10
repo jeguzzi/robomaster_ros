@@ -7,9 +7,42 @@
   <let name="js_suffix" value="" unless="$(var gui)"/>
   <let name="js_suffix" value="_gui" if="$(var gui)"/>
 
+  <arg name="tof_0" default="False"/>
+  <arg name="tof_0_parent" default="base_link"/>
+  <arg name="tof_0_xyz" default="0 0 0"/>
+  <arg name="tof_0_rpy" default="0 0 0"/>
+  <arg name="tof_1" default="False"/>
+  <arg name="tof_1_parent" default="base_link"/>
+  <arg name="tof_1_xyz" default="0 0 0"/>
+  <arg name="tof_1_rpy" default="0 0 0"/>
+  <arg name="tof_2" default="False"/>
+  <arg name="tof_2_parent" default="base_link"/>
+  <arg name="tof_2_xyz" default="0 0 0"/>
+  <arg name="tof_2_rpy" default="0 0 0"/>
+  <arg name="tof_3" default="False"/>
+  <arg name="tof_3_parent" default="base_link"/>
+  <arg name="tof_3_xyz" default="0 0 0"/>
+  <arg name="tof_3_rpy" default="0 0 0"/>
+
   <include file="$(find-pkg-share robomaster_description)/launch/model.launch.py">
     <arg name="name" value="$(var name)"/>
     <arg name="model" value="$(var model)"/>
+    <arg name="tof_0" value="$(var tof_0)"/>
+    <arg name="tof_0_parent" value="$(var tof_0_parent)"/>
+    <arg name="tof_0_xyz" value="$(var tof_0_xyz)"/>
+    <arg name="tof_0_rpy" value="$(var tof_0_rpy)"/>
+    <arg name="tof_1" value="$(var tof_1)"/>
+    <arg name="tof_1_parent" value="$(var tof_1_parent)"/>
+    <arg name="tof_1_xyz" value="$(var tof_1_xyz)"/>
+    <arg name="tof_1_rpy" value="$(var tof_1_rpy)"/>
+    <arg name="tof_2" value="$(var tof_2)"/>
+    <arg name="tof_2_parent" value="$(var tof_2_parent)"/>
+    <arg name="tof_2_xyz" value="$(var tof_2_xyz)"/>
+    <arg name="tof_2_rpy" value="$(var tof_2_rpy)"/>
+    <arg name="tof_3" value="$(var tof_3)"/>
+    <arg name="tof_3_parent" value="$(var tof_3_parent)"/>
+    <arg name="tof_3_xyz" value="$(var tof_3_xyz)"/>
+    <arg name="tof_3_rpy" value="$(var tof_3_rpy)"/>
   </include>
 
   <node name="joint_state_publisher" exec="joint_state_publisher$(var js_suffix)"
