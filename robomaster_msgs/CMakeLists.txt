@@ -62,6 +62,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/AudioOpus.msg"
   "msg/H264Packet.msg"
   "msg/SensorAdapter.msg"
+  "msg/ServoRawState.msg"
   "action/Move.action"
   "action/MoveArm.action"
   "action/GripperControl.action"
