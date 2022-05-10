@@ -88,6 +88,7 @@
   <arg name="tof_rate" default="10"/>
 
   <arg name="camera_calibration_suffix" default=""/>
+  <arg name="camera_calibration_directory" default="$(find-pkg-share robomaster_ros)/config"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
     <arg name="with_model_description" value="$(var with_model_description)"/>
@@ -134,6 +135,7 @@
     <arg name="tof_3_rpy" value="$(var tof_3_rpy)"/>
     <arg name="tof_rate" value="$(var tof_rate)"/>
     <arg name="camera_calibration_suffix" value="$(var camera_calibration_suffix)"/>
+    <arg name="camera_calibration_directory" value="$(var camera_calibration_directory)"/>
   </include>
 
 </launch>
