@@ -22,14 +22,19 @@ from ..action import add_cb
 from ..utils import deg, rad, rate
 
 RADIUS = 0.05
-RPM2SPEED = 2 * math.pi * 2 * RADIUS / 60
+RPM2SPEED = 2 * math.pi * RADIUS / 60
 G = 9.81
 MAX_ESC_ANGLE = 32767
 
 
 # rmp -> [linear] speed
-def wheel_speed(value: float) -> float:
+def linear_speed_from_rpm(value: float) -> float:
     return RPM2SPEED * value
+
+
+# [linear] speed -> rpm:
+def rpm_from_linear_speed(value: float) -> int:
+    return round(value / RPM2SPEED)
 
 
 Esc = Tuple[List[int], List[int], List[int], List[int]]
@@ -124,8 +129,8 @@ class Chassis(Module):
 
     def has_received_wheel_speeds(self, msg: robomaster_msgs.msg.WheelSpeeds) -> None:
         self.api.drive_wheels(
-            w1=wheel_speed(msg.front_right), w2=wheel_speed(msg.front_left),
-            w3=wheel_speed(msg.rear_left), w4=wheel_speed(msg.rear_right),
+            w1=rpm_from_linear_speed(msg.front_right), w2=rpm_from_linear_speed(msg.front_left),
+            w3=rpm_from_linear_speed(msg.rear_left), w4=rpm_from_linear_speed(msg.rear_right),
             timeout=self.timeout)
 
     def updated_position(self, msg: Tuple[float, float, float]) -> None:
@@ -205,7 +210,7 @@ class Chassis(Module):
             # if self.action._percent > 50:
             #     self.action._abort()
             #     return
-            feedback_msg.progress = self.action._percent * 0.01
+            feedback_msg.progress = self.action._percent * 0.01  # type: ignore
             goal_handle.publish_feedback(feedback_msg)
 
         add_cb(self.action, cb)
