@@ -58,10 +58,10 @@ class Arm(Module):
                 direction=left_motor_direction, name=node.tf_frame("rod_joint"))
         }
         node.get_logger().info(
-            f"[Arm] left servo: direction {left_motor_direction}, value {left_motor_zero},"
-            f" angle {left_motor_angle}")
+            f"[Arm] left servo: direction {left_motor_direction}, value {left_motor_zero}, "
+            f"angle {left_motor_angle}")
         node.get_logger().info(
-            f"[Arm] right servo: direction {right_motor_direction}, value {right_motor_zero},"
+            f"[Arm] right servo: direction {right_motor_direction}, value {right_motor_zero}, "
             f"angle {right_motor_angle}")
         self.arm_position_msg = geometry_msgs.msg.PointStamped()
         self.arm_position_msg.header.frame_id = node.tf_frame('arm_base_link')

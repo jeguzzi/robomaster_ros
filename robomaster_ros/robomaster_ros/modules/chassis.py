@@ -8,9 +8,11 @@ import sensor_msgs.msg
 import geometry_msgs.msg
 import robomaster_msgs.msg
 import nav_msgs.msg
+import std_srvs.srv
 
 import robomaster.robot
 import robomaster.action
+import robomaster.protocol
 
 from typing import Optional, List, Tuple, Any
 from typing import TYPE_CHECKING
@@ -104,6 +106,20 @@ class Chassis(Module):
         self._move_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.Move, 'move', self.execute_move_callback,
             cancel_callback=self.cancel_move_callback)
+        self.engage_server = node.create_service(std_srvs.srv.SetBool, 'engage_wheels',
+                                                 self.engage_cb)
+
+    def engage(self, value: bool) -> None:
+        proto = robomaster.protocol.ProtoChassisSetWorkMode()
+        proto._mode = 1 if value else 0
+        self.api._send_sync_proto(proto)
+        self.logger.info(f"{'Engaged' if value else 'Disengaged'} wheel motors")
+
+    def engage_cb(self, request: std_srvs.srv.SetBool.Request,
+                  response: std_srvs.srv.SetBool.Response) -> std_srvs.srv.SetBool.Response:
+        self.engage(request.data)
+        response.success = True
+        return response
 
     def abort(self) -> None:
         if self.action:
@@ -114,6 +130,7 @@ class Chassis(Module):
 
     def stop(self) -> None:
         self._move_action_server.destroy()
+        self.engage_server.destroy()
         if self.node.connected:
             self.api.drive_wheels(0, 0, 0, 0)
             self.api.unsub_position()
