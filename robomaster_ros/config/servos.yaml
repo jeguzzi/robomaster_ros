@@ -2,11 +2,11 @@
   index: 0
   name: rod_joint
   angle: 0.073304
-  value: 1242
-  slope: -325.95
+  value: 1024
+  direction: 1
 -
   index: 1
   name: arm_1_joint
   angle: -0.274016
-  value: 1273
-  slope: -325.95
+  value: 1024
+  direction: -1

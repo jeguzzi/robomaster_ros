@@ -43,24 +43,26 @@ class Arm(Module):
 
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.node = node
-        right_motor_zero: int = node.declare_parameter('arm.right_motor.zero', 1273).value
-        left_motor_zero: int = node.declare_parameter('arm.left_motor.zero', 1242).value
+        right_motor_zero: int = node.declare_parameter('arm.right_motor.zero', 1024).value
+        left_motor_zero: int = node.declare_parameter('arm.left_motor.zero', 1024).value
         right_motor_angle: float = node.declare_parameter('arm.right_motor.angle', -0.274016).value
         left_motor_angle: float = node.declare_parameter('arm.left_motor.angle', 0.073304).value
-        right_motor_slope: int = node.declare_parameter('arm.right_motor.k', -325.95).value
-        left_motor_slope: int = node.declare_parameter('arm.left_motor.k', -325.95).value
+        right_motor_direction: int = node.declare_parameter('arm.right_motor.direction', -1).value
+        left_motor_direction: int = node.declare_parameter('arm.left_motor.direction', 1).value
         self.servos = {
             'right_motor': RMServo(
                 index=1, reference_angle=right_motor_angle, reference_value=right_motor_zero,
-                slope=right_motor_slope, name=node.tf_frame('arm_1_joint')),
+                direction=right_motor_direction, name=node.tf_frame('arm_1_joint')),
             'left_motor': RMServo(
                 index=0, reference_angle=left_motor_angle, reference_value=left_motor_zero,
-                slope=left_motor_slope, name=node.tf_frame("rod_joint"))
+                direction=left_motor_direction, name=node.tf_frame("rod_joint"))
         }
         node.get_logger().info(
-            f"[Arm] zeros: left {left_motor_zero}, right {right_motor_zero}"
-            f"[Arm] angle: left {left_motor_angle}, right {right_motor_angle}"
-            f"[Arm] slope: left {left_motor_slope}, right {right_motor_slope}")
+            f"[Arm] left servo: direction {left_motor_direction}, value {left_motor_zero},"
+            f" angle {left_motor_angle}")
+        node.get_logger().info(
+            f"[Arm] right servo: direction {right_motor_direction}, value {right_motor_zero},"
+            f"angle {right_motor_angle}")
         self.arm_position_msg = geometry_msgs.msg.PointStamped()
         self.arm_position_msg.header.frame_id = node.tf_frame('arm_base_link')
         self.arm_position_msg.point.y = 0.0

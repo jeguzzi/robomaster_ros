@@ -10,12 +10,12 @@
   <arg name="joint_state_rate" default="10.0"/>
 
   <arg name="arm" default="$(eval '\'$(var model)\' == \'ep\'')"/>
-  <arg name="left_motor_zero" default="1242"/>
-  <arg name="right_motor_zero" default="1273"/>
-  <arg name="left_motor_k" default="-325.95"/>
-  <arg name="right_motor_k" default="-325.95"/>
+  <arg name="left_motor_zero" default="1024"/>
+  <arg name="right_motor_zero" default="1024"/>
   <arg name="left_motor_angle" default="0.073304"/>
   <arg name="right_motor_angle" default="-0.274016"/>
+  <arg name="left_motor_direction" default="1"/>
+  <arg name="right_motor_direction" default="-1"/>
 
   <arg name="arm_rate" default="10"/>
 
@@ -120,8 +120,8 @@
       <param name="rate" value="$(var arm_rate)"/>
       <param name="right_motor.zero" value="$(var right_motor_zero)"/>
       <param name="left_motor.zero" value="$(var left_motor_zero)"/>
-      <param name="right_motor.k" value="$(var right_motor_k)"/>
-      <param name="left_motor.k" value="$(var left_motor_k)"/>
+      <param name="right_motor.direction" value="$(var right_motor_direction)"/>
+      <param name="left_motor.direction" value="$(var left_motor_direction)"/>
       <param name="right_motor.angle" value="$(var right_motor_angle)"/>
       <param name="left_motor.angle" value="$(var left_motor_angle)"/>
     </param>
