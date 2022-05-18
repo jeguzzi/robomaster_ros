@@ -24,6 +24,7 @@ from ..action import add_cb
 from ..utils import deg, rad, rate
 
 RADIUS = 0.05
+AXIS = 0.2
 RPM2SPEED = 2 * math.pi * RADIUS / 60
 G = 9.81
 MAX_ESC_ANGLE = 32767
@@ -57,6 +58,15 @@ def quaternion_from_euler(roll: float, pitch: float, yaw: float
     return quaternion.from_euler_angles(roll, pitch, yaw)
 
 
+def wheel_speeds_from_twist(vx: float, vy: float, vtheta: float,
+                            axis_length: float = AXIS) -> Tuple[float, float, float, float]:
+    front_left  = vx - vy - axis_length * vtheta  # noqa
+    front_right = vx + vy + axis_length * vtheta  # noqa
+    rear_left   = vx + vy - axis_length * vtheta  # noqa
+    rear_right  = vx - vy + axis_length * vtheta  # noqa
+    return (front_left, front_right, rear_left, rear_right)
+
+
 WHEEL_FRAMES = ['front_right_wheel_joint', 'front_left_wheel_joint',
                 'rear_left_wheel_joint', 'rear_right_wheel_joint']
 
@@ -71,6 +81,12 @@ class Chassis(Module):
         if self.timeout == 0.0:
             self.timeout = None
         self.api = robot.chassis
+        self.twist_to_wheel_speeds: bool = node.declare_parameter(
+            "chassis.twist_to_wheel_speeds", False).value
+        if self.twist_to_wheel_speeds:
+            self.logger.info("topic cmd_vel will control wheel speeds")
+        else:
+            self.logger.info("topic cmd_vel will control chassis twist")
         odom_frame = node.tf_frame('odom')
         base_link = node.tf_frame('base_link')
         self.odom_msg = nav_msgs.msg.Odometry()
@@ -141,8 +157,16 @@ class Chassis(Module):
             self.api.unsub_status()
 
     def has_received_twist(self, msg: geometry_msgs.msg.Twist) -> None:
-        self.api.drive_speed(
-            x=msg.linear.x, y=-msg.linear.y, z=-deg(msg.angular.z), timeout=self.timeout)
+        if self.twist_to_wheel_speeds:
+            front_left, front_right, rear_left, rear_right = wheel_speeds_from_twist(
+                msg.linear.x, msg.linear.y, msg.angular.z)
+            self.api.drive_wheels(
+                w1=rpm_from_linear_speed(front_right), w2=rpm_from_linear_speed(front_left),
+                w3=rpm_from_linear_speed(rear_left), w4=rpm_from_linear_speed(rear_right),
+                timeout=self.timeout)
+        else:
+            self.api.drive_speed(
+                x=msg.linear.x, y=-msg.linear.y, z=-deg(msg.angular.z), timeout=self.timeout)
 
     def has_received_wheel_speeds(self, msg: robomaster_msgs.msg.WheelSpeeds) -> None:
         self.api.drive_wheels(
