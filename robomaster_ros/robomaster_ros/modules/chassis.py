@@ -197,7 +197,7 @@ class Chassis(Module):
             f * G * value for value, f in zip(msg[:3], (1, -1, -1))]
         angular_speed = self.imu_msg.angular_velocity
         (angular_speed.x, angular_speed.y, angular_speed.z) = [
-            f * rad(value) for value, f in zip(msg[3:], (1, -1, -1))]
+            f * value for value, f in zip(msg[3:], (1, -1, -1))]
         # TODO(jerome): better? synchronization (should also check the jittering)
         stamp = self.clock.now().to_msg()
         self.imu_msg.orientation = self.odom_msg.pose.pose.orientation
