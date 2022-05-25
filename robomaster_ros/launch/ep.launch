@@ -82,6 +82,7 @@
   <arg name="camera_calibration_suffix" default=""/>
   <arg name="camera_calibration_directory" default="$(find-pkg-share robomaster_ros)/config"/>
   <arg name="chassis_twist_to_wheel_speeds" default="false"/>
+  <arg name="chassis_force_level" default="false"/>
 
   <include file="$(find-pkg-share robomaster_ros)/launch/main.launch">
     <arg name="with_model_description" value="$(var with_model_description)"/>
@@ -126,6 +127,7 @@
     <arg name="camera_calibration_suffix" value="$(var camera_calibration_suffix)"/>
     <arg name="camera_calibration_directory" value="$(var camera_calibration_directory)"/>
     <arg name="chassis_twist_to_wheel_speeds" value="$(var chassis_twist_to_wheel_speeds)"/>
+    <arg name="chassis_force_level" value="$(var chassis_force_level)"/>
   </include>
 
 </launch>

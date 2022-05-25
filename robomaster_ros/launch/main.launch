@@ -85,6 +85,7 @@
   <arg name="chassis_rate" default="10"/>
   <arg name="chassis_timeout" default="0.0"/>
   <arg name="chassis_twist_to_wheel_speeds" default="false"/>
+  <arg name="chassis_force_level" default="false"/>
 
   <arg name="gimbal" default="$(eval '\'$(var model)\' == \'s1\'')"/>
   <!-- [0, 1, 5, 10, 20, 50] -->
@@ -156,6 +157,7 @@
       <param name="rate" value="$(var chassis_rate)"/>
       <param name="timeout" value="$(var chassis_timeout)"/>
       <param name="twist_to_wheel_speeds" value="$(var chassis_twist_to_wheel_speeds)"/>
+      <param name="force_level" value="$(var chassis_force_level)"/>
     </param>
     <param name="gripper">
       <param name="enabled" value="$(var gripper)"/>

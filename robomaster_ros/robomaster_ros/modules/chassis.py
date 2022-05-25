@@ -9,6 +9,7 @@ import geometry_msgs.msg
 import robomaster_msgs.msg
 import nav_msgs.msg
 import std_srvs.srv
+import rcl_interfaces.msg
 
 import robomaster.robot
 import robomaster.action
@@ -21,7 +22,7 @@ if TYPE_CHECKING:
 
 from .. import Module
 from ..action import add_cb
-from ..utils import deg, rad, rate
+from ..utils import Rate, deg, rad, rate, nearest_rate
 
 RADIUS = 0.05
 AXIS = 0.2
@@ -83,6 +84,8 @@ class Chassis(Module):
         self.api = robot.chassis
         self.twist_to_wheel_speeds: bool = node.declare_parameter(
             "chassis.twist_to_wheel_speeds", False).value
+        self.force_level: bool = node.declare_parameter(
+            "chassis.force_level", False).value
         if self.twist_to_wheel_speeds:
             self.logger.info("topic cmd_vel will control wheel speeds")
         else:
@@ -105,11 +108,7 @@ class Chassis(Module):
         chassis_rate = rate(node, 'chassis', 10)
         status_rate = rate(node, 'chassis.status', 1)
         if chassis_rate:
-            self.api.sub_position(cs=1, freq=chassis_rate, callback=self.updated_position)
-            self.api.sub_velocity(freq=chassis_rate, callback=self.updated_velocity)
-            self.api.sub_attitude(freq=chassis_rate, callback=self.updated_attitude)
-            self.api.sub_imu(freq=chassis_rate, callback=self.updated_imu)
-            self.api.sub_esc(freq=chassis_rate, callback=self.updated_esc)
+            self.subscribe(chassis_rate)
         if status_rate:
             self.api.sub_status(freq=status_rate, callback=self.updated_status)
 
@@ -119,11 +118,39 @@ class Chassis(Module):
 
         # self.goal_handle: Optional[rclpy.action.server.ServerGoalHandle] = None
         self.action: Optional[robomaster.action.Action] = None
+        cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
         self._move_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.Move, 'move', self.execute_move_callback,
-            cancel_callback=self.cancel_move_callback)
+            cancel_callback=self.cancel_move_callback, callback_group=cbg)
         self.engage_server = node.create_service(std_srvs.srv.SetBool, 'engage_wheels',
                                                  self.engage_cb)
+        node.add_on_set_parameters_callback(self.set_params_cb)
+
+    def set_params_cb(self, params: Any) -> rcl_interfaces.msg.SetParametersResult:
+        for param in params:
+            if param.name == 'chassis.timeout':
+                if param.value > 0:
+                    self.timeout = param.value
+                else:
+                    self.timeout = None
+            elif param.name == 'chassis.twist_to_wheel_speeds':
+                self.twist_to_wheel_speeds = param.value
+                if self.twist_to_wheel_speeds:
+                    self.logger.info("topic cmd_vel will control wheel speeds")
+                else:
+                    self.logger.info("topic cmd_vel will control chassis twist")
+            elif param.name == 'chassis.force_level':
+                self.force_level = param.value
+            elif param.name == 'chassis.rate':
+                # TODO(Jerome): push the actual value back
+                chassis_rate = nearest_rate(param.value)
+                self.subscribe(chassis_rate)
+            elif param.name == 'chassis.status':
+                # TODO(Jerome): push the actual value back
+                status_rate = nearest_rate(param.value)
+                if status_rate:
+                    self.api.sub_status(freq=status_rate, callback=self.updated_status)
+        return rcl_interfaces.msg.SetParametersResult(successful=True)
 
     def engage(self, value: bool) -> None:
         proto = robomaster.protocol.ProtoChassisSetWorkMode()
@@ -144,16 +171,28 @@ class Chassis(Module):
                 self.logger.info("wait for the action to terminate")
                 time.sleep(0.1)
 
+    def subscribe(self, rate: Rate) -> None:
+        if rate:
+            # There is no need to unsubscribe
+            self.api.sub_position(cs=1, freq=rate, callback=self.updated_position)
+            self.api.sub_velocity(freq=rate, callback=self.updated_velocity)
+            self.api.sub_attitude(freq=rate, callback=self.updated_attitude)
+            self.api.sub_imu(freq=rate, callback=self.updated_imu)
+            self.api.sub_esc(freq=rate, callback=self.updated_esc)
+
+    def unsubscribe(self) -> None:
+        self.api.unsub_position()
+        self.api.unsub_velocity()
+        self.api.unsub_attitude()
+        self.api.unsub_imu()
+        self.api.unsub_esc()
+
     def stop(self) -> None:
         self._move_action_server.destroy()
         self.engage_server.destroy()
         if self.node.connected:
             self.api.drive_wheels(0, 0, 0, 0)
-            self.api.unsub_position()
-            self.api.unsub_velocity()
-            self.api.unsub_attitude()
-            self.api.unsub_imu()
-            self.api.unsub_esc()
+            self.unsubscribe()
             self.api.unsub_status()
 
     def has_received_twist(self, msg: geometry_msgs.msg.Twist) -> None:
@@ -185,7 +224,14 @@ class Chassis(Module):
     # (yaw, pitch, roll)
     def updated_attitude(self, msg: Tuple[float, float, float]) -> None:
         orientation = self.odom_msg.pose.pose.orientation
-        q = quaternion_from_euler(yaw=-rad(msg[0]), pitch=rad(msg[1]), roll=-rad(msg[2]))
+        yaw = -rad(msg[0])
+        if self.force_level:
+            pitch = 0.0
+            roll = 0.0
+        else:
+            pitch = rad(msg[1])
+            roll = -rad(msg[2])
+        q = quaternion_from_euler(yaw=yaw, pitch=pitch, roll=roll)
         (orientation.x, orientation.y, orientation.z, orientation.w) = (q.x, q.y, q.z, q.w)
 
     # (acc, ang vel)
