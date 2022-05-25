@@ -79,9 +79,10 @@ class Arm(Module):
             self.robot.servo.sub_servo_info(freq=arm_rate, callback=self.updated_arm_servo)
             self.servo_raw_state_pub = node.create_publisher(
                 robomaster_msgs.msg.ServoRawState, 'servo_raw_state', 1)
+        cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
         self._move_arm_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.MoveArm, 'move_arm', self.execute_move_arm_callback,
-            cancel_callback=self.cancel_move_arm_callback)
+            cancel_callback=self.cancel_move_arm_callback, callback_group=cbg)
         # self.goal_handle: Optional[rclpy.action.server.ServerGoalHandle] = None
         self.action: Optional[robomaster.action.Action] = None
 
@@ -140,7 +141,8 @@ class Arm(Module):
     def execute_move_arm_callback(self, goal_handle: Any) -> robomaster_msgs.action.MoveArm.Result:
         # TODO(jerome): Complete with failures, ...
         request = goal_handle.request
-        timeout: Optional[float] = None
+        # timeout: Optional[float] = None
+        timeout: float = 5.0
         if request.relative:
             f = self.api.move
             delta = max(abs(request.x), abs(request.z))
@@ -154,11 +156,12 @@ class Arm(Module):
         else:
             f = self.api.moveto
         try:
-            self.action = f(x=int(request.x * 1000), y=int(request.z * 1000))
+            new_action = f(x=int(request.x * 1000), y=int(request.z * 1000))
         except RuntimeError as e:
             self.logger.warning(f'Cannot move arm: {e}')
             goal_handle.abort()
             return robomaster_msgs.action.MoveArm.Result()
+        self.action = new_action
         self.logger.info(f'Start moving arm with request {request}')
         feedback_msg = robomaster_msgs.action.MoveArm.Feedback()
 

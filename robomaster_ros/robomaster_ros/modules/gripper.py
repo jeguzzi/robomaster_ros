@@ -5,6 +5,7 @@ import threading
 import numpy as np
 
 import rclpy.action
+import rclpy.qos
 
 import robomaster.robot
 import robomaster.gripper
@@ -13,8 +14,7 @@ import robomaster.action
 import robomaster_msgs.msg
 import sensor_msgs.msg
 
-from typing import Any, Optional
-from typing import TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
 
@@ -106,15 +106,21 @@ class Gripper(Module):
         # TODO: record the prismatic joint too
         # self.data = np.insert(self.data, 0, np.linspace(0.001, -0.023, n), axis=0)
         self._xs = np.linspace(0, 1, n)
-        self.gripper_pub = node.create_publisher(robomaster_msgs.msg.GripperState, 'gripper', 1)
+        qos = rclpy.qos.QoSProfile(
+            depth=1,
+            history=rclpy.qos.QoSHistoryPolicy.KEEP_LAST,
+            durability=rclpy.qos.QoSDurabilityPolicy.TRANSIENT_LOCAL)
+        self.gripper_pub = node.create_publisher(robomaster_msgs.msg.GripperState, 'gripper', qos)
         self._gripper_state = -1
         self.query_gripper_state()
         # TODO(jerome): make it latched
         self.should_abort = False
         self._gripper_action_lock = threading.Lock()
+        cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
+        # TODO(Jerome): there is no need to lock when I use exclusive callback groups
         self._gripper_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.GripperControl, 'gripper', self.execute_gripper_callback,
-            cancel_callback=self.cancel_gripper_callback)
+            cancel_callback=self.cancel_gripper_callback, callback_group=cbg)
 
     def stop(self) -> None:
         if self.node.connected:
@@ -163,7 +169,7 @@ class Gripper(Module):
 
         self.gripper.sub_status(freq=10, callback=cb)
 
-        deadline = self.clock.now() + rclpy.duration.Duration(seconds=5)
+        deadline = self.clock.now() + rclpy.duration.Duration(seconds=7)
         while (feedback_msg.current_state != request.target_state and not self.should_abort and
                not goal_handle.is_cancel_requested):
             if(self.clock.now() > deadline):
@@ -171,7 +177,10 @@ class Gripper(Module):
                     f'Deadline to reach gripper target state {request.target_state} elapsed')
                 break
             time.sleep(1 / 10)
-        self.gripper.unsub_status()
+        try:
+            self.gripper.unsub_status()
+        except AttributeError:
+            pass
         if goal_handle.is_cancel_requested:
             self.logger.warn('Canceled gripping')
             goal_handle.canceled()

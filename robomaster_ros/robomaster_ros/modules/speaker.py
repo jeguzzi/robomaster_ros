@@ -20,9 +20,10 @@ class Speaker(Module):
         self.api = robot
         self.logger = node.get_logger()
         self.action: Optional[robomaster.action.Action] = None
+        cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
         self._sound_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.PlaySound, "play", self.execute_play_sound,
-            cancel_callback=self.cancel_callback)
+            cancel_callback=self.cancel_callback, callback_group=cbg)
         self._audio_files: Dict[int, str] = {}
         self._audio_id = 0
 

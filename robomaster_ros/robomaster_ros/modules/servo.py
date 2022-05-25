@@ -103,9 +103,10 @@ class Servo(Module):
         node.create_subscription(robomaster_msgs.msg.ServoCommand, 'cmd_servo',
                                  self.has_received_cmd, 1)
         self.action: Optional[robomaster.action.Action] = None
+        cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
         self._move_servo_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.MoveServo, 'move_servo', self.execute_move_servo_callback,
-            cancel_callback=self.cancel_callback)
+            cancel_callback=self.cancel_callback, callback_group=cbg)
 
     def publish_sensor_raw_state(self, msg: ServoData) -> None:
         omsg = robomaster_msgs.msg.ServoRawState()

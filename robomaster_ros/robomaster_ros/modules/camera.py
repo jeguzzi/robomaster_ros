@@ -6,6 +6,7 @@ from cv_bridge import CvBridge
 import numpy as np
 import yaml
 
+import rclpy
 import robomaster.media
 import robomaster_msgs.msg
 import sensor_msgs.msg
@@ -87,6 +88,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                             self.publish_camera_info = True
                 except FileNotFoundError:
                     self.logger.warn(f"Calibration file not found at {calibration_path}")
+            self.logger.info(f"[Camera] Start video stream with resolution {height}p")
             self.api.start_video_stream(display=False, resolution=f"{height}p")
         self.audio: bool = node.declare_parameter("camera.audio.enabled", True).value
         if self.audio:
@@ -117,10 +119,14 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
 
     # TODO(jerome) Check because we are overwriting a method here!
     # def stop(self) -> None:
+    #     self.logger.info("[Camera] Will stop")
     #     if self.video:
+    #         self.stop_video_stream()
     #         self.api.stop_video_stream()
     #     if self.audio:
+    #         self.stop_audio_stream()
     #         self.api.stop_audio_stream()
+    #     self.logger.info("[Camera] Has stopped")
 
     # TODO(jerome): maybe better a parameter??
     def has_updated_camera_config(self, msg: robomaster_msgs.msg.CameraConfig) -> None:
@@ -174,7 +180,10 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             except queue.Empty:
                 continue
             # self.logger.info("Got msg")
-            self.raw_video_pub.publish(msg)
+            try:
+                self.raw_video_pub.publish(msg)
+            except rclpy._rclpy_pybind11.RCLError:
+                return
             if self.publish_camera_info:
                 self.camera_info_msg.header.stamp = msg.header.stamp
                 self.camera_info_pub.publish(self.camera_info_msg)
