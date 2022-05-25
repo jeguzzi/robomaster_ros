@@ -12,6 +12,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name + '/launch', glob.glob('launch/*.launch')),
+        ('share/' + package_name + '/launch', glob.glob('launch/*.launch.py')),
         ('share/' + package_name + '/config', glob.glob('config/*'))
     ],
     install_requires=['setuptools', 'numpy', 'numpy-quaternion', 'pyyaml', 'robomaster'],
@@ -28,6 +29,8 @@ setup(
             'play_audio = robomaster_ros.play_audio:main',
             'play_opus = robomaster_ros.play_audio_opus:main',
             'display_battery = robomaster_ros.display_battery:main',
+            'connect = robomaster_ros.connect:main',
+            'discover = robomaster_ros.discover:main',
         ],
     },
 )
