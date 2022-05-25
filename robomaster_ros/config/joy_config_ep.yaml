@@ -93,12 +93,17 @@
           axis: 5
           scale: 0.02
           offset: 0
-    # move_arm_b:
-    #   type: action
-    #   interface_type: robomaster_msgs/action/MoveArm
-    #   action_name: move_arm
-    #   action_goal:
-    #     x: -0.02
-    #     z: 0.0
-    #     relative: true
-    #   buttons: [6, 5]
+    engage:
+      type: service
+      interface_type: std_srvs/srv/SetBool
+      service_name: engage_wheels
+      service_request:
+        data: true
+      buttons: [5, 1]
+    disengage:
+      type: service
+      interface_type: std_srvs/srv/SetBool
+      service_name: engage_wheels
+      service_request:
+        data: false
+      buttons: [5, 2]
