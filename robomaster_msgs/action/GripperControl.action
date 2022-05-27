@@ -9,6 +9,7 @@ float32 power 0.5
 ---
 # Result
 # bool success
+builtin_interfaces/Duration duration
 ---
 # Feedback
 uint8 current_state

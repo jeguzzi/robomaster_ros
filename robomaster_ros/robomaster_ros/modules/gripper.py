@@ -6,6 +6,8 @@ import numpy as np
 
 import rclpy.action
 import rclpy.qos
+import rclpy.duration
+import rclpy.time
 
 import robomaster.robot
 import robomaster.gripper
@@ -14,7 +16,7 @@ import robomaster.action
 import robomaster_msgs.msg
 import sensor_msgs.msg
 
-from typing import Any, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING, Optional
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
 
@@ -161,16 +163,26 @@ class Gripper(Module):
         # self.logger.info('Sending ProtoGripperCtrl ...')
         self.gripper._send_sync_proto(proto, robomaster.protocol.host2byte(3, 6))
         # self.logger.info('ProtoGripperCtrl sent')
+        first: Optional[rclpy.time.Time] = None
+        last: Optional[rclpy.time.Time] = None
+        current_state: Optional[int] = None
 
         def cb(msg: int) -> None:
+            nonlocal first
+            nonlocal last
+            nonlocal current_state
+            last = self.clock.now()
+            if not first:
+                first = last
+            current_state = msg
             feedback_msg.current_state = msg
             goal_handle.publish_feedback(feedback_msg)
             self.gripper_state = msg
 
-        self.gripper.sub_status(freq=10, callback=cb)
+        self.gripper.sub_status(freq=20, callback=cb)
 
         deadline = self.clock.now() + rclpy.duration.Duration(seconds=7)
-        while (feedback_msg.current_state != request.target_state and not self.should_abort and
+        while (current_state != request.target_state and not self.should_abort and
                not goal_handle.is_cancel_requested):
             if(self.clock.now() > deadline):
                 self.logger.warning(
@@ -181,6 +193,11 @@ class Gripper(Module):
             self.gripper.unsub_status()
         except AttributeError:
             pass
+        if last and first:
+            duration = last - first
+        else:
+            self.logger.warn('Got no message from gripper')
+            duration = rclpy.duration.Duration()
         if goal_handle.is_cancel_requested:
             self.logger.warn('Canceled gripping')
             goal_handle.canceled()
@@ -190,9 +207,9 @@ class Gripper(Module):
                              f'[{self.gripper_state}] != target state [{request.target_state}]')
         else:
             goal_handle.succeed()
-            self.logger.info('Done moving gripper')
+            self.logger.info(f'Done moving gripper after {duration.nanoseconds / 1e6:.0f} ms')
         self._gripper_action_lock.release()
-        return robomaster_msgs.action.GripperControl.Result()
+        return robomaster_msgs.action.GripperControl.Result(duration=duration.to_msg())
 
     def cancel_gripper_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
         self.logger.info('Canceling gripper action')
