@@ -21,10 +21,11 @@ def main(args: Any = None) -> None:
     info = helper.build_qrcode_string(ssid=args.ssid, password=args.password)
     img = qrcode.make(info)
     img.show()
+    logger = rclpy.logging.get_logger("connect")
     if helper.wait_for_connection():
-        rclpy.logging.get_logger().info("Connected")
+        logger.info("Connected")
     else:
-        rclpy.logging.get_logger().error("Connection failed")
+        logger.error("Connection failed")
     # TODO(Jerome): close the image display
     # As of now, it will leave the window open because `img.show`
     # spawns a separate process to display an image

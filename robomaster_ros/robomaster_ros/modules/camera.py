@@ -182,7 +182,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             # self.logger.info("Got msg")
             try:
                 self.raw_video_pub.publish(msg)
-            except rclpy._rclpy_pybind11.RCLError:
+            except rclpy._rclpy_pybind11.RCLError:  # type: ignore
                 return
             if self.publish_camera_info:
                 self.camera_info_msg.header.stamp = msg.header.stamp

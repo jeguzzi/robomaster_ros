@@ -14,7 +14,7 @@ import std_msgs.msg
 
 import rclpy.logging
 
-from typing import Tuple, Any, Optional
+from typing import Tuple, Any, Optional, cast
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
@@ -129,8 +129,9 @@ class Gimbal(Module):
             try:
                 self.logger.info("Will lock")
                 # Sent at least a (unit) 1, else it won't execute the action on board and change state
-                move(self.api, yaw=0.5).wait_for_completed()
-                move(self.api, yaw=-0.5).wait_for_completed()
+                # TODO(Jerome): check timeouts
+                move(self.api, yaw=0.5).wait_for_completed(timeout=2)
+                move(self.api, yaw=-0.5).wait_for_completed(timeout=2)
                 self.logger.info("Locked")
             except Exception as e:  # noqa
                 self.logger.warning(f'Cannot move gimbal: {e}')
@@ -169,10 +170,11 @@ class Gimbal(Module):
         feedback_msg = robomaster_msgs.action.MoveGimbal.Feedback()
 
         def cb() -> None:
-            feedback_msg.progress = self.move_action._percent * 0.01
+            feedback_msg.progress = cast(robomaster.action.Action, self.move_action)._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
         add_cb(self.move_action, cb)
         self.logger.info(f'Start moving gimbal with request {request}')
+        # TODO(Jerome) add timeout
         self.move_action.wait_for_completed()
         if self.move_action.has_succeeded:
             goal_handle.succeed()
@@ -198,10 +200,12 @@ class Gimbal(Module):
         feedback_msg = robomaster_msgs.action.RecenterGimbal.Feedback()
 
         def cb() -> None:
-            feedback_msg.progress = self.recenter_action._percent * 0.01
+            feedback_msg.progress = cast(
+                robomaster.action.Action, self.recenter_action)._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
         add_cb(self.recenter_action, cb)
         self.logger.info(f'Start recentering gimbal after request {request}')
+        # TODO(Jerome) add timeout
         self.recenter_action.wait_for_completed()
         if self.recenter_action.has_succeeded:
             goal_handle.succeed()

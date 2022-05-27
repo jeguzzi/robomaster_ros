@@ -10,7 +10,7 @@ import sensor_msgs.msg
 
 from .servo import ServoData, RMServo
 
-from typing import Dict, Tuple, Any, Optional
+from typing import Dict, Tuple, Any, Optional, cast
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
@@ -167,7 +167,7 @@ class Arm(Module):
 
         def cb() -> None:
             # self.logger.info(f'Moving arm ... {action._percent}')
-            feedback_msg.progress = self.action._percent * 0.01
+            feedback_msg.progress = cast(robomaster.action.Action, self.action)._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
         add_cb(self.action, cb)
         self.action.wait_for_completed(timeout=timeout)

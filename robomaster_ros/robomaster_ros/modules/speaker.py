@@ -7,7 +7,7 @@ import robomaster_msgs.msg
 
 from ..action import add_cb
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, cast
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
@@ -78,14 +78,15 @@ class Speaker(Module):
         progress = [2.0]
 
         def cb() -> None:
-            feedback_msg.progress = self.action._percent * 0.01
+            feedback_msg.progress = cast(robomaster.action.Action, self.action)._percent * 0.01
             if feedback_msg.progress < progress[0]:
                 feedback_msg.time += 1
             progress[0] = feedback_msg.progress
             goal_handle.publish_feedback(feedback_msg)
 
         add_cb(self.action, cb)
-        self.action.wait_for_completed()
+        # TODO(Jerome): relax
+        self.action.wait_for_completed(timeout=10)
         if self.action.has_succeeded:
             goal_handle.succeed()
         elif goal_handle.is_cancel_requested:

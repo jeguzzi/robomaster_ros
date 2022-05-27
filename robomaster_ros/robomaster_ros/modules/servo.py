@@ -9,7 +9,7 @@ import sensor_msgs.msg
 import robomaster_msgs.msg
 import robomaster_msgs.action
 
-from typing import Dict, List, Tuple, Any, Optional
+from typing import Dict, List, Tuple, Any, Optional, cast
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
@@ -144,10 +144,11 @@ class Servo(Module):
         self.logger.info(f'Start moving servo with request {request}')
 
         def cb() -> None:
-            feedback_msg.progress = self.action._percent * 0.01
+            feedback_msg.progress = cast(robomaster.action.Action, self.action)._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
         add_cb(self.action, cb)
-        self.action.wait_for_completed()
+        # TODO(Jerome): parametrize timeput
+        self.action.wait_for_completed(timeout=7)
         if self.action.has_succeeded:
             goal_handle.succeed()
         elif goal_handle.is_cancel_requested:
