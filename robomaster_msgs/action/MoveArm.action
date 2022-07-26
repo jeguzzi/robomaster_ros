@@ -1,10 +1,14 @@
-# Request
-float32 x
-float32 z
-bool relative
+# An action to move the arm end effector using the onboard control.
+# Coodinates may be relative to the current end effector position or
+# absolute with respect to ``arm_base_link``.
+#
+# The action succeeds when the end effector come closest to the target point as possible
+# .. note:: it may not be able to reach the target point
+
+float32 x         # target x-coordinate in meter (x-axis points forwards)
+float32 z         # target z-coordinate in meter (z-axis points upwards)
+bool relative     # whenever the coordinates are relative or absolute.
 ---
-# Result
-# bool success
+
 ---
-# Feedback
-float32 progress
+float32 progress  # the relative progress towards goal from 0 to 1

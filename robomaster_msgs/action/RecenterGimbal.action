@@ -1,8 +1,12 @@
-float32 yaw_speed 1.04
-float32 pitch_speed 1.04
+# An action to recenter the gimbal using the onboard control
+# distict from :ros:action:`MoveGimbal` to trigger a specific onboard action.
+#
+# The action succeeds when the gimbal reaches the neutral orientation.
+
+
+float32 yaw_speed 1.04   # maximal yaw rotation speed in rad/s
+float32 pitch_speed 1.04 # maximal pitch rotation speed in rad/s
 ---
-# Result
-# bool success
+
 ---
-# Feedback
-float32 progress
+float32 progress         # the relative progress towards goal from 0 to 1

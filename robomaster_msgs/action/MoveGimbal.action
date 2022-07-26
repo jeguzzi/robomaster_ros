@@ -1,23 +1,23 @@
-# The frames
-# gravity aligned, origin set at boot
-# (same as chassis odometry and imu)
-uint8 FIXED=0
-# Attached to gimbal, useful to send relative movements.
-uint8 GIMBAL=1
-# Yaw aligned to chassis, pitch as in GIMBAL
-uint8 CHASSIS_GIMBAL_PITCH=2
-# Yaw aligned to chassis, pitch as in FIXED
-uint8 CHASSIS_FIXED_PITCH=3
+# An action to rotate the gimbal using the onboard control.
+# Attitute can be specified in four different frames.
+#
+# The action succeeds when the gimbal reaches the target orientation.
 
-# Request
-float32 yaw
-float32 pitch
-float32 yaw_speed 0.52
-float32 pitch_speed 0.52
-uint8 frame 3
+uint8 FIXED=0                # Frame: gravity aligned, origin set at boot
+                             # (same frame as chassis odometry and imu)
+uint8 GIMBAL=1               # Frame: attached to gimbal, useful to send relative movements.
+uint8 CHASSIS_GIMBAL_PITCH=2 # Frame: yaw aligned to chassis, pitch as in GIMBAL
+uint8 CHASSIS_FIXED_PITCH=3  # Frame: yaw aligned to chassis, pitch as in FIXED
+
+float32 yaw                  # target yaw in rad
+float32 pitch                # target pitch in rad
+float32 yaw_speed 0.52       # maximal yaw rotation speed in rad/s
+float32 pitch_speed 0.52     # maximal pitch rotation speed in rad/s
+uint8 frame 3                # the frame in which target orientation is specified.
+                             # One of ``FIXED``, ``GIMBAL``, ``CHASSIS_GIMBAL_PITCH``,
+                             # or ``CHASSIS_FIXED_PITCH``
 ---
-# Result
-# bool success
+
 ---
-# Feedback
-float32 progress
+
+float32 progress             # the relative progress towards goal from 0 to 1

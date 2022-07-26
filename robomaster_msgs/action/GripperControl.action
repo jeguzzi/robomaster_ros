@@ -1,15 +1,19 @@
-uint8 PAUSE=0
-uint8 CLOSE=2
-uint8 OPEN=1
+# The gripper goal to open, close, or pause, by applying some power.
+#
+# The action succeeds when the gripper reaches the the target state.
 
-# Request
-uint8 target_state
-# in [0, 1]
-float32 power 0.5
+uint8 PAUSE=0                        # the gripper state when manually stopped
+uint8 OPEN=1                         # the open gripper state
+uint8 CLOSE=2                        # the closed gripper state
+
+uint8 target_state                   # the target gripper state:
+                                     # one of ``PAUSE``, ``OPEN``, or ``CLOSE``
+float32 power 0.5                    # the relative amount of power in [0, 1]
 ---
-# Result
-# bool success
-builtin_interfaces/Duration duration
+
+builtin_interfaces/Duration duration # the duration of the action
+
 ---
-# Feedback
-uint8 current_state
+
+uint8 current_state                  # the current gripper state:
+                                     # one of ``PAUSE``, ``OPEN``, or ``CLOSE``

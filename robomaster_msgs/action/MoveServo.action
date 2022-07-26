@@ -1,9 +1,10 @@
-# Request
-uint8 index
-float32 angle
+# An action to rotate a servo using the onboard control.
+#
+# The action succeeds when the servo reaches the target angle.
+
+uint8 index       # ID of the servo (between 0 and 2)
+float32 angle     # absolute target angle in rad
 ---
-# Result
-# bool success
+
 ---
-# Feedback
-float32 progress
+float32 progress  # the relative progress towards goal from 0 to 1

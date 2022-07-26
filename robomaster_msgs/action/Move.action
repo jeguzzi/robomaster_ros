@@ -1,12 +1,15 @@
-# Request
-float32 x
+# An action to move the robot relative to its current pose,
+# at desired angular and linear speeds using the onboard control.
+#
+# The action succeeds when the robot arrives near the goal pose.
+
+float32 x                     # target relative position
+                              # (longitudinal component with positive towards front)
 float32 y
-float32 theta
-float32 linear_speed 0.5      # 0.5 m/s
-float32 angular_speed 0.5236  #  30 deg/s
+float32 theta                 # target relative angle in rad
+float32 linear_speed 0.5      # maximal linear speed in m/s
+float32 angular_speed 0.5236  # maximal angular speed in rad/s (default is 30 deg/s)
 ---
-# Result
-# bool success
+
 ---
-# Feedback
-float32 progress
+float32 progress              # the relative progress towards goal from 0 to 1

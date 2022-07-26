@@ -1,5 +1,7 @@
-uint8 id
-uint8 port
+# Command to read an IO pin state of sensor adapters.
+
+uint8 id     # 0 or 1: ID of one of two interfaces of a sensor adapter
+uint8 port   # 0, 1, 2, or 3: ID of one of the 4 sensor adapter that can be connected to the robot
 ---
-bool valid
-uint8 value
+bool valid   # whenever the sensor adapter is enabled
+uint8 value  # the pin state (0 or 1)

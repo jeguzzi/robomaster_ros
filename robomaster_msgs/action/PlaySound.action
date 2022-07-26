@@ -1,11 +1,12 @@
-# Request
-uint8 sound_id 1
-uint8 times 1
-string file ""
+# An action to play a predefined sound or an audio file from the speaker.
+#
+# The action succeeds when the speaker finishes to play.
+
+int32 sound_id 1  # ID of the sound to play
+uint8 times 1     # how many times to play the same sound
+string file ""    # if not empry, the local file to be played.
 ---
-# Result
-# bool success
+
 ---
-# Feedback
-uint8 time
-float32 progress
+uint8 time        # the current count of sound repetitions
+float32 progress  # the relative progress towards goal from 0 to 1
