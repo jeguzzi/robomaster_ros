@@ -10,6 +10,7 @@ import rclpy
 import robomaster.media
 import robomaster_msgs.msg
 import sensor_msgs.msg
+import rcl_interfaces.msg
 # import rclpy.duration
 
 from typing import TYPE_CHECKING, Optional, Dict, Any
@@ -103,6 +104,24 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             self.audio_level_pub = node.create_publisher(
                 robomaster_msgs.msg.AudioLevel, 'camera/audio_level', 1)
             self.api.start_audio_stream()
+
+        # TODO(Jerome): disabled beacuse setting the resolution is not working ... why?
+        # node.add_on_set_parameters_callback(self.set_params_cb)
+
+    def set_params_cb(self, params: Any) -> rcl_interfaces.msg.SetParametersResult:
+        success = True
+        for param in params:
+            if param.name == 'camera.video.resolution' and self.video:
+                if param.value in (360, 540, 720):
+                    self.logger.info(f"Will set resolution to {param.value}")
+                    self.api.stop_video_stream()
+                    self.api.start_video_stream(display=False, resolution=f"{param.value}p")
+                    self.logger.info(f"Has set resolution to {param.value}")
+                else:
+                    success = False
+                    self.logger.warning(
+                        f"Resolution {param.value} not supported. Should be 360, 540, or 720")
+        return rcl_interfaces.msg.SetParametersResult(successful=success)
 
     def start_video_stream(self, display: bool = False, addr: Optional[str] = None,
                            ip_proto: str = "tcp") -> None:

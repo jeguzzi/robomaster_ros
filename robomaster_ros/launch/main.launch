@@ -1,58 +1,47 @@
 <launch>
 
-  <arg name="name" default="" description="a name used as ROS namespace"/>
-  <arg name="model" default="ep"/>
-  <arg name="with_model_description" default="true"/>
-  <arg name="serial_number" default=""/>
-  <arg name="conn_type" default="sta"/>
-  <arg name="log_level" default="info"/>
-  <arg name="lib_log_level" default="ERROR"/>
-  <arg name="joint_state_rate" default="10.0"/>
+  <arg name="name" default="" description="A name used as ROS namespace"/>
+  <arg name="model" default="ep" description="The type of robot: ep or s1"/>
+  <arg name="with_model_description" default="true" description="Enables publishing the robot model"/>
+  <arg name="log_level" default="info" description="ROS logging level"/>
+  <!-- CLIENT -->
+  <arg name="serial_number" default="" description="The serial number of the robot. Leave empty to ignore it."/>
+  <arg name="conn_type" default="sta" description="The type of connection: sta, ap, or rndis"/>
+  <arg name="lib_log_level" default="ERROR" description="Robomaster SDK logging level"/>
+  <arg name="reconnect" default="true" description="Wait for reconnections"/>
 
-  <arg name="arm" default="$(eval '\'$(var model)\' == \'ep\'')"/>
-  <arg name="left_motor_zero" default="1024"/>
-  <arg name="right_motor_zero" default="1024"/>
-  <arg name="left_motor_angle" default="0.073304"/>
-  <arg name="right_motor_angle" default="-0.274016"/>
-  <arg name="left_motor_direction" default="1"/>
-  <arg name="right_motor_direction" default="-1"/>
+  <arg name="arm" default="$(eval '\'$(var model)\' == \'ep\'')" description="Enable the arm module. Should not be enabled together with the servo module"/>
+  <arg name="left_motor_zero" default="1024" description="The arm left servo zero value"/>
+  <arg name="right_motor_zero" default="1024" description="The arm right servo zero value"/>
+  <arg name="left_motor_angle" default="0.073304" description="The arm left servo zero angle"/>
+  <arg name="right_motor_angle" default="-0.274016" description="The arm right servo zero angle"/>
+  <arg name="left_motor_direction" default="1" description="The arm left servo direction"/>
+  <arg name="right_motor_direction" default="-1" description="The arm right servo direction"/>
 
-  <arg name="arm_rate" default="10"/>
+  <arg name="arm_rate" default="10" description="The update rate for the arm state"/>
 
-  <arg name="armor" default="false"/>
-  <arg name="armor_sensitivity" default="0.5"/>
+  <arg name="armor" default="false" description="Enable the armor module"/>
+  <arg name="armor_sensitivity" default="0.5" description="Armor sensitivity"/>
 
-  <arg name="battery" default="true"/>
+  <arg name="battery" default="true" description="Enable the battery module"/>
 
-  <arg name="led" default="true"/>
+  <arg name="led" default="true" description="Enable the LED module"/>
 
-  <arg name="speaker" default="true"/>
+  <arg name="speaker" default="true" description="Enable the speaker module"/>
 
-  <arg name="blaster" default="$(eval '\'$(var model)\' == \'s1\'')"/>
+  <arg name="blaster" default="$(eval '\'$(var model)\' == \'s1\'')" description="Enable the blaster module"/>
 
-  <arg name="gripper" default="$(eval '\'$(var model)\' == \'ep\'')"/>
+  <arg name="gripper" default="$(eval '\'$(var model)\' == \'ep\'')" description="Enable the gripper module"/>
 
-  <arg name="sbus" default="false"/>
+  <arg name="sbus" default="false" description="Enable the sbus module"/>
 
-  <arg name="servo" default="false"/>
+  <arg name="servo" default="false" description="Enable the servo module. Should not be enabled together with the arm module"/>
 
-  <arg name="tof_0" default="False"/>
-  <arg name="tof_0_parent" default="base_link"/>
-  <arg name="tof_0_xyz" default="0 0 0"/>
-  <arg name="tof_0_rpy" default="0 0 0"/>
-  <arg name="tof_1" default="False"/>
-  <arg name="tof_1_parent" default="base_link"/>
-  <arg name="tof_1_xyz" default="0 0 0"/>
-  <arg name="tof_1_rpy" default="0 0 0"/>
-  <arg name="tof_2" default="False"/>
-  <arg name="tof_2_parent" default="base_link"/>
-  <arg name="tof_2_xyz" default="0 0 0"/>
-  <arg name="tof_2_rpy" default="0 0 0"/>
-  <arg name="tof_3" default="False"/>
-  <arg name="tof_3_parent" default="base_link"/>
-  <arg name="tof_3_xyz" default="0 0 0"/>
-  <arg name="tof_3_rpy" default="0 0 0"/>
-  <arg name="tof_rate" default="10"/>
+  <arg name="tof_0" default="False" description="Enable ToF sensor #0"/>
+  <arg name="tof_1" default="False" description="Enable ToF sensor #1"/>
+  <arg name="tof_2" default="False" description="Enable ToF sensor #2"/>
+  <arg name="tof_3" default="False" description="Enable ToF sensor #3"/>
+  <arg name="tof_rate" default="10" description="Update rate for ToF sensors"/>
   <let name="tof"
     value="$(eval '\'$(var tof_0)\' in (\'true\', \'True\') or
                    \'$(var tof_1)\' in (\'true\', \'True\') or
@@ -60,52 +49,62 @@
                    \'$(var tof_3)\' in (\'true\', \'True\')')"/>
 
   <!-- e.g., marker:red, robot -->
-  <arg name="vision_targets" default="[]"/>
+  <arg name="vision_targets" default="[]" description="Enable one or more vision detection"/>
   <let name="vision" value="$(eval 'len($(var vision_targets)) > 0')"/>
 
-  <arg name="sensor_adapter" default="false"/>
+  <arg name="sensor_adapter" default="false" description="Enable the sensor adapter module"/>
   <!-- [0, 1, 5, 10, 20, 50] -->
-  <arg name="sensor_adapter_rate" default="10"/>
+  <arg name="sensor_adapter_rate" default="10" description="Update rate for sensor adapters"/>
 
-  <arg name="uart_data_bit" default="0"/>
-  <arg name="uart_odd_even" default="0"/>
-  <arg name="uart_stop_bit" default="0"/>
-  <arg name="uart_rx_enable" default="false"/>
-  <arg name="uart_tx_enable" default="false"/>
-  <arg name="uart_rx_size" default="50"/>
-  <arg name="uart_tx_size" default="50"/>
+  <arg name="uart_baudrate" default="115200" description="UART baudrate"/>
+  <arg name="uart_data_bit" default="0" description="UART data bit"/>
+  <arg name="uart_odd_even" default="0" description="UART parity"/>
+  <arg name="uart_stop_bit" default="0" description="UART stop bit"/>
+  <arg name="uart_rx_enable" default="false" description="Enable UART RX"/>
+  <arg name="uart_tx_enable" default="false" description="Enable UART TX"/>
+  <arg name="uart_rx_size" default="50" description="UART RX buffer size"/>
+  <arg name="uart_tx_size" default="50" description="UART TX buffer size"/>
   <let name="uart" value="$(eval '\'$(var uart_rx_enable)\' in (\'true\', \'True\') or \'$(var uart_tx_enable)\' in (\'true\', \'True\')')"/>
 
   <!-- e.g., <= 0 -> None -->
-  <arg name="pwm_frequencies" default="[-1,-1,-1,-1,-1,-1]"/>
+  <arg name="pwm_frequencies" default="[-1,-1,-1,-1,-1,-1]" description="PWM dfrequencies. Enable the PWM module when at least one is positive."/>
   <let name="pwm" value="$(eval 'max($(var pwm_frequencies)) > 0')"/>
 
-  <arg name="chassis" default="true"/>
-  <!-- [0, 1, 5, 10, 20, 50] -->
-  <arg name="chassis_rate" default="10"/>
-  <arg name="chassis_timeout" default="0.0"/>
-  <arg name="chassis_twist_to_wheel_speeds" default="false"/>
-  <arg name="chassis_force_level" default="false"/>
+  <!-- CHASSIS -->
+  <arg name="chassis" default="true" description="Enables chassis module, see :ros:param:`chassis.enabled` "/>
+  <arg name="chassis_rate" default="10" description="Chassis update rate: one of 0, 1, 5, 10, 20, 50. See :ros:param:`chassis.rate`"/>
+  <arg name="chassis_status_rate" default="1" description="Chassis status update rate: one of 0, 1, 5, 10, 20, 50. See :ros:param:`chassis.rate`"/>
+  <arg name="chassis_timeout" default="0.0" description="Chassis control timeout in seconds. See :ros:param:`chassis.timeout`"/>
+  <arg name="chassis_twist_to_wheel_speeds" default="false" description="Enables `cmd_vel` translation to wheel speeds. See :ros:param:`chassis.twist_to_wheel_speeds`"/>
+  <arg name="chassis_force_level" default="false" description="Force the state estimation to stay horizontal. See :ros:param:`chassis.force_level`"/>
+  <arg name="chassis_imu_includes_orientation" default="true" description="Include orientation in `imu`. See :ros:param:`chassis.imu_includes_orientation`"/>
+  <arg name="chassis_error_linear_velocity" default="0.005" description="State estimation error -- linear velocity. See :ros:param:`chassis.error.linear_velocity.xy`"/>
+  <arg name="chassis_error_angular_velocity_xy" default="0.01" description="State estimation error -- non horizontal angular velocity. See :ros:param:`chassis.error.angular_velocity.xy`"/>
+  <arg name="chassis_error_angular_velocity_z" default="0.03" description="State estimation error -- horizontal angular velocity. See :ros:param:`chassis.error.angular_velocity.z`"/>
+  <arg name="chassis_error_linear_acceleration" default="0.1" description="State estimation error -- linear acceleration. See :ros:param:`chassis.error.linear_acceleration.xyz`"/>
 
-  <arg name="gimbal" default="$(eval '\'$(var model)\' == \'s1\'')"/>
+  <arg name="gimbal" default="$(eval '\'$(var model)\' == \'s1\'')" description="Enables gimbal module"/>
   <!-- [0, 1, 5, 10, 20, 50] -->
-  <arg name="gimbal_rate" default="10"/>
+  <arg name="gimbal_rate" default="10" description="Update rate for gimbal state"/>
   <!-- 0: FREE, 1: GIMBAL_LEAD, 2: CHASSIS_LEAD -->
-  <arg name="gimbal_mode" default="2"/>
+  <arg name="gimbal_mode" default="2" description="Gimbal-chassis coontrol coupling"/>
 
-  <arg name="video_resolution" default="360"/>
-  <arg name="video_raw" default="true"/>
-  <arg name="video_h264" default="false"/>
-  <arg name="video_compressed" default="false"/>
-  <arg name="audio_raw" default="false"/>
-  <arg name="audio_opus" default="false"/>
+  <arg name="video_resolution" default="360" description="Video resolution: 360, 540 or 720 pixels height"/>
+  <arg name="video_raw" default="true" description="Enables publishing decoded video stream"/>
+  <arg name="video_h264" default="false" description="Enables publishing original H264 encoded video stream"/>
+  <!-- <arg name="video_compressed" default="false"/> -->
+  <arg name="audio_raw" default="false" description="Enables publishing decoded audio stream"/>
+  <arg name="audio_opus" default="false" description="Enables publishing original OPUS encoded audio stream"/>
   <let name="video" value="$(eval '\'$(var video_raw)\' in (\'true\', \'True\') or \'$(var video_h264)\' in (\'true\', \'True\')')"/>
   <let name="audio" value="$(eval '\'$(var audio_raw)\' in (\'true\', \'True\') or \'$(var audio_opus)\' in (\'true\', \'True\')')"/>
   <let name="camera" value="$(eval '$(var audio) or $(var video)')"/>
-  <arg name="camera_calibration_suffix" default=""/>
-  <arg name="display_battery" default="off"/>
+  <arg name="camera_calibration_suffix" default="" description="The suffix to append to the camera calibration file"/>
 
-  <arg name="camera_calibration_directory" default="$(find-pkg-share robomaster_ros)/config"/>
+  <!-- <arg name="display_battery" default="off"/> -->
+
+  <arg name="camera_calibration_directory" default="$(find-pkg-share robomaster_ros)/config" description="The location of the camera calibration files"/>
+  <arg name="camera_calibration_file" default="$(var camera_calibration_directory)/rm_camera_calibration_$(var video_resolution)$(var camera_calibration_suffix).yaml" description="The camera calibration file"/>
+
   <!-- $(env HOME)/.ros -->
 
   <push-ros-namespace namespace="$(var name)"/>
@@ -144,7 +143,7 @@
         <param name="raw" value="$(var video_raw)"/>
         <param name="h264" value="$(var video_h264)"/>
         <param name="resolution" value="$(var video_resolution)"/>
-        <param name="calibration_file" value="$(var camera_calibration_directory)/rm_camera_calibration_$(var video_resolution)$(var camera_calibration_suffix).yaml"/>
+        <param name="calibration_file" value="$(var camera_calibration_file)"/>
       </param>
       <param name="audio">
         <param name="enabled" value="$(var audio)"/>
@@ -155,9 +154,17 @@
     <param name="chassis">
       <param name="enabled" value="$(var chassis)"/>
       <param name="rate" value="$(var chassis_rate)"/>
+      <param name="status.rate" value="$(var chassis_status_rate)"/>
       <param name="timeout" value="$(var chassis_timeout)"/>
       <param name="twist_to_wheel_speeds" value="$(var chassis_twist_to_wheel_speeds)"/>
       <param name="force_level" value="$(var chassis_force_level)"/>
+      <param name="imu_includes_orientation" value="$(var chassis_imu_includes_orientation)"/>
+      <param name="error">
+        <param name="linear_velocity.xy" value="$(var chassis_error_linear_velocity)"/>
+        <param name="angular_velocity.x" value="$(var chassis_error_angular_velocity_xy)"/>
+        <param name="angular_velocity.z" value="$(var chassis_error_angular_velocity_z)"/>
+        <param name="linear_acceleration.xyz" value="$(var chassis_error_linear_acceleration)"/>
+      </param>
     </param>
     <param name="gripper">
       <param name="enabled" value="$(var gripper)"/>
@@ -188,6 +195,7 @@
       <param name="data_bit" value="$(var uart_data_bit)"/>
       <param name="odd_even" value="$(var uart_odd_even)"/>
       <param name="stop_bit" value="$(var uart_stop_bit)"/>
+      <param name="baudrate" value="$(var uart_baudrate)"/>
       <param name="rx">
         <param name="enabled" value="$(var uart_rx_enable)"/>
         <param name="size" value="$(var uart_rx_size)"/>
@@ -213,36 +221,21 @@
 
   <include file="$(find-pkg-share robomaster_description)/launch/main.launch" if="$(var with_model_description)">
     <arg name="name" value="$(var name)"/>
-    <arg name="gui" value="false"/>
     <arg name="model" value="$(var model)"/>
-    <arg name="rate" value="$(var joint_state_rate)"/>
-
     <arg name="tof_0" value="$(var tof_0)"/>
-    <arg name="tof_0_parent" value="$(var tof_0_parent)"/>
-    <arg name="tof_0_xyz" value="$(var tof_0_xyz)"/>
-    <arg name="tof_0_rpy" value="$(var tof_0_rpy)"/>
     <arg name="tof_1" value="$(var tof_1)"/>
-    <arg name="tof_1_parent" value="$(var tof_1_parent)"/>
-    <arg name="tof_1_xyz" value="$(var tof_1_xyz)"/>
-    <arg name="tof_1_rpy" value="$(var tof_1_rpy)"/>
     <arg name="tof_2" value="$(var tof_2)"/>
-    <arg name="tof_2_parent" value="$(var tof_2_parent)"/>
-    <arg name="tof_2_xyz" value="$(var tof_2_xyz)"/>
-    <arg name="tof_2_rpy" value="$(var tof_2_rpy)"/>
     <arg name="tof_3" value="$(var tof_3)"/>
-    <arg name="tof_3_parent" value="$(var tof_3_parent)"/>
-    <arg name="tof_3_xyz" value="$(var tof_3_xyz)"/>
-    <arg name="tof_3_rpy" value="$(var tof_3_rpy)"/>
   </include>
 
   <!-- <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out/compressed:=/camera/image_raw" if="$(var video_compressed)" /> -->
 
-  <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
+  <!-- <node name="display_battery" pkg="robomaster_ros" exec="display_battery" output="screen"
      if="$(eval '\'$(var display_battery)\' != \'off\' and \'$(var gimbal)\' in (\'true\', \'True\')')">
     <param name='side' value="$(var display_battery)"/>
-  </node>
+  </node> -->
 
-  <push-ros-namespace namespace="camera"/>
+  <!-- <push-ros-namespace namespace="camera"/> -->
 
   <!-- <include file="$(find-pkg-share robomaster_ros)/launch/camera_proc.launch.py" if="$(var video_raw)">
   </include> -->

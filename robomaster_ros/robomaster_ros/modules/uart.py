@@ -14,7 +14,7 @@ class Uart(Module):
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.api = robot.uart
         self.node = node
-        baud_rate: int = node.declare_parameter('uart.baud_rate', 0).value
+        baud_rate: int = node.declare_parameter('uart.baud_rate', 115200).value
         baud_rates = [9600, 19200, 38400, 57600, 115200]
         baud_rate = nearest_index(baud_rate, baud_rates)
         # TODO(jerome) : complete

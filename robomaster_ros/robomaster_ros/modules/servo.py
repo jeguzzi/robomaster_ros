@@ -34,7 +34,6 @@ def rpm(angular_speed: float) -> float:
 class RMServo:
     index: int
     valid: bool
-    zero: float
     value: int
     speed_value: int
     direction: int  # Literal[-1, 1]

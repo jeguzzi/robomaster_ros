@@ -11,11 +11,14 @@ from robomaster_ros.client import RoboMasterROS
 def main(args: Any = None) -> None:
     rclpy.init(args=args)
     executor = rclpy.executors.MultiThreadedExecutor()
-    # TODO(Jerome): xurrently not triggered by ctrl+C
+    # TODO(Jerome): currently not triggered by ctrl+C
     # rclpy.get_default_context().on_shutdown(...)
     should_reconnect = True
     while should_reconnect:
-        node = RoboMasterROS(executor=executor)
+        try:
+            node = RoboMasterROS(executor=executor)
+        except KeyboardInterrupt:
+            break
         should_reconnect = node.reconnect
         if not node.disconnection.done():
             try:
@@ -32,4 +35,5 @@ def main(args: Any = None) -> None:
         node.destroy_node()
         time.sleep(0.1)
     if rclpy.ok():
+        # TODO(Jerome): maybe remove, as probably never needed
         rclpy.shutdown()

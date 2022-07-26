@@ -11,6 +11,7 @@ import robomaster_msgs.msg
 import sensor_msgs.msg
 import std_srvs.srv
 import std_msgs.msg
+import rcl_interfaces.msg
 
 import rclpy.logging
 
@@ -20,8 +21,8 @@ if TYPE_CHECKING:
     from ..client import RoboMasterROS
 
 from .. import Module
-from ..action import add_cb
-from ..utils import rate, rad, deg
+from ..action import wait_action
+from ..utils import rate, nearest_rate, rad, deg, Rate
 
 GimbalData = Tuple[float, float, float, float]
 
@@ -65,25 +66,41 @@ class Gimbal(Module):
 
         gimbal_rate = rate(node, 'gimbal', 10)
         if gimbal_rate:
-            self.api.sub_angle(freq=gimbal_rate, callback=self.updated_gimbal_position)
+            self.subscribe(gimbal_rate)
         node.create_subscription(robomaster_msgs.msg.GimbalCommand, 'cmd_gimbal',
                                  self.has_received_command, 1)
         # Latched
-        node.create_subscription(robomaster_msgs.msg.Mode, 'mode', self.has_received_mode, 1)
-        node.create_subscription(std_msgs.msg.Bool, 'lock', self.has_received_lock, 1)
-        node.create_subscription(std_msgs.msg.Bool, 'activate', self.has_received_activate, 1)
-        node.create_service(std_srvs.srv.SetBool, 'set_status', self.set_status_cb)
+        node.create_subscription(robomaster_msgs.msg.Mode, 'gimabl/mode', self.has_received_mode, 1)
+        node.create_subscription(std_msgs.msg.Bool, 'gimbal/lock', self.has_received_lock, 1)
+        node.create_subscription(std_msgs.msg.Bool, 'gimbal/engage', self.has_received_engage, 1)
+        cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
+        # node.create_service(std_srvs.srv.SetBool, 'gimbal/engage', self.set_status_cb)
         self._move_gimbal_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.MoveGimbal, 'move_gimbal',
             self.execute_move_gimbal_callback,
-            cancel_callback=self.cancel_move_gimbal_callback)
+            cancel_callback=self.cancel_gimbal_callback,
+            callback_group=cbg)
         # Do I need the recenter action too? ... let's add it ... then I decide if I should keep it
         self._recenter_gimbal_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.RecenterGimbal, 'recenter_gimbal',
             self.execute_recenter_gimbal_callback,
-            cancel_callback=self.cancel_recenter_gimbal_callback)
-        self.recenter_action: Optional[robomaster.action.Action] = None
-        self.move_action: Optional[robomaster.action.Action] = None
+            cancel_callback=self.cancel_gimbal_callback,
+            callback_group=cbg)
+        self.action: Optional[robomaster.action.Action] = None
+        node.add_on_set_parameters_callback(self.set_params_cb)
+
+    def subscribe(self, rate: Rate) -> None:
+        if rate:
+            self.api.sub_angle(freq=rate, callback=self.updated_gimbal_position)
+
+    def set_params_cb(self, params: Any) -> rcl_interfaces.msg.SetParametersResult:
+        for param in params:
+            if 'gimbal' not in param.name:
+                continue
+            if param.name == 'gimbal.rate':
+                param.value = nearest_rate(param.value)
+                self.subscribe(param.value)
+        return rcl_interfaces.msg.SetParametersResult(successful=True)
 
     def stop(self) -> None:
         if self.node.connected:
@@ -92,23 +109,21 @@ class Gimbal(Module):
         self._recenter_gimbal_action_server.destroy()
 
     def abort(self) -> None:
-        if self.move_action:
-            self.move_action._abort()
-            while self.move_action is not None:
-                self.logger.info("wait for the action to terminate")
-                time.sleep(0.1)
-        if self.recenter_action:
-            self.recenter_action._abort()
-            while self.recenter_action is not None:
+        if self.action:
+            self.action._abort()
+            while self.action is not None:
                 self.logger.info("wait for the action to terminate")
                 time.sleep(0.1)
 
-    def set_status_cb(self, request: std_srvs.srv.SetBool.Request,
-                      response: std_srvs.srv.SetBool.Response) -> std_srvs.srv.SetBool.Response:
-        if request.data:
+    def engage(self, value: bool) -> None:
+        if value:
             self.api.resume()
         else:
             self.api.suspend()
+
+    def set_engage_cb(self, request: std_srvs.srv.SetBool.Request,
+                      response: std_srvs.srv.SetBool.Response) -> std_srvs.srv.SetBool.Response:
+        self.engage(request.data)
         response.success = True
         return response
 
@@ -116,11 +131,8 @@ class Gimbal(Module):
         self._mode = mode2api(msg.mode)
         self.robot.set_robot_mode(self._mode)
 
-    def has_received_activate(self, msg: std_msgs.msg.Bool) -> None:
-        if msg.data:
-            self.api.resume()
-        else:
-            self.api.suspend()
+    def has_received_engage(self, msg: std_msgs.msg.Bool) -> None:
+        self.engage(msg.data)
 
     def has_received_lock(self, msg: std_msgs.msg.Bool) -> None:
         # self.logger.info("has_received_lock")
@@ -151,7 +163,11 @@ class Gimbal(Module):
     # Actions should not block! ... I should keep receiving and forwarding data
     def execute_move_gimbal_callback(self, goal_handle: Any
                                      ) -> robomaster_msgs.action.MoveGimbal.Result:
-        # TODO(Jerome): Complete with failures, ...
+        if self.action:
+            # should never be, as mutually excluive:
+            self.logger.warning('Cannot move gimbal: already performing action')
+            goal_handle.abort()
+            return robomaster_msgs.action.RecenterGimbal.Result()
         request = goal_handle.request
         # DONE(Jerome): exposes all coordinates frames?
         # if request.relative:
@@ -159,7 +175,7 @@ class Gimbal(Module):
         # else:
         #     f = self.api.move_to
         try:
-            self.move_action = move(
+            self.action = move(
                 self.api, yaw=-deg(request.yaw), pitch=-deg(request.pitch),
                 pitch_speed=deg(request.pitch_speed), yaw_speed=deg(request.yaw_speed),
                 frame=request.frame)
@@ -170,28 +186,39 @@ class Gimbal(Module):
         feedback_msg = robomaster_msgs.action.MoveGimbal.Feedback()
 
         def cb() -> None:
-            feedback_msg.progress = cast(robomaster.action.Action, self.move_action)._percent * 0.01
+            feedback_msg.progress = cast(robomaster.action.Action, self.action)._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
-        add_cb(self.move_action, cb)
         self.logger.info(f'Start moving gimbal with request {request}')
+        wait_action(self.action, cb)
         # TODO(Jerome) add timeout
-        self.move_action.wait_for_completed()
-        if self.move_action.has_succeeded:
+        # self.move_action.wait_for_completed()
+        if self.action.has_succeeded:
+            self.logger.info('Done moving gimbal: succeed')
             goal_handle.succeed()
         elif goal_handle.is_cancel_requested:
+            self.logger.info('Done moving gimbal: canceled')
             goal_handle.canceled()
         else:
-            goal_handle.abort()
-        self.move_action = None
-        self.logger.info('Done moving gimbal')
+            self.logger.warning('Done moving gimbal: aborted')
+            try:
+                goal_handle.abort()
+            except rclpy._rclpy_pybind11.RCLError:
+                # Happens when the context shutdown before we send feedbacks
+                pass
+        self.action = None
+
         return robomaster_msgs.action.MoveGimbal.Result()
 
     def execute_recenter_gimbal_callback(self, goal_handle: Any
                                          ) -> robomaster_msgs.action.RecenterGimbal.Result:
-        # TODO(Jerome): Complete with failures, ...
+        if self.action:
+            # should never be, as mutually excluive:
+            self.logger.warning('Cannot move gimbal: already performing action')
+            goal_handle.abort()
+            return robomaster_msgs.action.RecenterGimbal.Result()
         request = goal_handle.request
         try:
-            self.recenter_action = self.api.recenter(
+            self.action = self.api.recenter(
                 pitch_speed=int(deg(request.pitch_speed)), yaw_speed=int(deg(request.yaw_speed)))
         except Exception as e:  # noqa
             self.logger.warning(f'Cannot move gimbal: {e}')
@@ -201,26 +228,40 @@ class Gimbal(Module):
 
         def cb() -> None:
             feedback_msg.progress = cast(
-                robomaster.action.Action, self.recenter_action)._percent * 0.01
+                robomaster.action.Action, self.action)._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
-        add_cb(self.recenter_action, cb)
         self.logger.info(f'Start recentering gimbal after request {request}')
+        wait_action(self.action, cb)
         # TODO(Jerome) add timeout
-        self.recenter_action.wait_for_completed()
-        if self.recenter_action.has_succeeded:
+        # self.recenter_action.wait_for_completed()
+        if self.action.has_succeeded:
+            self.logger.info('Done recentering gimbal: succeed')
             goal_handle.succeed()
         elif goal_handle.is_cancel_requested:
+            self.logger.info('Done recentering gimbal: canceled')
             goal_handle.canceled()
         else:
-            goal_handle.abort()
-        self.recenter_action = None
-        self.logger.info('Done recentering gimbal')
+            self.logger.warning('Done recentering gimbal: aborted')
+            try:
+                goal_handle.abort()
+            except rclpy._rclpy_pybind11.RCLError:
+                # Happens when the context shutdown before we send feedbacks
+                pass
+        self.action = None
         return robomaster_msgs.action.RecenterGimbal.Result()
 
-    def cancel_move_gimbal_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
-        self.logger.warn('It is not possible to cancel onboard actions')
-        return rclpy.action.CancelResponse.REJECT
+    def _stop_action(self) -> None:
+        if self.action:
+            self.logger.info('Canceling gimbal action')
+            # ABORTED, which would be a more corrent state, is not handled as a completed state
+            # by the SDK, therefore we use FAILED
+            self.action._changeto_state(robomaster.action.ACTION_FAILED)
+            # TODO: tentative
+            move(self.api, yaw=0, pitch=0).wait_for_completed(timeout=2)
 
-    def cancel_recenter_gimbal_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
-        self.logger.warn('It is not possible to cancel onboard actions')
-        return rclpy.action.CancelResponse.REJECT
+    def cancel_gimbal_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
+        # self.logger.warn('It is not possible to cancel onboard actions')
+        # return rclpy.action.CancelResponse.REJECT
+        if self.action:
+            self.node.executor.create_task(self._stop_action)
+        return rclpy.action.CancelResponse.ACCEPT

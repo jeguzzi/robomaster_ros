@@ -42,20 +42,28 @@ def pad_serial(value: str) -> str:
 
 def add_unknown_protocol(cmdset: int, cmdid: int, hint: str = '?') -> None:
     def unpack_resp(self: Any, buf: bytes, offset: int = 0) -> None:
-        logging.warn(f'[{hint}] Received unknown message with cmd set {cmdset} and id {cmdid}, '
-                     f'with buffer {buf!r} ({len(buf)})')
+        logging.warning(
+            f'[{hint}] Received unknown response with cmd set {cmdset:#x} and id {cmdid:#x}, '
+            f'with buffer {buf!r} ({len(buf)})')
+
+    def unpack_req(self: Any, buf: bytes, offset: int = 0) -> None:
+        logging.warning(
+            f'[{hint}] Received unknown request with cmd set {cmdset:#x} and id {cmdid:#x}, '
+            f'with buffer {buf!r} ({len(buf)})')
+
     _ = type(f'UnknownProtocol_{cmdset}_{cmdid}',
              (robomaster.protocol.ProtoData, ),
              {'_cmdset': cmdset,
               '_cmdid': cmdid,
-              'unpack_resp': unpack_resp})
+              'unpack_resp': unpack_resp,
+              'unpack_req': unpack_req})
 
 
 def add_unknown_protocols() -> None:
     # state change
-    add_unknown_protocol(0x3f, 0x29, 'STATE')
+    add_unknown_protocol(0x3f, 0x29, 'CHASSIS STATE')
     # related to uart
-    add_unknown_protocol(0x3f, 0xf4, 'UART')
+    add_unknown_protocol(0x3f, 0xf4, 'SENSOR ADC')
     # related to tof
     add_unknown_protocol(0x24, 0x21, 'TOF')
 
@@ -90,9 +98,10 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
             sn = None
         self.initialized = False
         self.connected = False
-        self.get_logger().info("Waiting for a robot")
-        wait_for_robot(sn)
-        self.get_logger().info("Found a robot")
+        if conn_type == 'sta':
+            self.get_logger().info("Waiting for a robot")
+            wait_for_robot(sn)
+            self.get_logger().info("Found a robot")
         robomaster.conn.FtpConnection = FtpConnection
         # robomaster.conn.FtpConnection = FakeFtpConnection
         self.ep_robot = robomaster.robot.Robot()

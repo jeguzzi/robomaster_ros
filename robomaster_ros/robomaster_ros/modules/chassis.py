@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from ..client import RoboMasterROS
 
 from .. import Module
-from ..action import add_cb
+from ..action import wait_action, abort_action
 from ..utils import Rate, deg, rad, rate, nearest_rate
 
 RADIUS = 0.05
@@ -29,6 +29,10 @@ AXIS = 0.2
 RPM2SPEED = 2 * math.pi * RADIUS / 60
 G = 9.81
 MAX_ESC_ANGLE = 32767
+DEFAULT_TWIST_ERROR_LINEAR = 0.005
+DEFAULT_TWIST_ERROR_ANGULAR_XY = 0.01
+DEFAULT_TWIST_ERROR_ANGULAR_Z = 0.03
+DEFAULT_ACCELERATION_ERROR = 0.1
 
 
 # rmp -> [linear] speed
@@ -78,14 +82,26 @@ class Chassis(Module):
         self.clock = node.get_clock()
         self.logger = node.get_logger()
         self.node = node
-        self.timeout: Optional[float] = node.declare_parameter("chassis.timeout", 0.0).value
+        self.robot = robot
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "Set the command deadline in seconds. Values less or equal to zero "
+                "disable the deadman check"))
+        self.timeout: Optional[float] = node.declare_parameter(
+            "chassis.timeout", 0.0, descriptor=desc).value
         if self.timeout == 0.0:
             self.timeout = None
         self.api = robot.chassis
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "When enabled, cmd_vel will control wheel state instead of chassis state."))
         self.twist_to_wheel_speeds: bool = node.declare_parameter(
-            "chassis.twist_to_wheel_speeds", False).value
+            "chassis.twist_to_wheel_speeds", False, descriptor=desc).value
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "When enabled, forces the state estimation to be horizontal"))
         self.force_level: bool = node.declare_parameter(
-            "chassis.force_level", False).value
+            "chassis.force_level", False, descriptor=desc).value
         if self.twist_to_wheel_speeds:
             self.logger.info("topic cmd_vel will control wheel speeds")
         else:
@@ -97,6 +113,39 @@ class Chassis(Module):
         self.odom_msg.child_frame_id = odom_frame
         self.imu_msg = sensor_msgs.msg.Imu()
         self.imu_msg.header.frame_id = base_link
+        # no covariance for the pose, as there are no sensors measuring absolute
+        # position or orientation. Twist covariance
+        # we assume linear x, y have the same constant variance in world frame
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "Linear speed variance in (m/s)^2"))
+        self.linear_velocity_error = node.declare_parameter(
+            "chassis.error.linear_velocity.xy", DEFAULT_TWIST_ERROR_LINEAR,
+            descriptor=desc).value
+        # we assume angular x, y have the same constant variance in world frame
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "Non-horizontal angular speed variance in (m/s)^2"))
+        self.angular_velocity_error_xy = node.declare_parameter(
+            "chassis.error.angular_velocity.xy", DEFAULT_TWIST_ERROR_ANGULAR_XY,
+            descriptor=desc).value
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "Horizontal angular speed variance in (m/s)^2"))
+        self.angular_velocity_error_z = node.declare_parameter(
+            "chassis.error.angular_velocity.z", DEFAULT_TWIST_ERROR_ANGULAR_Z,
+            descriptor=desc).value
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "Whenever imu messages should include orientation"))
+        self.imu_has_orientation = node.declare_parameter(
+            "chassis.imu.include_orientation", True, descriptor=desc).value
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "Accelerometer variance in (m/s^2)^2"))
+        self.linear_acceleration_error = node.declare_parameter(
+            "chassis.error.linear_acceleration.xyz", DEFAULT_ACCELERATION_ERROR,
+            descriptor=desc).value
         self.wheel_state_msg = sensor_msgs.msg.JointState(
             name=[node.tf_frame(name) for name in WHEEL_FRAMES])
         self.transform_msg = geometry_msgs.msg.TransformStamped(child_frame_id=base_link)
@@ -126,8 +175,50 @@ class Chassis(Module):
                                                  self.engage_cb)
         node.add_on_set_parameters_callback(self.set_params_cb)
 
+    @property
+    def linear_velocity_error(self) -> float:
+        return math.sqrt(self.odom_msg.twist.covariance[0])
+
+    @linear_velocity_error.setter
+    def linear_velocity_error(self, value: float) -> None:
+        vs = self.odom_msg.twist.covariance
+        vs[0] = vs[4] = value ** 2
+
+    @property
+    def angular_velocity_error_xy(self) -> float:
+        return math.sqrt(self.odom_msg.twist.covariance[21])
+
+    @angular_velocity_error_xy.setter
+    def angular_velocity_error_xy(self, value: float) -> None:
+        vs = self.odom_msg.twist.covariance
+        vs[21] = vs[28] = value ** 2
+        vs = self.imu_msg.angular_velocity_covariance
+        vs[0] = vs[4] = value ** 2
+
+    @property
+    def angular_velocity_error_z(self) -> float:
+        return math.sqrt(self.odom_msg.twist.covariance[35])
+
+    @angular_velocity_error_z.setter
+    def angular_velocity_error_z(self, value: float) -> None:
+        vs = self.odom_msg.twist.covariance
+        vs[35] = value ** 2
+        vs = self.imu_msg.angular_velocity_covariance
+        vs[8] = value ** 2
+
+    @property
+    def linear_acceleration_error(self) -> float:
+        return math.sqrt(self.imu_msg.linear_acceleration_error[0])
+
+    @linear_acceleration_error.setter
+    def linear_acceleration_error(self, value: float) -> None:
+        vs = self.imu_msg.linear_acceleration_covariance
+        vs[0] = vs[4] = vs[8] = value ** 2
+
     def set_params_cb(self, params: Any) -> rcl_interfaces.msg.SetParametersResult:
         for param in params:
+            if 'chassis' not in param.name:
+                continue
             if param.name == 'chassis.timeout':
                 if param.value > 0:
                     self.timeout = param.value
@@ -143,13 +234,24 @@ class Chassis(Module):
                 self.force_level = param.value
             elif param.name == 'chassis.rate':
                 # TODO(Jerome): push the actual value back
-                chassis_rate = nearest_rate(param.value)
-                self.subscribe(chassis_rate)
+                param.value = nearest_rate(param.value)
+                self.subscribe(param.value)
             elif param.name == 'chassis.status':
                 # TODO(Jerome): push the actual value back
-                status_rate = nearest_rate(param.value)
-                if status_rate:
-                    self.api.sub_status(freq=status_rate, callback=self.updated_status)
+                param.value = nearest_rate(param.value)
+                self.api.sub_status(freq=param.value, callback=self.updated_status)
+            elif param.name == 'chassis.imu_includes_orientation':
+                self.imu_has_orientation = param.value
+                if not self.imu_has_orientation:
+                    self.imu_msg.orientation = [0.0, 0.0, 0.0]
+            elif param.name == 'chassis.error.linear_velocity.xy':
+                self.linear_velocity_error = param.value
+            elif param.name == 'chassis.error.angular_velocity.xy':
+                self.angular_velocity_error_xy = param.value
+            elif param.name == 'chassis.error.angular_velocity.z':
+                self.angular_velocity_error_z = param.value
+            elif param.name == 'chassis.error.linear_acceleration.xyz':
+                self.linear_acceleration_error = param.value
         return rcl_interfaces.msg.SetParametersResult(successful=True)
 
     def engage(self, value: bool) -> None:
@@ -246,7 +348,8 @@ class Chassis(Module):
             f * value for value, f in zip(msg[3:], (1, -1, -1))]
         # TODO(jerome): better? synchronization (should also check the jittering)
         stamp = self.clock.now().to_msg()
-        self.imu_msg.orientation = self.odom_msg.pose.pose.orientation
+        if self.imu_has_orientation:
+            self.imu_msg.orientation = self.odom_msg.pose.pose.orientation
         self.odom_msg.twist.twist.angular = self.imu_msg.angular_velocity
         self.odom_msg.header.stamp = stamp
         self.odom_pub.publish(self.odom_msg)
@@ -300,23 +403,48 @@ class Chassis(Module):
             feedback_msg.progress = self.action._percent * 0.01  # type: ignore
             goal_handle.publish_feedback(feedback_msg)
 
-        add_cb(self.action, cb)
+        # add_cb(self.action, cb)
+        # self.action.wait_for_completed()
+
         # while action.is_running:
         #     time.sleep(0.01)
-        self.action.wait_for_completed()
-        if self.action.has_succeeded:
-            goal_handle.succeed()
-        elif goal_handle.is_cancel_requested:
+
+        wait_action(self.action, cb)
+
+        if goal_handle.is_cancel_requested:
+            self.logger.info('Done moving chassis: canceled')
             goal_handle.canceled()
+        elif self.action.has_succeeded:
+            self.logger.info('Done moving chassis: succeed')
+            goal_handle.succeed()
         else:
-            goal_handle.abort()
-        self.logger.info('Done moving chassis')
+            self.logger.warning('Done moving chassis: aborted')
+            try:
+                goal_handle.abort()
+            except rclpy._rclpy_pybind11.RCLError:
+                # Happens when the context shutdown before we send feedbacks
+                pass
         self.action = None
         return robomaster_msgs.action.Move.Result()
 
     def cancel_move_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
-        self.logger.warn('It is not possible to cancel onboard actions')
-        return rclpy.action.CancelResponse.REJECT
+        if self.action:
+            self.node.executor.create_task(self._stop_action)
+        return rclpy.action.CancelResponse.ACCEPT
+
+    def _stop_action(self) -> None:
+        if self.action:
+            self.logger.info('Canceling move action')
+            # ABORTED, which would be a more corrent state, is not handled as a completed state
+            # by the SDK, therefore we use FAILED
+            # Action specific way to abort:
+            # self.action._changeto_state(robomaster.action.ACTION_FAILED)
+            # self.api.move(x=0, y=0, z=0).wait_for_completed()
+            # Action generic way to abort:
+            abort_action(self.robot, self.action)
+
+        # self.logger.warn('It is not possible to cancel onboard actions')
+        # return rclpy.action.CancelResponse.REJECT
         # if self.action:
         #     self.logger.info('Canceling move action')
         #     self.action._abort()
