@@ -63,6 +63,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/H264Packet.msg"
   "msg/SensorAdapter.msg"
   "msg/ServoRawState.msg"
+  "msg/SpeakerCommand.msg"
   "action/Move.action"
   "action/MoveArm.action"
   "action/GripperControl.action"
