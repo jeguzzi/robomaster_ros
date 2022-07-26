@@ -3,6 +3,8 @@ Robomaster-ROS
 
 This repository contains a ROS2 driver for the DJI Robomaster family of robots (EP and S1) based on the [official Python client library](https://github.com/dji-sdk/RoboMaster-SDK).
 
+Full documentation available at https://jeguzzi.github.io/robomaster_ros.
+
 
 ## Installation
 
@@ -145,3 +147,10 @@ Then, for instance, you can make the robots spin in opposite direction by publis
 ros2 topic pub /RM0/cmd_vel geometry_msgs/msg/Twist "{angular: {z: -0.5}}" --once
 ros2 topic pub /RM1/cmd_vel geometry_msgs/msg/Twist "{angular: {z: 0.5}}" --once
 ```
+
+
+### Thanks
+
+This work has been supported by the European Commission through the Horizon 2020 project [1-SWARM](https://www.1-swarm.eu/), grant ID 871743.
+
+![1-Swarm Logo](https://static.1-swarm.eu/wp-content/uploads/2020/08/04143844/logo-1-swarm-copia.png | width=300)
