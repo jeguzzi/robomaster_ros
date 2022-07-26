@@ -152,6 +152,3 @@ ros2 topic pub /RM1/cmd_vel geometry_msgs/msg/Twist "{angular: {z: 0.5}}" --once
 ### Thanks
 
 This work has been supported by the European Commission through the Horizon 2020 project [1-SWARM](https://www.1-swarm.eu/), grant ID 871743.
-
-
-<img src="(https://static.1-swarm.eu/wp-content/uploads/2020/08/04143844/logo-1-swarm-copia.png" width="100">
