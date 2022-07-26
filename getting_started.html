@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/design-tabs.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="robomaster_description" href="robomaster_description.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_description.html">robomaster_description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_msgs.html">robomaster_msgs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros.html">robomaster_ros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_driver_node.html">Robomaster Driver Node</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h1>
+<p>Switch on your Robomaster and connect your PC through
+<a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/connection.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">one of three available interfaces</span></a>:</p>
+<dl>
+<dt>USB</dt><dd><p>connect using a USB cable to the intelligent controller (<a class="reference internal" href="robomaster_driver_node.html#RoboMasterROS.param.conn_type" title="RoboMasterROS.param.conn_type"><em class="xref ros ros-param">conn_type</em></a> = <code class="docutils literal notranslate"><span class="pre">&quot;rndis&quot;</span></code>)</p>
+</dd>
+<dt>Wi-Fi Access point</dt><dd><p>move the slider on the intelligent controller to the back (<a class="reference internal" href="robomaster_driver_node.html#RoboMasterROS.param.conn_type" title="RoboMasterROS.param.conn_type"><em class="xref ros ros-param">conn_type</em></a> = <code class="docutils literal notranslate"><span class="pre">&quot;ap&quot;</span></code>)
+to make it starts its own access point.
+Connect your PC to it using the SSID and password printed on the top of the intelligent controller.</p>
+</dd>
+<dt>Wi-Fi Router</dt><dd><p>move the slider on the intelligent controller to the front (<a class="reference internal" href="robomaster_driver_node.html#RoboMasterROS.param.conn_type" title="RoboMasterROS.param.conn_type"><em class="xref ros ros-param">conn_type</em></a> = <code class="docutils literal notranslate"><span class="pre">&quot;sta&quot;</span></code>)
+and connect your PC to a Wi-Fi router. To communicate the network SSID and password to the robot,
+you can use the Robomaster app or run <a class="reference internal" href="robomaster_ros.html#robomaster_ros.exec.connect" title="robomaster_ros.exec.connect"><em class="xref ros ros-exec">connect</em></a>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ros2 run robomaster_ros connect &lt;SSID&gt; &lt;PASSWORD&gt;
+</pre></div>
+</div>
+<p>Point the robot’s camera towards the QR code and press the small button near the intelligent controller slider.
+The robot will read the code and connect to the network.</p>
+</dd>
+</dl>
+<p>You can check that a robot is available and ready to be connected by running <a class="reference internal" href="robomaster_ros.html#robomaster_ros.exec.discover" title="robomaster_ros.exec.discover"><em class="xref ros ros-exec">discover</em></a>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ros2 run robomaster_ros discover
+<span class="go">[INFO] [1658231475.202434272] [discover]: Discovered 1 robots</span>
+<span class="go">[INFO] [1658231476.378546964] [discover]: Connected to robot XXXXXXXXXXXXXX at 192.168.1.136: version 01.01.1131, battery 20%</span>
+</pre></div>
+</div>
+<p>The command will list the robots, which will beep and blink their LEDs.</p>
+<p>You are ready to start controlling the robot through ROS:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ros2 launch robomaster_ros main.launch model:<span class="o">=</span>&lt;ep<span class="p">|</span>s1&gt;
+</pre></div>
+</div>
+<p>Pick your robot type in <code class="docutils literal notranslate"><span class="pre">model:=&lt;ep|s1&gt;</span></code> to publish the correct URDF model and enable the appropriate modules.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="robomaster_description.html" class="btn btn-neutral float-right" title="robomaster_description" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>robomaster_ros &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/design-tabs.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Robomaster Driver Node" href="robomaster_driver_node.html" />
+    <link rel="prev" title="robomaster_msgs" href="robomaster_msgs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_description.html">robomaster_description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_msgs.html">robomaster_msgs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">robomaster_ros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#executables">Executables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-files">Launch files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_driver_node.html">Robomaster Driver Node</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>robomaster_ros</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/robomaster_ros.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="robomaster-ros">
+<h1>robomaster_ros<a class="headerlink" href="#robomaster-ros" title="Permalink to this heading"></a></h1>
+<dl class="ros package">
+<dt class="sig sig-object ros" id="package.robomaster_ros">
+<em class="property"><span class="pre">package</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_ros</span></span><a class="headerlink" href="#package.robomaster_ros" title="Permalink to this definition"></a></dt>
+<dd><div class="admonition">
+<p class="admonition-title">Summary</p>
+<details>
+<summary>Executables</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_ros.exec.connect" title="connect">connect</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_ros.exec.discover" title="discover">discover</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_ros.exec.display_battery" title="display_battery">display_battery</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_ros.exec.h264_decoder" title="h264_decoder">h264_decoder</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_ros.exec.play_audio" title="play_audio">play_audio</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_ros.exec.robomaster_driver" title="robomaster_driver">robomaster_driver</a></p></td>
+</tr>
+</tbody>
+</table>
+</details><details>
+<summary>Launch files</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_ros.launch.main.launch" title="main.launch">main.launch</a></p></td>
+</tr>
+</tbody>
+</table>
+</details></div>
+</dd></dl>
+
+<section id="executables">
+<h2>Executables<a class="headerlink" href="#executables" title="Permalink to this heading"></a></h2>
+<dl class="ros executable">
+<dt class="sig sig-object ros" id="robomaster_ros.exec.connect">
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">connect</span></span><span class="w"> </span><span class="sig sig-inline"><span class="pre">[-h]</span> <span class="pre">[--app_id</span> <span class="pre">APP_ID]</span> <span class="pre">ssid</span> <span class="pre">password</span></span><a class="headerlink" href="#robomaster_ros.exec.connect" title="Permalink to this definition"></a></dt>
+<dd><p>The program shows a QR code that encodes SSID and password:
+point the robot’s camera towards the QR code and
+press the small button near the intelligent controller slider.
+The robot will read the code and try to connect to the network.
+The program wait until the robot connects and then terminates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Positional arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ssid</strong> – The network SSID</p></li>
+<li><p><strong>password</strong> – The network password</p></li>
+</ul>
+</dd>
+<dt class="field-even">Optional arguments</dt>
+<dd class="field-even"><p><strong>app_id</strong> – The app id of at most 7 letters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros executable">
+<dt class="sig sig-object ros" id="robomaster_ros.exec.discover">
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">discover</span></span><span class="w"> </span><span class="sig sig-inline"><span class="pre">[-h]</span> <span class="pre">[--timeout</span> <span class="pre">TIMEOUT]</span> <span class="pre">[--modules]</span></span><a class="headerlink" href="#robomaster_ros.exec.discover" title="Permalink to this definition"></a></dt>
+<dd><p>The command lists the available robots with their serial number, IP address,
+firmware version, and battery level. Discovered robots will beep and blink their LEDs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Optional arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timeout</strong> – How much to wait for robots</p></li>
+<li><p><strong>modules</strong> – Probe the robot modules</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros executable">
+<dt class="sig sig-object ros" id="robomaster_ros.exec.robomaster_driver">
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_driver</span></span><a class="headerlink" href="#robomaster_ros.exec.robomaster_driver" title="Permalink to this definition"></a></dt>
+<dd><p>Execute a Robomaster ROS driver instantiating <a class="reference internal" href="robomaster_driver_node.html#node.RoboMasterROS" title="node.RoboMasterROS"><code class="xref ros ros-node docutils literal notranslate"><span class="pre">RoboMasterROS</span></code></a>. When the robot disconnects,
+it waits until the robots connects again when <a class="reference internal" href="robomaster_driver_node.html#RoboMasterROS.param.reconnect" title="RoboMasterROS.param.reconnect"><em class="xref ros ros-param">reconnect</em></a> is enabled
+(destroying and creating another node each time).
+It tries to shut down the node as graceful as possible, stopping any ongoing action
+before notifying modules to stop.</p>
+<p>To limite the ROS driver to just module &lt;module&gt;, run</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ros2 run robomaster_ros robomaster_driver --ros-args --param &lt;module&gt;.enabled:=true</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Execute one driver for each robot you want to control using different namespaces.</p>
+</div>
+</dd></dl>
+
+<dl class="ros executable">
+<dt class="sig sig-object ros" id="robomaster_ros.exec.h264_decoder">
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">h264_decoder</span></span><a class="headerlink" href="#robomaster_ros.exec.h264_decoder" title="Permalink to this definition"></a></dt>
+<dd><p>TODO</p>
+</dd></dl>
+
+<dl class="ros executable">
+<dt class="sig sig-object ros" id="robomaster_ros.exec.display_battery">
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">display_battery</span></span><a class="headerlink" href="#robomaster_ros.exec.display_battery" title="Permalink to this definition"></a></dt>
+<dd><p>TODO</p>
+</dd></dl>
+
+<dl class="ros executable">
+<dt class="sig sig-object ros" id="robomaster_ros.exec.play_audio">
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">play_audio</span></span><a class="headerlink" href="#robomaster_ros.exec.play_audio" title="Permalink to this definition"></a></dt>
+<dd><p>TODO</p>
+</dd></dl>
+
+</section>
+<section id="launch-files">
+<h2>Launch files<a class="headerlink" href="#launch-files" title="Permalink to this heading"></a></h2>
+<dl class="ros launch_file">
+<dt class="sig sig-object ros" id="robomaster_ros.launch.main.launch">
+<em class="property"><span class="pre">launch</span> <span class="pre">file</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">main.launch</span></span><a class="headerlink" href="#robomaster_ros.launch.main.launch" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – A name used as ROS namespace [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
+<li><p><strong>model</strong> – The type of robot: ep or s1 [Default: <code class="docutils literal notranslate"><span class="pre">ep</span></code>]</p></li>
+<li><p><strong>with_model_description</strong> – Enables publishing the robot model [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
+<li><p><strong>log_level</strong> – ROS logging level [Default: <code class="docutils literal notranslate"><span class="pre">info</span></code>]</p></li>
+<li><p><strong>serial_number</strong> – The serial number of the robot. Leave empty to ignore it. [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
+<li><p><strong>conn_type</strong> – The type of connection: sta, ap, or rndis [Default: <code class="docutils literal notranslate"><span class="pre">sta</span></code>]</p></li>
+<li><p><strong>lib_log_level</strong> – Robomaster SDK logging level [Default: <code class="docutils literal notranslate"><span class="pre">ERROR</span></code>]</p></li>
+<li><p><strong>reconnect</strong> – Wait for reconnections [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
+<li><p><strong>arm</strong> – Enable the arm module. Should not be enabled together with the servo module [Default: <code class="docutils literal notranslate"><span class="pre">'&lt;model&gt;'</span> <span class="pre">==</span> <span class="pre">'ep'</span></code>]</p></li>
+<li><p><strong>left_motor_zero</strong> – The arm left servo zero value [Default: <code class="docutils literal notranslate"><span class="pre">1024</span></code>]</p></li>
+<li><p><strong>right_motor_zero</strong> – The arm right servo zero value [Default: <code class="docutils literal notranslate"><span class="pre">1024</span></code>]</p></li>
+<li><p><strong>left_motor_angle</strong> – The arm left servo zero angle [Default: <code class="docutils literal notranslate"><span class="pre">0.073304</span></code>]</p></li>
+<li><p><strong>right_motor_angle</strong> – The arm right servo zero angle [Default: <code class="docutils literal notranslate"><span class="pre">-0.274016</span></code>]</p></li>
+<li><p><strong>left_motor_direction</strong> – The arm left servo direction [Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>]</p></li>
+<li><p><strong>right_motor_direction</strong> – The arm right servo direction [Default: <code class="docutils literal notranslate"><span class="pre">-1</span></code>]</p></li>
+<li><p><strong>arm_rate</strong> – The update rate for the arm state [Default: <code class="docutils literal notranslate"><span class="pre">10</span></code>]</p></li>
+<li><p><strong>armor</strong> – Enable the armor module [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>armor_sensitivity</strong> – Armor sensitivity [Default: <code class="docutils literal notranslate"><span class="pre">0.5</span></code>]</p></li>
+<li><p><strong>battery</strong> – Enable the battery module [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
+<li><p><strong>led</strong> – Enable the LED module [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
+<li><p><strong>speaker</strong> – Enable the speaker module [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
+<li><p><strong>blaster</strong> – Enable the blaster module [Default: <code class="docutils literal notranslate"><span class="pre">'&lt;model&gt;'</span> <span class="pre">==</span> <span class="pre">'s1'</span></code>]</p></li>
+<li><p><strong>gripper</strong> – Enable the gripper module [Default: <code class="docutils literal notranslate"><span class="pre">'&lt;model&gt;'</span> <span class="pre">==</span> <span class="pre">'ep'</span></code>]</p></li>
+<li><p><strong>sbus</strong> – Enable the sbus module [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>servo</strong> – Enable the servo module. Should not be enabled together with the arm module [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>tof_0</strong> – Enable ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_1</strong> – Enable ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_2</strong> – Enable ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_3</strong> – Enable ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_rate</strong> – Update rate for ToF sensors [Default: <code class="docutils literal notranslate"><span class="pre">10</span></code>]</p></li>
+<li><p><strong>vision_targets</strong> – Enable one or more vision detection [Default: <code class="docutils literal notranslate"><span class="pre">[]</span></code>]</p></li>
+<li><p><strong>sensor_adapter</strong> – Enable the sensor adapter module [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>sensor_adapter_rate</strong> – Update rate for sensor adapters [Default: <code class="docutils literal notranslate"><span class="pre">10</span></code>]</p></li>
+<li><p><strong>uart_baudrate</strong> – UART baudrate [Default: <code class="docutils literal notranslate"><span class="pre">115200</span></code>]</p></li>
+<li><p><strong>uart_data_bit</strong> – UART data bit [Default: <code class="docutils literal notranslate"><span class="pre">0</span></code>]</p></li>
+<li><p><strong>uart_odd_even</strong> – UART parity [Default: <code class="docutils literal notranslate"><span class="pre">0</span></code>]</p></li>
+<li><p><strong>uart_stop_bit</strong> – UART stop bit [Default: <code class="docutils literal notranslate"><span class="pre">0</span></code>]</p></li>
+<li><p><strong>uart_rx_enable</strong> – Enable UART RX [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>uart_tx_enable</strong> – Enable UART TX [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>uart_rx_size</strong> – UART RX buffer size [Default: <code class="docutils literal notranslate"><span class="pre">50</span></code>]</p></li>
+<li><p><strong>uart_tx_size</strong> – UART TX buffer size [Default: <code class="docutils literal notranslate"><span class="pre">50</span></code>]</p></li>
+<li><p><strong>pwm_frequencies</strong> – PWM dfrequencies. Enable the PWM module when at least one is positive. [Default: <code class="docutils literal notranslate"><span class="pre">[-1,-1,-1,-1,-1,-1]</span></code>]</p></li>
+<li><p><strong>chassis</strong> – Enables chassis module, see <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.enabled" title="RoboMasterROS.param.chassis.enabled"><em class="xref ros ros-param">chassis.enabled</em></a>  [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
+<li><p><strong>chassis_rate</strong> – Chassis update rate: one of 0, 1, 5, 10, 20, 50. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.rate" title="RoboMasterROS.param.chassis.rate"><em class="xref ros ros-param">chassis.rate</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">10</span></code>]</p></li>
+<li><p><strong>chassis_status_rate</strong> – Chassis status update rate: one of 0, 1, 5, 10, 20, 50. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.rate" title="RoboMasterROS.param.chassis.rate"><em class="xref ros ros-param">chassis.rate</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>]</p></li>
+<li><p><strong>chassis_timeout</strong> – Chassis control timeout in seconds. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.timeout" title="RoboMasterROS.param.chassis.timeout"><em class="xref ros ros-param">chassis.timeout</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">0.0</span></code>]</p></li>
+<li><p><strong>chassis_twist_to_wheel_speeds</strong> – Enables <cite>cmd_vel</cite> translation to wheel speeds. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.twist_to_wheel_speeds" title="RoboMasterROS.param.chassis.twist_to_wheel_speeds"><em class="xref ros ros-param">chassis.twist_to_wheel_speeds</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>chassis_force_level</strong> – Force the state estimation to stay horizontal. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.force_level" title="RoboMasterROS.param.chassis.force_level"><em class="xref ros ros-param">chassis.force_level</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>chassis_imu_includes_orientation</strong> – Include orientation in <cite>imu</cite>. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.imu_includes_orientation" title="RoboMasterROS.param.chassis.imu_includes_orientation"><em class="xref ros ros-param">chassis.imu_includes_orientation</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
+<li><p><strong>chassis_error_linear_velocity</strong> – State estimation error – linear velocity. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.error.linear_velocity.xy" title="RoboMasterROS.param.chassis.error.linear_velocity.xy"><em class="xref ros ros-param">chassis.error.linear_velocity.xy</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">0.005</span></code>]</p></li>
+<li><p><strong>chassis_error_angular_velocity_xy</strong> – State estimation error – non horizontal angular velocity. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.error.angular_velocity.xy" title="RoboMasterROS.param.chassis.error.angular_velocity.xy"><em class="xref ros ros-param">chassis.error.angular_velocity.xy</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">0.01</span></code>]</p></li>
+<li><p><strong>chassis_error_angular_velocity_z</strong> – State estimation error – horizontal angular velocity. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.error.angular_velocity.z" title="RoboMasterROS.param.chassis.error.angular_velocity.z"><em class="xref ros ros-param">chassis.error.angular_velocity.z</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">0.03</span></code>]</p></li>
+<li><p><strong>chassis_error_linear_acceleration</strong> – State estimation error – linear acceleration. See <a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.error.linear_acceleration.xyz" title="RoboMasterROS.param.chassis.error.linear_acceleration.xyz"><em class="xref ros ros-param">chassis.error.linear_acceleration.xyz</em></a> [Default: <code class="docutils literal notranslate"><span class="pre">0.1</span></code>]</p></li>
+<li><p><strong>gimbal</strong> – Enables gimbal module [Default: <code class="docutils literal notranslate"><span class="pre">'&lt;model&gt;'</span> <span class="pre">==</span> <span class="pre">'s1'</span></code>]</p></li>
+<li><p><strong>gimbal_rate</strong> – Update rate for gimbal state [Default: <code class="docutils literal notranslate"><span class="pre">10</span></code>]</p></li>
+<li><p><strong>gimbal_mode</strong> – Gimbal-chassis coontrol coupling [Default: <code class="docutils literal notranslate"><span class="pre">2</span></code>]</p></li>
+<li><p><strong>video_resolution</strong> – Video resolution: 360, 540 or 720 pixels height [Default: <code class="docutils literal notranslate"><span class="pre">360</span></code>]</p></li>
+<li><p><strong>video_raw</strong> – Enables publishing decoded video stream [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
+<li><p><strong>video_h264</strong> – Enables publishing original H264 encoded video stream [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>audio_raw</strong> – Enables publishing decoded audio stream [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>audio_opus</strong> – Enables publishing original OPUS encoded audio stream [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>camera_calibration_suffix</strong> – The suffix to append to the camera calibration file [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
+<li><p><strong>camera_calibration_directory</strong> – The location of the camera calibration files [Default: <code class="docutils literal notranslate"><span class="pre">pkg_share(robomaster_ros)/config</span></code>]</p></li>
+<li><p><strong>camera_calibration_file</strong> – The camera calibration file [Default: <code class="docutils literal notranslate"><span class="pre">&lt;camera_calibration_directory&gt;/rm_camera_calibration_&lt;video_resolution&gt;&lt;camera_calibration_suffix&gt;.yaml</span></code>]</p></li>
+<li><p><strong>joint_state_gui</strong> – If true, select the GUI version of <em class="xref ros ros-exec">join_state_publisher</em> [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>joint_state_rate</strong> – The rate to publish <em class="xref ros ros-pub">joint_states</em> [Default: <code class="docutils literal notranslate"><span class="pre">10.0</span></code>]</p></li>
+<li><p><strong>tof_0_parent</strong> – Parent frame of ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_0_xyz</strong> – Position of ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_0_rpy</strong> – Orientation of ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_1_parent</strong> – Parent frame of ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_1_xyz</strong> – Position of ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_1_rpy</strong> – Orientation of ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_2_parent</strong> – Parent frame of ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_2_xyz</strong> – Position of ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_2_rpy</strong> – Orientation of ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_3_parent</strong> – Parent frame of ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_3_xyz</strong> – Position of ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_3_rpy</strong> – Orientation of ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="robomaster_msgs.html" class="btn btn-neutral float-left" title="robomaster_msgs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="robomaster_driver_node.html" class="btn btn-neutral float-right" title="Robomaster Driver Node" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

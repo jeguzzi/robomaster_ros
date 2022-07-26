@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>robomaster_msgs &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/design-tabs.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="robomaster_ros" href="robomaster_ros.html" />
+    <link rel="prev" title="robomaster_description" href="robomaster_description.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_description.html">robomaster_description</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">robomaster_msgs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#interfaces">Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#messages">Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#actions">Actions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros.html">robomaster_ros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_driver_node.html">Robomaster Driver Node</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>robomaster_msgs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/robomaster_msgs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="robomaster-msgs">
+<h1>robomaster_msgs<a class="headerlink" href="#robomaster-msgs" title="Permalink to this heading"></a></h1>
+<dl class="ros package">
+<dt class="sig sig-object ros" id="package.robomaster_msgs">
+<em class="property"><span class="pre">package</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs</span></span><a class="headerlink" href="#package.robomaster_msgs" title="Permalink to this definition"></a></dt>
+<dd><p>This package implements all Robomaster specific interfaces used by the driver
+node <a class="reference internal" href="robomaster_driver_node.html#node.RoboMasterROS" title="node.RoboMasterROS"><code class="xref ros ros-node docutils literal notranslate"><span class="pre">RoboMasterROS</span></code></a>.
+Most interfaces maps the arguments of SDK methods (e.g., <a class="reference internal" href="#robomaster_msgs.action.Move" title="robomaster_msgs.action.Move"><em class="xref ros ros-action">robomaster_msgs/action/Move</em></a> maps to arguments
+of <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.chassis.Chassis.move" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.chassis.Chassis.move()</span></code></a> or the information provided by SDK subscribers
+(e.g., <a class="reference internal" href="#robomaster_msgs.msg.ChassisStatus" title="robomaster_msgs.msg.ChassisStatus"><em class="xref ros ros-msg">robomaster_msgs/msg/ChassisStatus</em></a> maps to the callback arguments
+in <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.chassis.Chassis.sub_status" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.chassis.Chassis.sub_status()</span></code></a>).</p>
+<div class="admonition">
+<p class="admonition-title">Summary</p>
+<details>
+<summary>Messages</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.ArmorHit" title="ArmorHit">ArmorHit</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.AudioData" title="AudioData">AudioData</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.AudioLevel" title="AudioLevel">AudioLevel</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.AudioOpus" title="AudioOpus">AudioOpus</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.BlasterLED" title="BlasterLED">BlasterLED</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.CameraConfig" title="CameraConfig">CameraConfig</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.ChassisStatus" title="ChassisStatus">ChassisStatus</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.DetectedGesture" title="DetectedGesture">DetectedGesture</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.DetectedLine" title="DetectedLine">DetectedLine</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.DetectedMarker" title="DetectedMarker">DetectedMarker</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.DetectedPerson" title="DetectedPerson">DetectedPerson</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.DetectedRobot" title="DetectedRobot">DetectedRobot</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.Detection" title="Detection">Detection</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.GimbalCommand" title="GimbalCommand">GimbalCommand</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.GripperState" title="GripperState">GripperState</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.H264Packet" title="H264Packet">H264Packet</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.LEDEffect" title="LEDEffect">LEDEffect</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.Mode" title="Mode">Mode</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.PWM" title="PWM">PWM</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.RegionOfInterest" title="RegionOfInterest">RegionOfInterest</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.SBus" title="SBus">SBus</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.SensorAdapter" title="SensorAdapter">SensorAdapter</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.Serial" title="Serial">Serial</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.ServoCommand" title="ServoCommand">ServoCommand</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.ServoRawState" title="ServoRawState">ServoRawState</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.msg.SpeakerCommand" title="SpeakerCommand">SpeakerCommand</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.msg.WheelSpeeds" title="WheelSpeeds">WheelSpeeds</a></p></td>
+</tr>
+</tbody>
+</table>
+</details><details>
+<summary>Services</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.srv.GetADC" title="GetADC">GetADC</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.srv.GetIO" title="GetIO">GetIO</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.srv.GetPulse" title="GetPulse">GetPulse</a></p></td>
+</tr>
+</tbody>
+</table>
+</details><details>
+<summary>Actions</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.action.GripperControl" title="GripperControl">GripperControl</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.action.Move" title="Move">Move</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.action.MoveArm" title="MoveArm">MoveArm</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.action.MoveGimbal" title="MoveGimbal">MoveGimbal</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.action.MoveServo" title="MoveServo">MoveServo</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_msgs.action.PlaySound" title="PlaySound">PlaySound</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_msgs.action.RecenterGimbal" title="RecenterGimbal">RecenterGimbal</a></p></td>
+</tr>
+</tbody>
+</table>
+</details></div>
+</dd></dl>
+
+<section id="interfaces">
+<h2>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this heading"></a></h2>
+<section id="messages">
+<h3>Messages<a class="headerlink" href="#messages" title="Permalink to this heading"></a></h3>
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.ArmorHit">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/ArmorHit</span></span><a class="headerlink" href="#robomaster_msgs.msg.ArmorHit" title="Permalink to this definition"></a></dt>
+<dd><p>A hit event detected by one of the sensors placed behind the LEDs. The Robomaster detects two kind of hits: collision using microphones, and infrared beams using infrared receivers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp of the hit</p></li>
+<li><p><strong>type</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – type of hit; one of <code class="docutils literal notranslate"><span class="pre">COLLISION</span></code> or <code class="docutils literal notranslate"><span class="pre">IR</span></code></p></li>
+<li><p><strong>location</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – a bit mask for which sensors have detected the hit</p></li>
+<li><p><strong>level</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint16</em></a></span>) – the hit impact strength as measured by the sensor microphone. Only applies to events of <code class="docutils literal notranslate"><span class="pre">COLLISION</span></code> type</p></li>
+</ul>
+</dd>
+<dt class="field-even">Constants</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>BOTTOM_BACK</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – sensor location: on back of the chassis</p></li>
+<li><p><strong>BOTTOM_FRONT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">2</span></code> – sensor location: on front of the chassis</p></li>
+<li><p><strong>BOTTOM_LEFT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">4</span></code> – sensor location: on left of the chassis</p></li>
+<li><p><strong>BOTTOM_RIGHT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">8</span></code> – sensor location: on right of the chassis</p></li>
+<li><p><strong>TOP_LEFT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">16</span></code> – sensor location: on left of the gimbal</p></li>
+<li><p><strong>TOP_RIGHT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">32</span></code> – sensor location: on right of the gimbal</p></li>
+<li><p><strong>COLLISION</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0</span></code> – type: detected by a microphone</p></li>
+<li><p><strong>IR</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – type: detected by the IR sensor</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.AudioData">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/AudioData</span></span><a class="headerlink" href="#robomaster_msgs.msg.AudioData" title="Permalink to this definition"></a></dt>
+<dd><p>Raw audio samples .. note::   Unlike ROS1, ROS2 has no <code class="docutils literal notranslate"><span class="pre">audio_common_msgs</span></code>, so for now we define our own format   to publish the raw 16-bit 48Khz audio stream from the camera mono microphone</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – the timestamp and frame of the microphone recording</p></li>
+<li><p><strong>data</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">int16[]</em></a></span>) – an array of 16-bit audio samples</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.AudioLevel">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/AudioLevel</span></span><a class="headerlink" href="#robomaster_msgs.msg.AudioLevel" title="Permalink to this definition"></a></dt>
+<dd><p>Sound level .. note::   Unlike ROS1, ROS2 has no <code class="docutils literal notranslate"><span class="pre">audio_common_msgs</span></code>, so we define our own format   for sound level in dBFS</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – the timestamp and frame of the microphone recording</p></li>
+<li><p><strong>level</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – sound level in dBFS</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.AudioOpus">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/AudioOpus</span></span><a class="headerlink" href="#robomaster_msgs.msg.AudioOpus" title="Permalink to this definition"></a></dt>
+<dd><p>Encapsulate a packet from an OPUS encoded audio stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp and origin of the packet</p></li>
+<li><p><strong>seq</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint64</em></a></span>) – sequential number of the packet</p></li>
+<li><p><strong>buffer</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8[]</em></a></span>) – Opus data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.BlasterLED">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/BlasterLED</span></span><a class="headerlink" href="#robomaster_msgs.msg.BlasterLED" title="Permalink to this definition"></a></dt>
+<dd><p>Command to control the blaster LED</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><p><strong>brightness</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – relative intensity of the LED: 0.0: off, 1.0: full brightness</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.CameraConfig">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/CameraConfig</span></span><a class="headerlink" href="#robomaster_msgs.msg.CameraConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Command to configure the camera</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><p><strong>zoom</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – relative zoom</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.ChassisStatus">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/ChassisStatus</span></span><a class="headerlink" href="#robomaster_msgs.msg.ChassisStatus" title="Permalink to this definition"></a></dt>
+<dd><p>High-level chassis state provided by the robot through <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.chassis.Chassis.sub_status" title="(in RoboMaster Developer Guide v0.1.19)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">robomaster.chassis.Chassis.sub_status()</span></code></a>. TODO(Jerome): check</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp of the update</p></li>
+<li><p><strong>is_static</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the robot is still</p></li>
+<li><p><strong>up_hill</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the robot is facing uphill</p></li>
+<li><p><strong>down_hill</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the robot is facing downhill</p></li>
+<li><p><strong>on_slope</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the robot is on a lateral slope</p></li>
+<li><p><strong>is_pick_up</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the robot has been picked up</p></li>
+<li><p><strong>slip</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever wheels are slipping</p></li>
+<li><p><strong>impact_x</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the accelerometer has registered a collision longitudinally</p></li>
+<li><p><strong>impact_y</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the accelerometer has registered a collision laterally</p></li>
+<li><p><strong>impact_z</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the accelerometer has registered a collision vertically</p></li>
+<li><p><strong>roll_over</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the robot is capsized</p></li>
+<li><p><strong>hill</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the robot is facing uphill and is still.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.DetectedGesture">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/DetectedGesture</span></span><a class="headerlink" href="#robomaster_msgs.msg.DetectedGesture" title="Permalink to this definition"></a></dt>
+<dd><p>Information about an gesture detected using vision</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>roi</strong> (<span><a class="reference internal" href="#robomaster_msgs.msg.RegionOfInterest" title="robomaster_msgs.msg.RegionOfInterest"><em class="xref ros ros-field">robomaster_msgs/msg/RegionOfInterest</em></a></span>) – bounding box</p></li>
+<li><p><strong>kind</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">string</em></a></span>) – the name of the gesture</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.DetectedLine">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/DetectedLine</span></span><a class="headerlink" href="#robomaster_msgs.msg.DetectedLine" title="Permalink to this definition"></a></dt>
+<dd><p>Information about a line detected in the camera frame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – relative horizontal position of the line in the image (between 0 and 1)</p></li>
+<li><p><strong>y</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – relative vertical position of the line in the image (between 0 and 1)</p></li>
+<li><p><strong>angle</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – slope</p></li>
+<li><p><strong>curvature</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – curvature</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.DetectedMarker">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/DetectedMarker</span></span><a class="headerlink" href="#robomaster_msgs.msg.DetectedMarker" title="Permalink to this definition"></a></dt>
+<dd><p>Information about a marker detected using vision</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>roi</strong> (<span><a class="reference internal" href="#robomaster_msgs.msg.RegionOfInterest" title="robomaster_msgs.msg.RegionOfInterest"><em class="xref ros ros-field">robomaster_msgs/msg/RegionOfInterest</em></a></span>) – bounding box</p></li>
+<li><p><strong>kind</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">string</em></a></span>) – the name of the marker</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.DetectedPerson">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/DetectedPerson</span></span><a class="headerlink" href="#robomaster_msgs.msg.DetectedPerson" title="Permalink to this definition"></a></dt>
+<dd><p>Information about a person detected using vision</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><p><strong>roi</strong> (<span><a class="reference internal" href="#robomaster_msgs.msg.RegionOfInterest" title="robomaster_msgs.msg.RegionOfInterest"><em class="xref ros ros-field">robomaster_msgs/msg/RegionOfInterest</em></a></span>) – bounding box</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.DetectedRobot">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/DetectedRobot</span></span><a class="headerlink" href="#robomaster_msgs.msg.DetectedRobot" title="Permalink to this definition"></a></dt>
+<dd><p>Information about a robot detected using vision</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><p><strong>roi</strong> (<span><a class="reference internal" href="#robomaster_msgs.msg.RegionOfInterest" title="robomaster_msgs.msg.RegionOfInterest"><em class="xref ros ros-field">robomaster_msgs/msg/RegionOfInterest</em></a></span>) – bounding box</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.Detection">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/Detection</span></span><a class="headerlink" href="#robomaster_msgs.msg.Detection" title="Permalink to this definition"></a></dt>
+<dd><p>Summary of vision detections</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp of the update</p></li>
+<li><p><strong>people</strong> (<a class="reference internal" href="#robomaster_msgs.msg.DetectedPerson" title="robomaster_msgs.msg.DetectedPerson"><em class="xref ros ros-field">robomaster_msgs/msg/DetectedPerson</em></a> []) – A list of people detections</p></li>
+<li><p><strong>robots</strong> (<a class="reference internal" href="#robomaster_msgs.msg.DetectedRobot" title="robomaster_msgs.msg.DetectedRobot"><em class="xref ros ros-field">robomaster_msgs/msg/DetectedRobot</em></a> []) – A list of robots detections</p></li>
+<li><p><strong>gestures</strong> (<a class="reference internal" href="#robomaster_msgs.msg.DetectedGesture" title="robomaster_msgs.msg.DetectedGesture"><em class="xref ros ros-field">robomaster_msgs/msg/DetectedGesture</em></a> []) – A list of gestures detections</p></li>
+<li><p><strong>lines</strong> (<a class="reference internal" href="#robomaster_msgs.msg.DetectedLine" title="robomaster_msgs.msg.DetectedLine"><em class="xref ros ros-field">robomaster_msgs/msg/DetectedLine</em></a> []) – A list of lines detections</p></li>
+<li><p><strong>markers</strong> (<a class="reference internal" href="#robomaster_msgs.msg.DetectedMarker" title="robomaster_msgs.msg.DetectedMarker"><em class="xref ros ros-field">robomaster_msgs/msg/DetectedMarker</em></a> []) – A list of markers detections</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.GimbalCommand">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/GimbalCommand</span></span><a class="headerlink" href="#robomaster_msgs.msg.GimbalCommand" title="Permalink to this definition"></a></dt>
+<dd><p>Command to control the gripper in speed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>yaw_speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0.0</span></code> – target yaw angular speed in rad/m</p></li>
+<li><p><strong>pitch_speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0.0</span></code> – target pitch angular speed in rad/m</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.GripperState">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/GripperState</span></span><a class="headerlink" href="#robomaster_msgs.msg.GripperState" title="Permalink to this definition"></a></dt>
+<dd><p>State of the gripper</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp of the update</p></li>
+<li><p><strong>state</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – one of <code class="docutils literal notranslate"><span class="pre">PAUSE</span></code>. <code class="docutils literal notranslate"><span class="pre">OPEN</span></code>. or <code class="docutils literal notranslate"><span class="pre">CLOSE</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Constants</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>PAUSE</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0</span></code> – Gripper inactive</p></li>
+<li><p><strong>OPEN</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – Gripper open</p></li>
+<li><p><strong>CLOSE</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">2</span></code> – Gripper closed</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.H264Packet">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/H264Packet</span></span><a class="headerlink" href="#robomaster_msgs.msg.H264Packet" title="Permalink to this definition"></a></dt>
+<dd><p>Encapsulate a packet from a H264 encoded video stream</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp and origin of the packet</p></li>
+<li><p><strong>seq</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint64</em></a></span>) – sequential number of the packet</p></li>
+<li><p><strong>data</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8[]</em></a></span>) – H264 data</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.LEDEffect">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/LEDEffect</span></span><a class="headerlink" href="#robomaster_msgs.msg.LEDEffect" title="Permalink to this definition"></a></dt>
+<dd><p>Control commands for all LEDs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">63</span></code> – bitmask mask to select which LEDs to control</p></li>
+<li><p><strong>submask</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">255</span></code> – bitmask to select which portions of the gimbal LED to control. The 7 sub LEDs are enumerate clockwise</p></li>
+<li><p><strong>effect</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – One of the effect enums</p></li>
+<li><p><strong>color</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/ColorRGBA.html"><em class="xref ros ros-field">std_msgs/msg/ColorRGBA</em></a></span>) – The desired LED color (not relevant for <code class="docutils literal notranslate"><span class="pre">effect=OFF</span></code>)</p></li>
+<li><p><strong>t1</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1.0</span></code> – On interval duration, only relevant for effects <code class="docutils literal notranslate"><span class="pre">PULSE</span></code> and <code class="docutils literal notranslate"><span class="pre">FLASH</span></code>.</p></li>
+<li><p><strong>t2</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1.0</span></code> – Off interval duration, only relevant for effects <code class="docutils literal notranslate"><span class="pre">PULSE</span></code> and <code class="docutils literal notranslate"><span class="pre">FLASH</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Constants</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>BOTTOM_BACK</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – mask: chassis rear LED</p></li>
+<li><p><strong>BOTTOM_FRONT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">2</span></code> – mask: chassis front LED</p></li>
+<li><p><strong>BOTTOM_LEFT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">4</span></code> – mask: chassis left LED</p></li>
+<li><p><strong>BOTTOM_RIGHT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">8</span></code> – mask: chassis right LED</p></li>
+<li><p><strong>BOTTOM</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">15</span></code> – mask: all chassis LEDs</p></li>
+<li><p><strong>TOP_LEFT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">16</span></code> – mask: gimbal left LED</p></li>
+<li><p><strong>TOP_RIGHT</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">32</span></code> – mask: gimbal right LED</p></li>
+<li><p><strong>TOP</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">48</span></code> – mask: all gimbal LEDs</p></li>
+<li><p><strong>ALL</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">63</span></code> – mask: all LEDs</p></li>
+<li><p><strong>OFF</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0</span></code> – effect: switch off LED</p></li>
+<li><p><strong>ON</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – effect: switch LED to solid color</p></li>
+<li><p><strong>BREATH</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">2</span></code> – effect: breath</p></li>
+<li><p><strong>FLASH</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">3</span></code> – effect: flash LED</p></li>
+<li><p><strong>SCROLLING</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">4</span></code> – effect: scrolling</p></li>
+<li><p><strong>PULSE</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">5</span></code> – effect: pulse LED</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.Mode">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/Mode</span></span><a class="headerlink" href="#robomaster_msgs.msg.Mode" title="Permalink to this definition"></a></dt>
+<dd><p>Coupling control model between gimbal and chassis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><p><strong>mode</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – coupling mode, one of <code class="docutils literal notranslate"><span class="pre">FREE</span></code>, <code class="docutils literal notranslate"><span class="pre">GIMBAL_LEAD</span></code>, <code class="docutils literal notranslate"><span class="pre">CHASSIS_LEAD</span></code></p>
+</dd>
+<dt class="field-even">Constants</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FREE</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0</span></code> – mode: gimbal and chassis are decoupled</p></li>
+<li><p><strong>GIMBAL_LEAD</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – mode: chassis follows gimbal movements to maintain the same relative orientation</p></li>
+<li><p><strong>CHASSIS_LEAD</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">2</span></code> – mode: gimbal follows gimbal movements to maintain the same relative orientation</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.PWM">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/PWM</span></span><a class="headerlink" href="#robomaster_msgs.msg.PWM" title="Permalink to this definition"></a></dt>
+<dd><p>Commands to control the 6 PWM interfaces</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><p><strong>fraction_of_duty_cycle</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32[6]</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">[-1.0,</span> <span class="pre">-1.0,</span> <span class="pre">-1.0,</span> <span class="pre">-1.0,</span> <span class="pre">-1.0,</span> <span class="pre">-1.0]</span></code> – Fraction of duty cycle in [0, 1]. Negative value signal to ignore the interface.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.RegionOfInterest">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/RegionOfInterest</span></span><a class="headerlink" href="#robomaster_msgs.msg.RegionOfInterest" title="Permalink to this definition"></a></dt>
+<dd><p>A region of interest (ROS) in an image. All values are in [0, 1] and are relative to image width and height</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_offset</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – leftmost pixel of the ROI (0 if the ROI includes the left edge of the image)</p></li>
+<li><p><strong>y_offset</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – topmost pixel of the ROI (0 if the ROI includes the top edge of the image)</p></li>
+<li><p><strong>height</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – height of ROI</p></li>
+<li><p><strong>width</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – width of ROI</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.SBus">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/SBus</span></span><a class="headerlink" href="#robomaster_msgs.msg.SBus" title="Permalink to this definition"></a></dt>
+<dd><p>Values recevied by the SBUS interface</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp of the update</p></li>
+<li><p><strong>channels</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">int16[16]</em></a></span>) – values received by the 16 channels</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.SensorAdapter">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/SensorAdapter</span></span><a class="headerlink" href="#robomaster_msgs.msg.SensorAdapter" title="Permalink to this definition"></a></dt>
+<dd><p>Summarizes the state of up to 6 sensor adapters (each with 2 interfaces)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp of the update</p></li>
+<li><p><strong>io</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8[12]</em></a></span>) – input pin state (0 or 1)</p></li>
+<li><p><strong>adc</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">int16[12]</em></a></span>) – adc state</p></li>
+<li><p><strong>port</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8[12]</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">1,</span> <span class="pre">2]</span></code> – interface intentifier</p></li>
+<li><p><strong>id</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8[12]</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">6]</span></code> – sensor adapter identifier</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.Serial">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/Serial</span></span><a class="headerlink" href="#robomaster_msgs.msg.Serial" title="Permalink to this definition"></a></dt>
+<dd><p>Encapsulates serial communication received or to be sent through UART</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp of the update</p></li>
+<li><p><strong>data</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8[]</em></a></span>) – the payload</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.ServoCommand">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/ServoCommand</span></span><a class="headerlink" href="#robomaster_msgs.msg.ServoCommand" title="Permalink to this definition"></a></dt>
+<dd><p>Command to control a servo in speed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – ID of the servo (between 0 and 2)</p></li>
+<li><p><strong>enable</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">True</span></code> – whenever to engage or disengage the servo</p></li>
+<li><p><strong>angular_speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0.0</span></code> – target angular speed in rad/m</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.ServoRawState">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/ServoRawState</span></span><a class="headerlink" href="#robomaster_msgs.msg.ServoRawState" title="Permalink to this definition"></a></dt>
+<dd><p>Raw state from the servos on ports {0, 1, 2, 3}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Header.html"><em class="xref ros ros-field">std_msgs/msg/Header</em></a></span>) – header with the time stamp of the update</p></li>
+<li><p><strong>valid</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool[4]</em></a></span>) – whenever a servo in connected to a port</p></li>
+<li><p><strong>value</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">int32[4]</em></a></span>) – the angle of the servos (1024 corresponds to 180 degrees)</p></li>
+<li><p><strong>speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">int32[4]</em></a></span>) – the speed of the servos (1024 corresponds to about 36 degrees per seconds)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.SpeakerCommand">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/SpeakerCommand</span></span><a class="headerlink" href="#robomaster_msgs.msg.SpeakerCommand" title="Permalink to this definition"></a></dt>
+<dd><p>An command to stop or play a predefined sound or an audio file from the speaker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sound_id</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">int32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – ID of the sound to play</p></li>
+<li><p><strong>times</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – how many times to play the same sound (0: infinite loop)</p></li>
+<li><p><strong>control</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – Control command: one of <code class="docutils literal notranslate"><span class="pre">CONTROL_STOP</span></code>, <code class="docutils literal notranslate"><span class="pre">CONTROL_PLAY</span></code>, <code class="docutils literal notranslate"><span class="pre">CONTROL_ADD</span></code></p></li>
+<li><p><strong>file</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">string</em></a></span>) – if not empry, the local file to be played.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Constants</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>CONTROL_STOP</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0</span></code> – Stop playing sound</p></li>
+<li><p><strong>CONTROL_PLAY</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – Start playing sound after stopping currently played sounds</p></li>
+<li><p><strong>CONTROL_ADD</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">2</span></code> – Start playing sound, without stopping currently played sounds</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros message">
+<dt class="sig sig-object ros" id="robomaster_msgs.msg.WheelSpeeds">
+<em class="property"><span class="pre">message</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/msg/WheelSpeeds</span></span><a class="headerlink" href="#robomaster_msgs.msg.WheelSpeeds" title="Permalink to this definition"></a></dt>
+<dd><p>A Command to set linear speeds for each wheel of the robot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>front_left</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – front left wheel tangential speed in m/s</p></li>
+<li><p><strong>front_right</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – front right wheel tangential speed in m/s</p></li>
+<li><p><strong>rear_left</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – rear left wheel tangential speed in m/s</p></li>
+<li><p><strong>rear_right</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – rear right wheel tangential speed in m/s</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="services">
+<h3>Services<a class="headerlink" href="#services" title="Permalink to this heading"></a></h3>
+<dl class="ros service">
+<dt class="sig sig-object ros" id="robomaster_msgs.srv.GetADC">
+<em class="property"><span class="pre">service</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/srv/GetADC</span></span><a class="headerlink" href="#robomaster_msgs.srv.GetADC" title="Permalink to this definition"></a></dt>
+<dd><p>Command to read on the Analog to Digital Converter (ADC) interface of one of the sensor adapters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Request fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – 0 or 1: ID of one of two interfaces of a sensor adapter</p></li>
+<li><p><strong>port</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – 0, 1, 2, or 3: ID of one of the 4 sensor adapter that can be connected to the robot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Response fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>valid</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the sensor adapter is enabled</p></li>
+<li><p><strong>value</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint16</em></a></span>) – the raw value read by the ADC</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros service">
+<dt class="sig sig-object ros" id="robomaster_msgs.srv.GetIO">
+<em class="property"><span class="pre">service</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/srv/GetIO</span></span><a class="headerlink" href="#robomaster_msgs.srv.GetIO" title="Permalink to this definition"></a></dt>
+<dd><p>Command to read an IO pin state of sensor adapters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Request fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – 0 or 1: ID of one of two interfaces of a sensor adapter</p></li>
+<li><p><strong>port</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – 0, 1, 2, or 3: ID of one of the 4 sensor adapter that can be connected to the robot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Response fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>valid</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the sensor adapter is enabled</p></li>
+<li><p><strong>value</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – the pin state (0 or 1)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros service">
+<dt class="sig sig-object ros" id="robomaster_msgs.srv.GetPulse">
+<em class="property"><span class="pre">service</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/srv/GetPulse</span></span><a class="headerlink" href="#robomaster_msgs.srv.GetPulse" title="Permalink to this definition"></a></dt>
+<dd><p>Command to read the pulse duration measured by one of the sensor adapters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Request fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – 0 or 1: ID of one of two interfaces of a sensor adapter</p></li>
+<li><p><strong>port</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – 0, 1, 2, or 3: ID of one of the 4 sensor adapter that can be connected to the robot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Response fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>valid</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the sensor adapter is enabled</p></li>
+<li><p><strong>time_ms</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint32</em></a></span>) – the pulse duration in milliseconds</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="actions">
+<h3>Actions<a class="headerlink" href="#actions" title="Permalink to this heading"></a></h3>
+<dl class="ros action">
+<dt class="sig sig-object ros" id="robomaster_msgs.action.GripperControl">
+<em class="property"><span class="pre">action</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/action/GripperControl</span></span><a class="headerlink" href="#robomaster_msgs.action.GripperControl" title="Permalink to this definition"></a></dt>
+<dd><p>The gripper goal to open, close, or pause, by applying some power.</p>
+<p>The action succeeds when the gripper reaches the the target state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Goal fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_state</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – the target gripper state: one of <code class="docutils literal notranslate"><span class="pre">PAUSE</span></code>, <code class="docutils literal notranslate"><span class="pre">OPEN</span></code>, or <code class="docutils literal notranslate"><span class="pre">CLOSE</span></code></p></li>
+<li><p><strong>power</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0.5</span></code> – the relative amount of power in [0, 1]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Goal constants</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>PAUSE</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0</span></code> – the gripper state when manually stopped</p></li>
+<li><p><strong>OPEN</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – the open gripper state</p></li>
+<li><p><strong>CLOSE</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">2</span></code> – the closed gripper state</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Result fields</dt>
+<dd class="field-odd"><p><strong>duration</strong> (<span><a class="reference external" href="http://docs.ros2.org/galactic/api/builtin_interfaces/msg/Duration.html"><em class="xref ros ros-field">builtin_interfaces/msg/Duration</em></a></span>) – the duration of the action</p>
+</dd>
+<dt class="field-even">Feedback fields</dt>
+<dd class="field-even"><p><strong>current_state</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – the current gripper state: one of <code class="docutils literal notranslate"><span class="pre">PAUSE</span></code>, <code class="docutils literal notranslate"><span class="pre">OPEN</span></code>, or <code class="docutils literal notranslate"><span class="pre">CLOSE</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros action">
+<dt class="sig sig-object ros" id="robomaster_msgs.action.Move">
+<em class="property"><span class="pre">action</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/action/Move</span></span><a class="headerlink" href="#robomaster_msgs.action.Move" title="Permalink to this definition"></a></dt>
+<dd><p>An action to move the robot relative to its current pose, at desired angular and linear speeds using the onboard control.</p>
+<p>The action succeeds when the robot arrives near the goal pose.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Goal fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – target relative position (longitudinal component with positive towards front)</p></li>
+<li><p><strong>y</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – </p></li>
+<li><p><strong>theta</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – target relative angle in rad</p></li>
+<li><p><strong>linear_speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0.5</span></code> – maximal linear speed in m/s</p></li>
+<li><p><strong>angular_speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0.5236</span></code> – maximal angular speed in rad/s (default is 30 deg/s)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Feedback fields</dt>
+<dd class="field-even"><p><strong>progress</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – the relative progress towards goal from 0 to 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros action">
+<dt class="sig sig-object ros" id="robomaster_msgs.action.MoveArm">
+<em class="property"><span class="pre">action</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/action/MoveArm</span></span><a class="headerlink" href="#robomaster_msgs.action.MoveArm" title="Permalink to this definition"></a></dt>
+<dd><p>An action to move the arm end effector using the onboard control. Coodinates may be relative to the current end effector position or absolute with respect to <code class="docutils literal notranslate"><span class="pre">arm_base_link</span></code>.</p>
+<p>The action succeeds when the end effector come closest to the target point as possible .. note:: it may not be able to reach the target point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Goal fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – target x-coordinate in meter (x-axis points forwards)</p></li>
+<li><p><strong>z</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – target z-coordinate in meter (z-axis points upwards)</p></li>
+<li><p><strong>relative</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">bool</em></a></span>) – whenever the coordinates are relative or absolute.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Feedback fields</dt>
+<dd class="field-even"><p><strong>progress</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – the relative progress towards goal from 0 to 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros action">
+<dt class="sig sig-object ros" id="robomaster_msgs.action.MoveGimbal">
+<em class="property"><span class="pre">action</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/action/MoveGimbal</span></span><a class="headerlink" href="#robomaster_msgs.action.MoveGimbal" title="Permalink to this definition"></a></dt>
+<dd><p>An action to rotate the gimbal using the onboard control. Attitute can be specified in four different frames.</p>
+<p>The action succeeds when the gimbal reaches the target orientation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Goal fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>yaw</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – target yaw in rad</p></li>
+<li><p><strong>pitch</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – target pitch in rad</p></li>
+<li><p><strong>yaw_speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0.52</span></code> – maximal yaw rotation speed in rad/s</p></li>
+<li><p><strong>pitch_speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0.52</span></code> – maximal pitch rotation speed in rad/s</p></li>
+<li><p><strong>frame</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">3</span></code> – the frame in which target orientation is specified. One of <code class="docutils literal notranslate"><span class="pre">FIXED</span></code>, <code class="docutils literal notranslate"><span class="pre">GIMBAL</span></code>, <code class="docutils literal notranslate"><span class="pre">CHASSIS_GIMBAL_PITCH</span></code>, or <code class="docutils literal notranslate"><span class="pre">CHASSIS_FIXED_PITCH</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Goal constants</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FIXED</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">0</span></code> – Frame: gravity aligned, origin set at boot (same frame as chassis odometry and imu)</p></li>
+<li><p><strong>GIMBAL</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – Frame: attached to gimbal, useful to send relative movements.</p></li>
+<li><p><strong>CHASSIS_GIMBAL_PITCH</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">2</span></code> – Frame: yaw aligned to chassis, pitch as in GIMBAL</p></li>
+<li><p><strong>CHASSIS_FIXED_PITCH</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">3</span></code> – Frame: yaw aligned to chassis, pitch as in FIXED</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Feedback fields</dt>
+<dd class="field-odd"><p><strong>progress</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – the relative progress towards goal from 0 to 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros action">
+<dt class="sig sig-object ros" id="robomaster_msgs.action.MoveServo">
+<em class="property"><span class="pre">action</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/action/MoveServo</span></span><a class="headerlink" href="#robomaster_msgs.action.MoveServo" title="Permalink to this definition"></a></dt>
+<dd><p>An action to rotate a servo using the onboard control.</p>
+<p>The action succeeds when the servo reaches the target angle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Goal fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – ID of the servo (between 0 and 2)</p></li>
+<li><p><strong>angle</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – absolute target angle in rad</p></li>
+</ul>
+</dd>
+<dt class="field-even">Feedback fields</dt>
+<dd class="field-even"><p><strong>progress</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – the relative progress towards goal from 0 to 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros action">
+<dt class="sig sig-object ros" id="robomaster_msgs.action.PlaySound">
+<em class="property"><span class="pre">action</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/action/PlaySound</span></span><a class="headerlink" href="#robomaster_msgs.action.PlaySound" title="Permalink to this definition"></a></dt>
+<dd><p>An action to play a predefined sound or an audio file from the speaker.</p>
+<p>The action succeeds when the speaker finishes to play.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Goal fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sound_id</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">int32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – ID of the sound to play</p></li>
+<li><p><strong>times</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1</span></code> – how many times to play the same sound</p></li>
+<li><p><strong>file</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">string</em></a></span>) – if not empry, the local file to be played.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Feedback fields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>time</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">uint8</em></a></span>) – the current count of sound repetitions</p></li>
+<li><p><strong>progress</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – the relative progress towards goal from 0 to 1</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros action">
+<dt class="sig sig-object ros" id="robomaster_msgs.action.RecenterGimbal">
+<em class="property"><span class="pre">action</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_msgs/action/RecenterGimbal</span></span><a class="headerlink" href="#robomaster_msgs.action.RecenterGimbal" title="Permalink to this definition"></a></dt>
+<dd><p>An action to recenter the gimbal using the onboard control distict from <a class="reference internal" href="#robomaster_msgs.action.MoveGimbal" title="robomaster_msgs.action.MoveGimbal"><em class="xref ros ros-action">robomaster_msgs/action/MoveGimbal</em></a> to trigger a specific onboard action.</p>
+<p>The action succeeds when the gimbal reaches the neutral orientation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Goal fields</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>yaw_speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1.04</span></code> – maximal yaw rotation speed in rad/s</p></li>
+<li><p><strong>pitch_speed</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) = <code class="docutils literal notranslate"><span class="pre">1.04</span></code> – maximal pitch rotation speed in rad/s</p></li>
+</ul>
+</dd>
+<dt class="field-even">Feedback fields</dt>
+<dd class="field-even"><p><strong>progress</strong> (<span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#field-types"><em class="xref ros ros-primitive">float32</em></a></span>) – the relative progress towards goal from 0 to 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="robomaster_description.html" class="btn btn-neutral float-left" title="robomaster_description" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="robomaster_ros.html" class="btn btn-neutral float-right" title="robomaster_ros" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gimbal &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Gripper" href="gripper.html" />
+    <link rel="prev" title="Chassis" href="chassis.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robomaster_description.html">robomaster_description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robomaster_msgs.html">robomaster_msgs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robomaster_ros.html">robomaster_ros</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../robomaster_driver_node.html">Robomaster Driver Node</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../robomaster_driver_node.html#modules">Modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="arm.html">Arm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="armor.html">Armor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="battery.html">Battery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="blaster.html">Blaster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camera.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chassis.html">Chassis</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Gimbal</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#state-estimation">State Estimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#control">Control</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subscription">Subscription</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#action-servers">Action Servers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gripper.html">Gripper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="leds.html">LEDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwm.html">PWM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbus.html">SBus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sensor_adapter.html">Sensor adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servo.html">Servo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speaker.html">Speaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tof.html">Time-of-Flight distance sensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uart.html">UART</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vision.html">Vision</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../robomaster_driver_node.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../robomaster_driver_node.html#publishers">Publishers</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../robomaster_driver_node.html">Robomaster Driver Node</a> &raquo;</li>
+      <li>Gimbal</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/robomaster_ros_modules/gimbal.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gimbal">
+<h1>Gimbal<a class="headerlink" href="#gimbal" title="Permalink to this heading"></a></h1>
+<p>This module wraps the SDK class <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.gimbal.Gimbal" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.gimbal.Gimbal</span></code></a>
+to get the state and control the gimbal.</p>
+<p>If the module is enabled, the ROS driver when initializing will recenter the gimbal and
+set the coupling control model between gimbal and chassis to <a class="reference internal" href="#RoboMasterROS.param.mode" title="RoboMasterROS.param.mode"><em class="xref ros ros-param">mode</em></a>.</p>
+<section id="state-estimation">
+<h2>State Estimation<a class="headerlink" href="#state-estimation" title="Permalink to this heading"></a></h2>
+<p>Information from <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.gimbal.Gimbal.sub_angle" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.gimbal.Gimbal.sub_angle()</span></code></a> is republished
+to <a class="reference internal" href="../robomaster_driver_node.html#RoboMasterROS.pub.joint_states_p" title="RoboMasterROS.pub.joint_states_p"><em class="xref ros ros-pub">joint_states_p</em></a> (joints <code class="docutils literal notranslate"><span class="pre">gimbal_joint</span></code> and <code class="docutils literal notranslate"><span class="pre">blaster_joint</span></code>
+of model <a class="reference internal" href="../robomaster_description.html#robomaster_description.model.gimbal.urdf.xacro" title="robomaster_description.model.gimbal.urdf.xacro"><em class="xref ros ros-model">gimbal.urdf.xacro</em></a>)
+at the rate configured by parameter <a class="reference internal" href="#RoboMasterROS.param.gimbal.rate" title="RoboMasterROS.param.gimbal.rate"><em class="xref ros ros-param">gimbal.rate</em></a>.</p>
+</section>
+<section id="control">
+<h2>Control<a class="headerlink" href="#control" title="Permalink to this heading"></a></h2>
+<p>The gimbal can be controlled in velocity, publishing target angular speeds on <a class="reference internal" href="#RoboMasterROS.sub.cmd_gimbal" title="RoboMasterROS.sub.cmd_gimbal"><em class="xref ros ros-sub">cmd_gimbal</em></a>,
+or by giving a goal orientation (in specific coordinate frames)
+to action <a class="reference internal" href="#RoboMasterROS.act_server.move_gimbal" title="RoboMasterROS.act_server.move_gimbal"><em class="xref ros ros-act_server">move_gimbal</em></a>, together with maximal rotation speeds.
+Action <a class="reference internal" href="#RoboMasterROS.act_server.recenter_gimbal" title="RoboMasterROS.act_server.recenter_gimbal"><em class="xref ros ros-act_server">recenter_gimbal</em></a> recenter the gimbal.</p>
+<p>To stop the gimbal, either send a zero velocity target or a zero relative target orientation,
+To engage or disengage the gimbel motors, use <a class="reference internal" href="#RoboMasterROS.sub.gimbal/engage" title="RoboMasterROS.sub.gimbal/engage"><em class="xref ros ros-sub">gimbal/engage</em></a>.</p>
+<section id="yaw-control-coupling-mode-between-gimbal-and-chassis">
+<h3>Yaw control coupling mode between gimbal and chassis<a class="headerlink" href="#yaw-control-coupling-mode-between-gimbal-and-chassis" title="Permalink to this heading"></a></h3>
+<p>The robot onboard controller can be configured to couple the controllers of gimbal and chassis yaws,
+in one of three modes:</p>
+<dl class="simple">
+<dt>chassis is leading</dt><dd><p>The gimbal will keep the same relative orientation with the chassis, effectively locking yaw rotations.</p>
+</dd>
+<dt>gimbal is leading</dt><dd><p>The chassis will actively rotate to keep the same relative orientation.</p>
+</dd>
+<dt>free</dt><dd><p>The two controllers are decoupled. When the chassis rotates,
+the gimbal (if no other commands are provided) will maintain absolute orientation,
+until it reaches the limits of yaw rotations.</p>
+</dd>
+</dl>
+<p>The initial coupling mode is configured by the value of parameter :<a class="reference internal" href="#RoboMasterROS.param.mode" title="RoboMasterROS.param.mode"><em class="xref ros ros-param">mode</em></a>. To change mode,
+send a command to <a class="reference internal" href="#RoboMasterROS.sub.mode" title="RoboMasterROS.sub.mode"><em class="xref ros ros-sub">mode</em></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Gimbal control commands will change the coupling mode: velocity commands on <a class="reference internal" href="#RoboMasterROS.sub.cmd_gimbal" title="RoboMasterROS.sub.cmd_gimbal"><em class="xref ros ros-sub">cmd_gimbal</em></a> will
+stop making the gimbal follows the chassis.</p>
+</div>
+<p>Command <a class="reference internal" href="#RoboMasterROS.sub.gimbal/lock" title="RoboMasterROS.sub.gimbal/lock"><em class="xref ros ros-sub">gimbal/lock</em></a> lock the gimbal to the chassis, freezing both yaw and pitch rotations.</p>
+</section>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.gimbal.enabled">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">gimbal.enabled</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">false</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.gimbal.enabled" title="Permalink to this definition"></a></dt>
+<dd><p>Enables all the ROS interface described here, which by default is disabled, like all other modules.</p>
+</dd></dl>
+
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.mode">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">mode</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">2</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.mode" title="Permalink to this definition"></a></dt>
+<dd><p>A value between 0 and 2, see the enum in <a class="reference internal" href="../robomaster_msgs.html#robomaster_msgs.msg.Mode" title="robomaster_msgs.msg.Mode"><em class="xref ros ros-msg">robomaster_msgs/msg/Mode</em></a>:
+0 free, 1 gimbal leads, 2 chassis leads.</p>
+</dd></dl>
+
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.gimbal.rate">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">gimbal.rate</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">10</span></code><span class="pre">]</span><span class="w"> </span><a class="reference external" href="#" title="Dynamic"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-sync sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M8 2.5a5.487 5.487 0 00-4.131 1.869l1.204 1.204A.25.25 0 014.896 6H1.25A.25.25 0 011 5.75V2.104a.25.25 0 01.427-.177l1.38 1.38A7.001 7.001 0 0114.95 7.16a.75.75 0 11-1.49.178A5.501 5.501 0 008 2.5zM1.705 8.005a.75.75 0 01.834.656 5.501 5.501 0 009.592 2.97l-1.204-1.204a.25.25 0 01.177-.427h3.646a.25.25 0 01.25.25v3.646a.25.25 0 01-.427.177l-1.38-1.38A7.001 7.001 0 011.05 8.84a.75.75 0 01.656-.834z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.param.gimbal.rate" title="Permalink to this definition"></a></dt>
+<dd><p>The rate in Hz at which <a class="reference internal" href="../robomaster_driver_node.html#RoboMasterROS.pub.joint_states_p" title="RoboMasterROS.pub.joint_states_p"><em class="xref ros ros-pub">joint_states_p</em></a> (with gimbal joints) is published.
+One of <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50</span></code> (else it will approximate to the nearest value).
+A value of <code class="docutils literal notranslate"><span class="pre">0</span></code> will effectively disable updates.</p>
+</dd></dl>
+
+</section>
+<section id="subscription">
+<h2>Subscription<a class="headerlink" href="#subscription" title="Permalink to this heading"></a></h2>
+<dl class="ros subscription">
+<dt class="sig sig-object ros" id="RoboMasterROS.sub.cmd_gimbal">
+<em class="property"><span class="pre">subscription</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">cmd_gimbal</span></span><span class="w"> </span><a class="reference internal" href="../robomaster_msgs.html#robomaster_msgs.msg.GimbalCommand" title="robomaster_msgs.msg.GimbalCommand"><em class="xref ros ros-msg"><span class="pre">robomaster_msgs/msg/GimbalCommand</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.sub.cmd_gimbal" title="Permalink to this definition"></a></dt>
+<dd><p>Listen for velocity commands to control yaw and pitch speed of the gimbal using
+<a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.gimbal.Gimbal.drive_speed" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.gimbal.Gimbal.drive_speed()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="ros subscription">
+<dt class="sig sig-object ros" id="RoboMasterROS.sub.mode">
+<em class="property"><span class="pre">subscription</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">mode</span></span><span class="w"> </span><a class="reference internal" href="../robomaster_msgs.html#robomaster_msgs.msg.Mode" title="robomaster_msgs.msg.Mode"><em class="xref ros ros-msg"><span class="pre">robomaster_msgs/msg/Mode</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.sub.mode" title="Permalink to this definition"></a></dt>
+<dd><p>Listen to commands to change the yaw coupling mode between gimbal and chassis.</p>
+</dd></dl>
+
+<dl class="ros subscription">
+<dt class="sig sig-object ros" id="RoboMasterROS.sub.gimbal/lock">
+<em class="property"><span class="pre">subscription</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">gimbal/lock</span></span><span class="w"> </span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Bool.html"><em class="xref ros ros-msg"><span class="pre">std_msgs/msg/Bool</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.sub.gimbal/lock" title="Permalink to this definition"></a></dt>
+<dd><p>Listen for commands to lock the gimbal to the frame (when <code class="docutils literal notranslate"><span class="pre">msg.data</span></code> is true).</p>
+</dd></dl>
+
+<dl class="ros subscription">
+<dt class="sig sig-object ros" id="RoboMasterROS.sub.gimbal/engage">
+<em class="property"><span class="pre">subscription</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">gimbal/engage</span></span><span class="w"> </span><a class="reference external" href="http://docs.ros2.org/galactic/api/std_msgs/msg/Bool.html"><em class="xref ros ros-msg"><span class="pre">std_msgs/msg/Bool</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.sub.gimbal/engage" title="Permalink to this definition"></a></dt>
+<dd><p>Listen for commands to engage or disengage the gimbal motors.</p>
+</dd></dl>
+
+</section>
+<section id="action-servers">
+<h2>Action Servers<a class="headerlink" href="#action-servers" title="Permalink to this heading"></a></h2>
+<dl class="ros action_server">
+<dt class="sig sig-object ros" id="RoboMasterROS.act_server.move_gimbal">
+<em class="property"><span class="pre">action</span> <span class="pre">server</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">move_gimbal</span></span><span class="w"> </span><a class="reference internal" href="../robomaster_msgs.html#robomaster_msgs.action.MoveGimbal" title="robomaster_msgs.action.MoveGimbal"><em class="xref ros ros-action"><span class="pre">robomaster_msgs/action/MoveGimbal</span></em></a><a class="headerlink" href="#RoboMasterROS.act_server.move_gimbal" title="Permalink to this definition"></a></dt>
+<dd><p>Pass a target orientation in one of the 4 coordinate frame described
+in <a class="reference internal" href="../robomaster_msgs.html#robomaster_msgs.action.MoveGimbal" title="robomaster_msgs.action.MoveGimbal"><em class="xref ros ros-action">robomaster_msgs/action/MoveGimbal</em></a> to an onboard action,
+which terminates when the gimbal reaches the goal.</p>
+</dd></dl>
+
+<dl class="ros action_server">
+<dt class="sig sig-object ros" id="RoboMasterROS.act_server.recenter_gimbal">
+<em class="property"><span class="pre">action</span> <span class="pre">server</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">recenter_gimbal</span></span><span class="w"> </span><a class="reference internal" href="../robomaster_msgs.html#robomaster_msgs.action.RecenterGimbal" title="robomaster_msgs.action.RecenterGimbal"><em class="xref ros ros-action"><span class="pre">robomaster_msgs/action/RecenterGimbal</span></em></a><a class="headerlink" href="#RoboMasterROS.act_server.recenter_gimbal" title="Permalink to this definition"></a></dt>
+<dd><p>Recenter the gimbal using onboard control triggered by a different SDK action
+<a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.gimbal.Gimbal.recenter" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.gimbal.Gimbal.recenter()</span></code></a>.
+The action terminates when the gimbal reaches zero yaw and pitch with respect to the chassis.</p>
+</dd></dl>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The two action are mutually exclusive: the ROS driver avoid triggering both in parallel.
+Moreover, new action goals are not accepted if a current goal is active. Therefore,
+to call a different action or to change goal, you first need
+to <a class="reference external" href="https://docs.ros2.org/latest/api/rclpy/api/actions.html#rclpy.action.client.ClientGoalHandle.cancel_goal_async">cancel</a>
+the current goal.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="chassis.html" class="btn btn-neutral float-left" title="Chassis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gripper.html" class="btn btn-neutral float-right" title="Gripper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

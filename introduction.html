@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/design-tabs.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="Welcome to Robomaster ROS’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#robomaster">Robomaster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ros2-and-robomaster">ROS2 and Robomaster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_description.html">robomaster_description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_msgs.html">robomaster_msgs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros.html">robomaster_ros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_driver_node.html">Robomaster Driver Node</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
+<section id="robomaster">
+<h2>Robomaster<a class="headerlink" href="#robomaster" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://www.dji.com/ch/products/steam">DJI Robomaster</a> is a family commercial, educational robots, which currently features
+three types of ground robots (<a class="reference external" href="https://www.dji.com/ch/robomaster-s1">S1</a>, <a class="reference external" href="https://www.dji.com/ch/robomaster-ep-core">EP Core</a>, and EP) and one drone (TT).
+Our tools covers only the Robomaster ground robots, which are effectively different configurations
+of the same hardware parts. They all share the four-wheeled omnidirectional chassis, the battery, and
+the camera. All robots have two controllers, connected among themselves and to other parts
+(servos, wheel motors, hit sensors, LEDs) through a CAN bus:</p>
+<dl class="simple">
+<dt>Motion controller</dt><dd><p>A micro-controller for low-level control that directly connects with the wheels, the chassis LEDs,
+and the sensors. It features 1 UART, 6 PWM, and 1 SBUS interfaces. It is powered from the battery.</p>
+</dd>
+<dt>Intelligent controller</dt><dd><p>A micro-processor running Android for high-level control. It interfaces with clients such as
+the DJI Robomaster App
+(available for <a class="reference external" href="https://www.dji.com/ch/downloads/djiapp/robomaster">mobile</a>
+and <a class="reference external" href="https://www.dji.com/ch/downloads/softwares/robomaster-win">PC</a>)
+and the <a class="reference external" href="https://github.com/dji-sdk/RoboMaster-SDK">official Python remote client library</a>.
+It manages the external communication with the robot (Wi-Fi and USB).
+It controls the camera via USB, the speaker, and perform machine vision processing.
+It is connected with the motion controller via CAN bus and powered from it.</p>
+</dd>
+</dl>
+<p>The different product configurations are</p>
+<dl class="simple">
+<dt>S1</dt><dd><p>The original product with a gimbal and a blaster mounted on top of the chassis.
+The camera is mounted on the gimbal.</p>
+</dd>
+<dt>EP Core</dt><dd><p>EP (for <em>educational pack</em>) Core replaces the gimbal with a parallel mechanism arm and a gripper.
+The camera is mounted on the arm.
+It has a metal extension to the plastic chassis to mount various other parts,
+such ToF sensors and IO adapters.</p>
+</dd>
+<dt>EP</dt><dd><p>It adds gimbal and blaster to EP Core. With EP, you can effectively recreate an S1 by mounting the gimbal
+(DJI “warrior” configuration) or an EP core by mounting the arm (DJI “engineer” configuration).
+Except from gimbal and blaster, it has the same components as the EP Core.</p>
+</dd>
+</dl>
+<p>All three product are meant to be controlled by DJI Robomaster App, which let users:</p>
+<ul class="simple">
+<li><p>check the system state</p></li>
+<li><p>configure the robot parts (e.g., mounting/dismounting the arm)</p></li>
+<li><p>configure the Wi-Fi communication</p></li>
+<li><p>update the firmware</p></li>
+<li><p>program the robot using Python or Blockly (which gets transliterated to Python).
+Python scripts are executed <em>onboard</em> by a restricted Python runtime.</p></li>
+<li><p>teleoperate the robot</p></li>
+</ul>
+<p>In addition, EP and EP Core, officially support a remote client Python library, which uses a binary
+protocol to get state, send commands, and trigger actions on the robot. We provide a ROS client that wraps this client library,</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python/apis.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">onboard Python library</span></a> used from the Robomaster App
+is different than the <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/modules.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">remote Python client library</span></a>.
+The first is interpreted by an onboard Python runtime. The second is interpreted on the user PC
+and communicates with the robots through IP sockets. The exposed functionality overlaps but it’s not identical.
+<a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/index.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">DJI official documentation</span></a> distinguishes between them using the term SDK for the remote client library.</p>
+</div>
+</section>
+<section id="ros2-and-robomaster">
+<h2>ROS2 and Robomaster<a class="headerlink" href="#ros2-and-robomaster" title="Permalink to this heading"></a></h2>
+<p>Three packages provides the core functionality to use Robomaster robots in ROS2:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="robomaster_msgs.html#package.robomaster_msgs" title="package.robomaster_msgs"><code class="xref ros ros-pkg docutils literal notranslate"><span class="pre">robomaster_msgs</span></code></a></dt><dd><p>defines all custom ROS interfaces. When possible, we use already standard interfaces
+(like <a class="reference external" href="http://docs.ros2.org/galactic/api/geometry_msgs/msg/Twist.html"><em class="xref ros ros-msg">geometry_msgs/msg/Twist</em></a> for velocity commands) to favor integration with existing ROS tools
+and libraries. Custom interfaces are needed to exposes all functionality offered by the robot
+(e.g., <a class="reference external" href="http://docs.ros2.org/galactic/api//msg/ArmorHit.html"><em class="xref ros ros-msg">ArmorHit</em></a> wraps all information about hit events) and to describe specific features
+(e.g., the id of LED in <a class="reference external" href="http://docs.ros2.org/galactic/api//msg/LEDEffect.html"><em class="xref ros ros-msg">LEDEffect</em></a>).</p>
+</dd>
+<dt><a class="reference internal" href="robomaster_description.html#package.robomaster_description" title="package.robomaster_description"><code class="xref ros ros-pkg docutils literal notranslate"><span class="pre">robomaster_description</span></code></a></dt><dd><p>contains <code class="docutils literal notranslate"><span class="pre">urdf</span></code> and <code class="docutils literal notranslate"><span class="pre">xacro</span></code> files to model the various component of the robots and
+the different way to configure a robot with them (i.e., EP and S1).
+The models have realistic visual and physical (i.e, inertia and collision shapes) details and
+can be used for state estimation, for simulation, and for visualization.</p>
+</dd>
+<dt><a class="reference internal" href="robomaster_ros.html#package.robomaster_ros" title="package.robomaster_ros"><code class="xref ros ros-pkg docutils literal notranslate"><span class="pre">robomaster_ros</span></code></a></dt><dd><p>contains Python libraries and executables to connect and control the robot. In particular, executable
+<em class="xref ros ros-exec">robomaster_driver</em> offers a ROS2 driver for the robot, wrapping the official client library,
+that exposes <em>all</em> available functionalities related to the robot’s parts.
+Users can configure the driver to use a subset of parts to reduce computational and networking costs.</p>
+</dd>
+</dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The wrapping of the client library in ROS follows these principles:</p>
+<dl>
+<dt>Completeness</dt><dd><p>All available functionality is exposed.
+This sometimes requires to patch the client library to expose hidden information.</p>
+</dd>
+<dt>Transparency</dt><dd><p>We provide a <em>minimal</em> wrapper that maps directly to the client library API.
+That is, we don’t add functionality that is not already present in the API:
+such extensions are delegated to client nodes.
+The client library provides three kind of interfaces, which are mapped one to one to ROS2:</p>
+<dl class="simple">
+<dt>SDK actions to ROS2 actions</dt><dd><p>The SDK uses actions for long running tasks, which maps very well with ROS2 actions.
+Contrary to ROS2 actions, there is not API to preempt SDK actions but stopping an action is done
+indirectly by sending control commands. All SDK actions provides
+the same feedback (progress estimation in percent), which we forward to ROS2.</p>
+</dd>
+<dt>SDK commands to ROS2 subscribers</dt><dd><p>Controlling the robot is done in the SDK by sending commands.
+We trigger commands when we received a message from ROS2 subscription.</p>
+</dd>
+<dt>SDK “DDS” subscriber to ROS2 publishers</dt><dd><p>Getting information from the robot is mostly done in the SDK by starting a subscriber at a fixed frequency.
+We forward the notifications to ROS2 publishers.</p>
+</dd>
+</dl>
+</dd>
+<dt>Conformity</dt><dd><p>Exception to the above transparency rule comes from the goal to be as conform as possible to ROS best practices.
+Therefore, we use SI units, geometric information uses ROS frame conventions, and
+information from several SDK subscribers is grouped to use common ROS interfaces
+such as <a class="reference external" href="http://docs.ros2.org/galactic/api/nav_msgs/msg/Odometry.html"><em class="xref ros ros-msg">nav_msgs/msg/Odometry</em></a>. We try our best to offer a coherent API,
+sometimes overcoming limitations in the SDK (e.g., gripper control in ROS2 uses actions
+as the gripper takes some time to close and open, while the SDK uses an instantaneous command,
+providing no explicit feedback for the progress).</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Robomaster ROS’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

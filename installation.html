@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/design-tabs.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pre-requisites">Pre-requisites</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ros2">ROS2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robomaster-sdk">Robomaster SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#robomaster-ros-packages">Robomaster ROS packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_description.html">robomaster_description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_msgs.html">robomaster_msgs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros.html">robomaster_ros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_driver_node.html">Robomaster Driver Node</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
+<section id="pre-requisites">
+<h2>Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permalink to this heading"></a></h2>
+<section id="ros2">
+<h3>ROS2<a class="headerlink" href="#ros2" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Install a current version of ROS2 (i.e., foxy, galactic, or humble),
+following the <a class="reference external" href="https://docs.ros.org/en/humble/Installation.html">official instructions</a>.</p></li>
+<li><p>In case you opted for a minimal installation (ROS2-base), add the following packages:
+<code class="docutils literal notranslate"><span class="pre">xacro,</span> <span class="pre">launch-xml,</span> <span class="pre">cv-bridge,</span> <span class="pre">launch-testing-ament-cmake,</span> <span class="pre">robot-state-publisher,</span> <span class="pre">joint-state-publisher-gui,</span> <span class="pre">joy,</span> <span class="pre">joy-teleop</span></code></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sudo apt install \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-xacro \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-launch-xml \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-cv-bridge \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-launch-testing-ament-cmake \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-robot-state-publisher \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-joint-state-publisher \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-joint-state-publisher-gui \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-joy \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-joy-teleop \</span>
+<span class="go">ros-&lt;ROS_DISTRO&gt;-joy-linux</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install <a class="reference external" href="https://colcon.readthedocs.io/en/released/">colcon</a></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sudo apt install python3-colcon-common-extensions</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="robomaster-sdk">
+<h3>Robomaster SDK<a class="headerlink" href="#robomaster-sdk" title="Permalink to this heading"></a></h3>
+<p>Install <a class="reference external" href="https://github.com/jeguzzi/RoboMaster-SDK">this fork</a> of the official RoboMaster-SDK,
+which fixes some issues of the upstream repo.</p>
+<ol class="arabic">
+<li><p>Install its dependencies</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sudo apt install libopus-dev python3-pip</span>
+<span class="go">python3 -m pip install -U numpy numpy-quaternion pyyaml</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install the RoboMaster-SDK</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git</span>
+<span class="go">python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git#&quot;egg=libmedia_codec&amp;subdirectory=lib/libmedia_codec&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="robomaster-ros-packages">
+<h2>Robomaster ROS packages<a class="headerlink" href="#robomaster-ros-packages" title="Permalink to this heading"></a></h2>
+<ol class="arabic">
+<li><p>In case you have none, <a class="reference external" href="https://colcon.readthedocs.io/en/released/user/quick-start.html#tl-dr">create a colcon workspace</a> where you want to build the packages,</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir -p &lt;ros2_ws&gt;/src</span>
+</pre></div>
+</div>
+</li>
+<li><p>Clone this repository</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd &lt;ros2_ws&gt;/src</span>
+<span class="go">git clone https://github.com/jeguzzi/robomaster_ros.git</span>
+</pre></div>
+</div>
+</li>
+<li><p>Built the packages.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd &lt;ros2_ws&gt;</span>
+<span class="go">colcon build</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

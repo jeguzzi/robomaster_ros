@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PWM &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SBus" href="sbus.html" />
+    <link rel="prev" title="LEDs" href="leds.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robomaster_description.html">robomaster_description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robomaster_msgs.html">robomaster_msgs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robomaster_ros.html">robomaster_ros</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../robomaster_driver_node.html">Robomaster Driver Node</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../robomaster_driver_node.html#modules">Modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="arm.html">Arm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="armor.html">Armor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="battery.html">Battery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="blaster.html">Blaster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camera.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chassis.html">Chassis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gimbal.html">Gimbal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gripper.html">Gripper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="leds.html">LEDs</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">PWM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#parameter">Parameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subscriptions">Subscriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sbus.html">SBus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sensor_adapter.html">Sensor adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servo.html">Servo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speaker.html">Speaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tof.html">Time-of-Flight distance sensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uart.html">UART</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vision.html">Vision</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../robomaster_driver_node.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../robomaster_driver_node.html#publishers">Publishers</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../robomaster_driver_node.html">Robomaster Driver Node</a> &raquo;</li>
+      <li>PWM</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/robomaster_ros_modules/pwm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pwm">
+<h1>PWM<a class="headerlink" href="#pwm" title="Permalink to this heading"></a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Documentation to be completed</p>
+</div>
+<section id="parameter">
+<h2>Parameter<a class="headerlink" href="#parameter" title="Permalink to this heading"></a></h2>
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.pwm.enabled">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">pwm.enabled</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">false</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.pwm.enabled" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.pwm.frequencies">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">pwm.frequencies</span></span><span class="w"> </span><span class="pre">int[]</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">-1,</span> <span class="pre">-1,</span> <span class="pre">-1,</span> <span class="pre">-1,</span> <span class="pre">-1]</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.pwm.frequencies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="subscriptions">
+<h2>Subscriptions<a class="headerlink" href="#subscriptions" title="Permalink to this heading"></a></h2>
+<dl class="ros subscription">
+<dt class="sig sig-object ros" id="RoboMasterROS.sub.cmd_pwm">
+<em class="property"><span class="pre">subscription</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">cmd_pwm</span></span><span class="w"> </span><a class="reference external" href="http://docs.ros2.org/galactic/api/robomaster_msgs/msg/PWM,.html"><em class="xref ros ros-msg"><span class="pre">robomaster_msgs/msg/PWM,</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.sub.cmd_pwm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="leds.html" class="btn btn-neutral float-left" title="LEDs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sbus.html" class="btn btn-neutral float-right" title="SBus" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

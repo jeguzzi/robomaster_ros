@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gripper &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="LEDs" href="leds.html" />
+    <link rel="prev" title="Gimbal" href="gimbal.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robomaster_description.html">robomaster_description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robomaster_msgs.html">robomaster_msgs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../robomaster_ros.html">robomaster_ros</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../robomaster_driver_node.html">Robomaster Driver Node</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../robomaster_driver_node.html#modules">Modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="arm.html">Arm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="armor.html">Armor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="battery.html">Battery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="blaster.html">Blaster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="camera.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chassis.html">Chassis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gimbal.html">Gimbal</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Gripper</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#publishers">Publishers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#action-servers">Action Servers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="leds.html">LEDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwm.html">PWM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sbus.html">SBus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sensor_adapter.html">Sensor adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="servo.html">Servo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="speaker.html">Speaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tof.html">Time-of-Flight distance sensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uart.html">UART</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vision.html">Vision</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../robomaster_driver_node.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../robomaster_driver_node.html#publishers">Publishers</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../robomaster_driver_node.html">Robomaster Driver Node</a> &raquo;</li>
+      <li>Gripper</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/robomaster_ros_modules/gripper.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gripper">
+<h1>Gripper<a class="headerlink" href="#gripper" title="Permalink to this heading"></a></h1>
+<p>This module wraps the SDK class <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.gripper.Gripper" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.gripper.Gripper</span></code></a> to control the gripper using
+the action <a class="reference internal" href="#RoboMasterROS.act_server.gripper" title="RoboMasterROS.act_server.gripper"><em class="xref ros ros-act_server">gripper</em></a>.</p>
+<p>The SDK expose the macroscopic control state of the gripper: open, closed or paused
+When “paused” the gripper is not actively trying to open or close. For example, if the gripper closes to grasp an object,
+the state will switch to “closed”. If not more commands are sent,
+once the object is removed, the gripper will close more. On the contrary, if a “pause” target is sent,
+the gripper won’t close once the object is removed.</p>
+<p>The state of the gripper changes due to discrete control actions.
+Therefore we publish a new state in <a class="reference internal" href="#RoboMasterROS.pub.gripper" title="RoboMasterROS.pub.gripper"><em class="xref ros ros-pub">gripper</em></a> only when there is a change.</p>
+<p>The module also publishes the state of all joints in
+<a class="reference internal" href="../robomaster_description.html#robomaster_description.model.gripper.urdf.xacro" title="robomaster_description.model.gripper.urdf.xacro"><em class="xref ros ros-model">gripper.urdf.xacro</em></a> on <a class="reference internal" href="../robomaster_driver_node.html#RoboMasterROS.pub.joint_states_p" title="RoboMasterROS.pub.joint_states_p"><em class="xref ros ros-pub">joint_states_p</em></a>.
+Joint positions are interpolated from a
+pre-recorded kinematic simulation of the gripper, based on the current state.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Because the actual opening of the gripper is not known, for computing joint states
+“open” and “closed” define a pose with the gripper <em>completely</em> open and closed, respectively.
+This leads to inaccuracies in the URDF model when the gripper is, in fact, partially open.</p>
+<p>Unfortunately there is not way to overcome this limitation within the SDK.
+One possible solution could be to use machine vision to infer the state of the gripper.</p>
+</div>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.gripper.enabled">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">gripper.enabled</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">false</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.gripper.enabled" title="Permalink to this definition"></a></dt>
+<dd><p>Enables all the ROS interface described here, which by default is disabled, like all other modules.</p>
+</dd></dl>
+
+</section>
+<section id="publishers">
+<h2>Publishers<a class="headerlink" href="#publishers" title="Permalink to this heading"></a></h2>
+<dl class="ros publisher">
+<dt class="sig sig-object ros" id="RoboMasterROS.pub.gripper">
+<em class="property"><span class="pre">publisher</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">gripper</span></span><span class="w"> </span><a class="reference internal" href="../robomaster_msgs.html#robomaster_msgs.msg.GripperState" title="robomaster_msgs.msg.GripperState"><em class="xref ros ros-msg"><span class="pre">robomaster_msgs/msg/GripperState</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: transient_local"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.pub.gripper" title="Permalink to this definition"></a></dt>
+<dd><p>Publishes the gripper state each time it changes due to control actions.</p>
+</dd></dl>
+
+</section>
+<section id="action-servers">
+<h2>Action Servers<a class="headerlink" href="#action-servers" title="Permalink to this heading"></a></h2>
+<dl class="ros action_server">
+<dt class="sig sig-object ros" id="RoboMasterROS.act_server.gripper">
+<em class="property"><span class="pre">action</span> <span class="pre">server</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">gripper</span></span><span class="w"> </span><a class="reference internal" href="../robomaster_msgs.html#robomaster_msgs.action.GripperControl" title="robomaster_msgs.action.GripperControl"><em class="xref ros ros-action"><span class="pre">robomaster_msgs/action/GripperControl</span></em></a><a class="headerlink" href="#RoboMasterROS.act_server.gripper" title="Permalink to this definition"></a></dt>
+<dd><p>Sends a command with the target state and wait until the gripper reaches that state.
+When the target state is “paused”, the action stop the gripper and return immediately.
+If the gripper does not reaches the target state before a timeout, the actions fails.
+The action feedback contains the current state while the response contains
+the duration of the action.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is the only ROS action that does not wrap an SDK action (as none is available in
+<a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.gripper.Gripper" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.gripper.Gripper</span></code></a>).</p>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gimbal.html" class="btn btn-neutral float-left" title="Gimbal" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="leds.html" class="btn btn-neutral float-right" title="LEDs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

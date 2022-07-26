@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robomaster Driver Node &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/design-tabs.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Arm" href="robomaster_ros_modules/arm.html" />
+    <link rel="prev" title="robomaster_ros" href="robomaster_ros.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_description.html">robomaster_description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_msgs.html">robomaster_msgs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros.html">robomaster_ros</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Robomaster Driver Node</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/arm.html">Arm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/armor.html">Armor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/battery.html">Battery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/blaster.html">Blaster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/camera.html">Camera</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/chassis.html">Chassis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/gimbal.html">Gimbal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/gripper.html">Gripper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/leds.html">LEDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/pwm.html">PWM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/sbus.html">SBus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html">Sensor adapter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/servo.html">Servo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/speaker.html">Speaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/tof.html">Time-of-Flight distance sensor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/uart.html">UART</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/vision.html">Vision</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#publishers">Publishers</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Robomaster Driver Node</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/robomaster_driver_node.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="robomaster-driver-node">
+<h1>Robomaster Driver Node<a class="headerlink" href="#robomaster-driver-node" title="Permalink to this heading"></a></h1>
+<dl class="ros node">
+<dt class="sig sig-object ros" id="node.RoboMasterROS">
+<em class="property"><span class="pre">node</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">RoboMasterROS</span></span><a class="headerlink" href="#node.RoboMasterROS" title="Permalink to this definition"></a></dt>
+<dd><p>This node provides a ROS interface to a Robomaster using the official Python client library.</p>
+<p>It wraps functionality from <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.robot.Robot" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.robot.Robot</span></code></a> to create and monitor a connection to a robot,
+configured by parameters <a class="reference internal" href="#RoboMasterROS.param.conn_type" title="RoboMasterROS.param.conn_type"><em class="xref ros ros-param">conn_type</em></a>, <a class="reference internal" href="#RoboMasterROS.param.serial_number" title="RoboMasterROS.param.serial_number"><em class="xref ros ros-param">serial_number</em></a>, and <a class="reference internal" href="#RoboMasterROS.param.reconnect" title="RoboMasterROS.param.reconnect"><em class="xref ros ros-param">reconnect</em></a>.</p>
+<div class="admonition">
+<p class="admonition-title">Summary</p>
+<details>
+<summary>Parameters</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.param.arm.enabled" title="arm.enabled">arm.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.param.arm.left_motor.angle" title="arm.left_motor.angle">arm.left_motor.angle</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.param.arm.left_motor.direction" title="arm.left_motor.direction">arm.left_motor.direction</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.param.arm.left_motor.zero" title="arm.left_motor.zero">arm.left_motor.zero</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.param.arm.rate" title="arm.rate">arm.rate</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.param.arm.right_motor.angle" title="arm.right_motor.angle">arm.right_motor.angle</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.param.arm.right_motor.direction" title="arm.right_motor.direction">arm.right_motor.direction</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.param.arm.right_motor.zero" title="arm.right_motor.zero">arm.right_motor.zero</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/armor.html#RoboMasterROS.param.armor.enabled" title="armor.enabled">armor.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/armor.html#RoboMasterROS.param.armor.sensitivity" title="armor.sensitivity">armor.sensitivity</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/battery.html#RoboMasterROS.param.battery.enabled" title="battery.enabled">battery.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/blaster.html#RoboMasterROS.param.blaster.enabled" title="blaster.enabled">blaster.enabled</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.audio.enabled" title="camera.audio.enabled">camera.audio.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.audio.opus" title="camera.audio.opus">camera.audio.opus</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.audio.raw" title="camera.audio.raw">camera.audio.raw</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.enabled" title="camera.enabled">camera.enabled</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.calibration_file" title="camera.video.calibration_file">camera.video.calibration_file</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.enabled" title="camera.video.enabled">camera.video.enabled</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.h264" title="camera.video.h264">camera.video.h264</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.protocol" title="camera.video.protocol">camera.video.protocol</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.raw" title="camera.video.raw">camera.video.raw</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.resolution" title="camera.video.resolution">camera.video.resolution</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.enabled" title="chassis.enabled">chassis.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.error.angular_velocity.xy" title="chassis.error.angular_velocity.xy">chassis.error.angular_velocity.xy</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.error.angular_velocity.z" title="chassis.error.angular_velocity.z">chassis.error.angular_velocity.z</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.error.linear_acceleration.xyz" title="chassis.error.linear_acceleration.xyz">chassis.error.linear_acceleration.xyz</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.error.linear_velocity.xy" title="chassis.error.linear_velocity.xy">chassis.error.linear_velocity.xy</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.force_level" title="chassis.force_level">chassis.force_level</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.imu_includes_orientation" title="chassis.imu_includes_orientation">chassis.imu_includes_orientation</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.rate" title="chassis.rate">chassis.rate</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.status.rate" title="chassis.status.rate">chassis.status.rate</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.timeout" title="chassis.timeout">chassis.timeout</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.param.chassis.twist_to_wheel_speeds" title="chassis.twist_to_wheel_speeds">chassis.twist_to_wheel_speeds</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#RoboMasterROS.param.conn_type" title="conn_type">conn_type</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/gimbal.html#RoboMasterROS.param.gimbal.enabled" title="gimbal.enabled">gimbal.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/gimbal.html#RoboMasterROS.param.gimbal.rate" title="gimbal.rate">gimbal.rate</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/gripper.html#RoboMasterROS.param.gripper.enabled" title="gripper.enabled">gripper.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/leds.html#RoboMasterROS.param.leds.enabled" title="leds.enabled">leds.enabled</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#RoboMasterROS.param.lib_log_level" title="lib_log_level">lib_log_level</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/gimbal.html#RoboMasterROS.param.mode" title="mode">mode</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/pwm.html#RoboMasterROS.param.pwm.enabled" title="pwm.enabled">pwm.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/pwm.html#RoboMasterROS.param.pwm.frequencies" title="pwm.frequencies">pwm.frequencies</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#RoboMasterROS.param.reconnect" title="reconnect">reconnect</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/sbus.html#RoboMasterROS.param.sbus.enabled" title="sbus.enabled">sbus.enabled</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/sbus.html#RoboMasterROS.param.sbus.rate" title="sbus.rate">sbus.rate</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.param.sensor_adapter.enabled" title="sensor_adapter.enabled">sensor_adapter.enabled</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.param.sensor_adapter.rate" title="sensor_adapter.rate">sensor_adapter.rate</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#RoboMasterROS.param.serial_number" title="serial_number">serial_number</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/servo.html#RoboMasterROS.param.servo.config" title="servo.config">servo.config</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/servo.html#RoboMasterROS.param.servo.rate" title="servo.rate">servo.rate</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/speaker.html#RoboMasterROS.param.speaker.enabled" title="speaker.enabled">speaker.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#RoboMasterROS.param.tf_prefix" title="tf_prefix">tf_prefix</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.param.uart.baud_rate" title="uart.baud_rate">uart.baud_rate</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.param.uart.data_bit" title="uart.data_bit">uart.data_bit</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.param.uart.enabled" title="uart.enabled">uart.enabled</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.param.uart.odd_even" title="uart.odd_even">uart.odd_even</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.param.uart.rx.enable" title="uart.rx.enable">uart.rx.enable</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.param.uart.rx.size" title="uart.rx.size">uart.rx.size</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.param.uart.stop_bit" title="uart.stop_bit">uart.stop_bit</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.param.uart.tx.enable" title="uart.tx.enable">uart.tx.enable</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.param.uart.tx.size" title="uart.tx.size">uart.tx.size</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/vision.html#RoboMasterROS.param.vision.enabled" title="vision.enabled">vision.enabled</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/tof.html#RoboMasterROS.param.vision.rate" title="vision.rate">vision.rate</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/vision.html#RoboMasterROS.param.vision.targets" title="vision.targets">vision.targets</a></p></td>
+</tr>
+</tbody>
+</table>
+</details><details>
+<summary>Subscriptions</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/blaster.html#RoboMasterROS.sub.blaster_led" title="blaster_led">blaster_led</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.sub.camera/config" title="camera/config">camera/config</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.sub.cmd_arm" title="cmd_arm">cmd_arm</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/gimbal.html#RoboMasterROS.sub.cmd_gimbal" title="cmd_gimbal">cmd_gimbal</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/pwm.html#RoboMasterROS.sub.cmd_pwm" title="cmd_pwm">cmd_pwm</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/servo.html#RoboMasterROS.sub.cmd_servo" title="cmd_servo">cmd_servo</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/speaker.html#RoboMasterROS.sub.cmd_sound" title="cmd_sound">cmd_sound</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.sub.cmd_vel" title="cmd_vel">cmd_vel</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.sub.cmd_wheels" title="cmd_wheels">cmd_wheels</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/gimbal.html#RoboMasterROS.sub.gimbal/engage" title="gimbal/engage">gimbal/engage</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/gimbal.html#RoboMasterROS.sub.gimbal/lock" title="gimbal/lock">gimbal/lock</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/leds.html#RoboMasterROS.sub.leds/color" title="leds/color">leds/color</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/leds.html#RoboMasterROS.sub.leds/effect" title="leds/effect">leds/effect</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/gimbal.html#RoboMasterROS.sub.mode" title="mode">mode</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/tof.html#RoboMasterROS.sub.range_&lt;index&gt;" title="range_&lt;index&gt;">range_&lt;index&gt;</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.sub.uart/rx" title="uart/rx">uart/rx</a></p></td>
+</tr>
+</tbody>
+</table>
+</details><details>
+<summary>Publishers</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#RoboMasterROS.pub./tf" title="/tf">/tf</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.pub.arm_position" title="arm_position">arm_position</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/battery.html#RoboMasterROS.pub.battery" title="battery">battery</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/audio_level" title="camera/audio_level">camera/audio_level</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/audio_opus" title="camera/audio_opus">camera/audio_opus</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/audio_raw" title="camera/audio_raw">camera/audio_raw</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/camera_info" title="camera/camera_info">camera/camera_info</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/image_color" title="camera/image_color">camera/image_color</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/image_h264" title="camera/image_h264">camera/image_h264</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/gripper.html#RoboMasterROS.pub.gripper" title="gripper">gripper</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/armor.html#RoboMasterROS.pub.hit" title="hit">hit</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.pub.imu" title="imu">imu</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#RoboMasterROS.pub.joint_states_p" title="joint_states_p">joint_states_p</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.pub.odom" title="odom">odom</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/sbus.html#RoboMasterROS.pub.sbus" title="sbus">sbus</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.pub.sensor_adapter" title="sensor_adapter">sensor_adapter</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/servo.html#RoboMasterROS.pub.servo_raw_state" title="servo_raw_state">servo_raw_state</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.pub.state" title="state">state</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.pub.uart/rx" title="uart/rx">uart/rx</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/vision.html#RoboMasterROS.pub.vision" title="vision">vision</a></p></td>
+</tr>
+</tbody>
+</table>
+</details><details>
+<summary>Service servers</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.srv_server.engage_wheels" title="engage_wheels">engage_wheels</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.srv_server.get_adc" title="get_adc">get_adc</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.srv_server.get_io" title="get_io">get_io</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.srv_server.get_pulse" title="get_pulse">get_pulse</a></p></td>
+</tr>
+</tbody>
+</table>
+</details></div>
+</dd></dl>
+
+<p>The robot and the client library are modulars: for example, one can attach a ToF sensor
+and use class <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.sensor.DistanceSensor" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.sensor.DistanceSensor</span></code></a> to read it.
+The ROS node follows the same organization, with submodules that corresponds to hardware parts.
+Modules can be enabled using parameters <em class="xref ros ros-param">&lt;module&gt;.enabled</em>: by default they are all disabled.</p>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/arm.html">Arm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/arm.html#state-estimation">State estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/arm.html#control">Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/arm.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/arm.html#subscriptions">Subscriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/arm.html#publishers">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/arm.html#action-servers">Action Servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/armor.html">Armor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/armor.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/armor.html#publishers">Publishers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/battery.html">Battery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/battery.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/battery.html#publishers">Publishers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/blaster.html">Blaster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/blaster.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/blaster.html#subscription">Subscription</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/camera.html">Camera</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/camera.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/camera.html#subscription">Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/camera.html#publishers">Publishers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/chassis.html">Chassis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/chassis.html#sensing-and-state-estimation">Sensing and State Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/chassis.html#control">Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/chassis.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/chassis.html#subscription">Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/chassis.html#publishers">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/chassis.html#service-servers">Service Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/chassis.html#action-servers">Action Servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/gimbal.html">Gimbal</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/gimbal.html#state-estimation">State Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/gimbal.html#control">Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robomaster_ros_modules/gimbal.html#yaw-control-coupling-mode-between-gimbal-and-chassis">Yaw control coupling mode between gimbal and chassis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/gimbal.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/gimbal.html#subscription">Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/gimbal.html#action-servers">Action Servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/gripper.html">Gripper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/gripper.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/gripper.html#publishers">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/gripper.html#action-servers">Action Servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/leds.html">LEDs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/leds.html#parameter">Parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/leds.html#subscriptions">Subscriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/pwm.html">PWM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/pwm.html#parameter">Parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/pwm.html#subscriptions">Subscriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/sbus.html">SBus</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/sbus.html#parameter">Parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/sbus.html#publishers">Publishers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html">Sensor adapter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#parameter">Parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#publishers">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#service-servers">Service Servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/servo.html">Servo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/servo.html#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/servo.html#publishers">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/servo.html#subscription">Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/servo.html#action-servers">Action Servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/speaker.html">Speaker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/speaker.html#parameter">Parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/speaker.html#subscribers">Subscribers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/speaker.html#action-servers">Action Servers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/tof.html">Time-of-Flight distance sensor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/tof.html#parameter">Parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/tof.html#publishers">Publishers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/uart.html">UART</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/uart.html#parameter">Parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/uart.html#subscriptions">Subscriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/uart.html#publishers">Publishers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/vision.html">Vision</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/vision.html#parameter">Parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/vision.html#publishers">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robomaster_ros_modules/vision.html#subscriptions">Subscriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<p>The following parameters configures the client library and the general behavior of the ROS node.</p>
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.lib_log_level">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">lib_log_level</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.lib_log_level" title="Permalink to this definition"></a></dt>
+<dd><p>The logging level used for the internal SDK wrapped by the ROS node (see <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/log.html" title="(in RoboMaster Developer Guide v0.1.19)"><span>RoboMaster SDK 如何记录日志</span></a>).</p>
+</dd></dl>
+
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.conn_type">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">conn_type</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;sta&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.conn_type" title="Permalink to this definition"></a></dt>
+<dd><p>The connection method between client and robot (see <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/connection.html" title="(in RoboMaster Developer Guide v0.1.19)"><span>RoboMaster SDK 和机器人建立连接</span></a>), one of:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;sta&quot;</span></code></dt><dd><p>through a managed Wi-Fi network (SSID and password needs to be communicated to the robot,
+for instance using <cite>connect</cite>)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;ap&quot;</span></code></dt><dd><p>through the robot’s Wi-Fi access point (SSID and password are printed on the intelligent controller)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;rndis&quot;</span></code></dt><dd><p>through a network USB interface (micro USB port on the side of the intelligent controller)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.serial_number">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">serial_number</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.serial_number" title="Permalink to this definition"></a></dt>
+<dd><p>If non empty, it is passed to <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.robot.Robot.initialize" title="(in RoboMaster Developer Guide v0.1.19)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">robomaster.robot.Robot.initialize()</span></code></a> to select which robot to connect.
+The serial number is a 14-long code printed on the intelligent controller.
+If the parameter value is a shorter, it’s end is padded by <code class="docutils literal notranslate"><span class="pre">*</span></code>, while if it is longer, it is truncated.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Shorter serial numbers are useful for simulated robot.</p>
+</div>
+</dd></dl>
+
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.reconnect">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">reconnect</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">true</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.reconnect" title="Permalink to this definition"></a></dt>
+<dd><p>If enabled, will keep the ROS node on while waiting for a robot to reconnect.
+In disabled, the node will terminate once the robot disconnects.</p>
+</dd></dl>
+
+<dl class="ros parameter">
+<dt class="sig sig-object ros" id="RoboMasterROS.param.tf_prefix">
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">tf_prefix</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.tf_prefix" title="Permalink to this definition"></a></dt>
+<dd><p>The prefix that gets prepended, if not empty, to any frame related to the robot,
+e.g., <code class="docutils literal notranslate"><span class="pre">base_link</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">&lt;tf_prefix&gt;/base_link</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You need to pass the same <code class="docutils literal notranslate"><span class="pre">tf_prefix</span></code> to the robot model too.
+Launch file <a class="reference internal" href="robomaster_ros.html#robomaster_ros.launch.main.launch" title="robomaster_ros.launch.main.launch"><em class="xref ros ros-launch">main.launch</em></a> does it automatically.</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="publishers">
+<h2>Publishers<a class="headerlink" href="#publishers" title="Permalink to this heading"></a></h2>
+<p>The following publishers are shared between modules</p>
+<dl class="ros publisher">
+<dt class="sig sig-object ros" id="RoboMasterROS.pub.joint_states_p">
+<em class="property"><span class="pre">publisher</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">joint_states_p</span></span><span class="w"> </span><a class="reference external" href="http://docs.ros2.org/galactic/api/sensor_msgs/msg/JointState.html"><em class="xref ros ros-msg"><span class="pre">sensor_msgs/msg/JointState</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.pub.joint_states_p" title="Permalink to this definition"></a></dt>
+<dd><p>Publishes partial updates about joints: <a class="reference internal" href="robomaster_ros_modules/chassis.html#chassis-state"><span class="std std-ref">wheels</span></a>, gimbal, arm, and gripper.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="robomaster_ros.html#robomaster_ros.launch.main.launch" title="robomaster_ros.launch.main.launch"><em class="xref ros ros-launch">main.launch</em></a> configures <code class="docutils literal notranslate"><span class="pre">joint_state_publisher</span></code> to group
+together <a class="reference internal" href="#RoboMasterROS.pub.joint_states_p" title="RoboMasterROS.pub.joint_states_p"><em class="xref ros ros-pub">joint_states_p</em></a> and republish them on
+<code class="docutils literal notranslate"><span class="pre">join_states</span></code>, which is used by <code class="docutils literal notranslate"><span class="pre">robot_state_publisher</span></code> to update the model.</p>
+</div>
+</dd></dl>
+
+<dl class="ros publisher">
+<dt class="sig sig-object ros" id="RoboMasterROS.pub./tf">
+<em class="property"><span class="pre">publisher</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">/tf</span></span><span class="w"> </span><a class="reference external" href="http://docs.ros2.org/galactic/api/tf2_msgs/msg/TFMessage.html"><em class="xref ros ros-msg"><span class="pre">tf2_msgs/msg/TFMessage</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.pub./tf" title="Permalink to this definition"></a></dt>
+<dd><p>This publisher is used indirectly to broadcast the transform <a class="reference internal" href="robomaster_ros_modules/chassis.html#chassis-state"><span class="std std-ref">odom -&gt; base_link</span></a>.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="robomaster_ros.html" class="btn btn-neutral float-left" title="robomaster_ros" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="robomaster_ros_modules/arm.html" class="btn btn-neutral float-right" title="Arm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

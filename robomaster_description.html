@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>robomaster_description &mdash; Robomaster ROS 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/design-tabs.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="robomaster_msgs" href="robomaster_msgs.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Robomaster ROS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">robomaster_description</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#models">Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parts">Parts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robots">Robots</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-files">Launch files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_msgs.html">robomaster_msgs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_ros.html">robomaster_ros</a></li>
+<li class="toctree-l1"><a class="reference internal" href="robomaster_driver_node.html">Robomaster Driver Node</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Robomaster ROS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>robomaster_description</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/robomaster_description.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="robomaster-description">
+<h1>robomaster_description<a class="headerlink" href="#robomaster-description" title="Permalink to this heading"></a></h1>
+<dl class="ros package">
+<dt class="sig sig-object ros" id="package.robomaster_description">
+<em class="property"><span class="pre">package</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_description</span></span><a class="headerlink" href="#package.robomaster_description" title="Permalink to this definition"></a></dt>
+<dd><p>This package provides the URDF model of Robomaster robots.
+Hardware parts are modelled in separated xacro files, which are then assembled in the EP Core and S1
+configurations. The models have realistic visual and physical (i.e, inertia and collision shapes) details and
+can be used for state estimation, simulation, and visualization.</p>
+<div class="admonition">
+<p class="admonition-title">Summary</p>
+<details>
+<summary>Launch files</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_description.launch.main.launch" title="main.launch">main.launch</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_description.launch.model.launch.py" title="model.launch.py">model.launch.py</a></p></td>
+</tr>
+</tbody>
+</table>
+</details><details>
+<summary>Models</summary><table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_description.model.arm.urdf.xacro" title="arm.urdf.xacro">arm.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_description.model.base.urdf.xacro" title="base.urdf.xacro">base.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_description.model.camera.urdf.xacro" title="camera.urdf.xacro">camera.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_description.model.extension.urdf.xacro" title="extension.urdf.xacro">extension.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_description.model.gimbal.urdf.xacro" title="gimbal.urdf.xacro">gimbal.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_description.model.gripper.urdf.xacro" title="gripper.urdf.xacro">gripper.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_description.model.intelligent_controller.urdf.xacro" title="intelligent_controller.urdf.xacro">intelligent_controller.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_description.model.led.urdf.xacro" title="led.urdf.xacro">led.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_description.model.robomaster_ep.urdf.xacro" title="robomaster_ep.urdf.xacro">robomaster_ep.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_description.model.robomaster_s1.urdf.xacro" title="robomaster_s1.urdf.xacro">robomaster_s1.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_description.model.tof.urdf.xacro" title="tof.urdf.xacro">tof.urdf.xacro</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#robomaster_description.model.wheels.urdf.xacro" title="wheels.urdf.xacro">wheels.urdf.xacro</a></p></td>
+</tr>
+</tbody>
+</table>
+</details></div>
+</dd></dl>
+
+<section id="models">
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this heading"></a></h2>
+<section id="parts">
+<h3>Parts<a class="headerlink" href="#parts" title="Permalink to this heading"></a></h3>
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.arm.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">arm.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.arm.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The robot arm</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.base.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">base.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.base.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The four-wheeled chassis</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.camera.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">camera.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.camera.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The camera</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.extension.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">extension.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.extension.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The metallic chassis extension to mount parts</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.gimbal.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">gimbal.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.gimbal.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The gimbal and blaster</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.gripper.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">gripper.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.gripper.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The gripper</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.intelligent_controller.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">intelligent_controller.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.intelligent_controller.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The intelligent controller</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.led.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">led.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.led.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>One chassis LED (a submodel of <a class="reference internal" href="#robomaster_description.model.base.urdf.xacro" title="robomaster_description.model.base.urdf.xacro"><em class="xref ros ros-model">base.urdf.xacro</em></a>)</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.tof.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">tof.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.tof.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The Time-of-flight distance sensor</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.wheels.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">wheels.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.wheels.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>One wheel (a submodel of <a class="reference internal" href="#robomaster_description.model.base.urdf.xacro" title="robomaster_description.model.base.urdf.xacro"><em class="xref ros ros-model">base.urdf.xacro</em></a>)</p>
+</dd></dl>
+
+</section>
+<section id="robots">
+<h3>Robots<a class="headerlink" href="#robots" title="Permalink to this heading"></a></h3>
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.robomaster_ep.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_ep.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.robomaster_ep.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The assembled Robomaster EP Core with arm, gripper, and metallic extension.
+The intelligent controller is mounted in the extension. The camera in mounted on the arm.</p>
+</dd></dl>
+
+<dl class="ros model">
+<dt class="sig sig-object ros" id="robomaster_description.model.robomaster_s1.urdf.xacro">
+<em class="property"><span class="pre">model</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_s1.urdf.xacro</span></span><a class="headerlink" href="#robomaster_description.model.robomaster_s1.urdf.xacro" title="Permalink to this definition"></a></dt>
+<dd><p>The assembled Robomaster S1 with gimbal and blaster.
+The intelligent controller and the camera are mounted on the gimbal.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="launch-files">
+<h2>Launch files<a class="headerlink" href="#launch-files" title="Permalink to this heading"></a></h2>
+<dl class="ros launch_file">
+<dt class="sig sig-object ros" id="robomaster_description.launch.model.launch.py">
+<em class="property"><span class="pre">launch</span> <span class="pre">file</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">model.launch.py</span></span><a class="headerlink" href="#robomaster_description.launch.model.launch.py" title="Permalink to this definition"></a></dt>
+<dd><p>Evaluate the xacro model and passes it to <em class="xref ros ros-exec">robot_state_publisher</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name of the robot used as a tf prefix [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
+<li><p><strong>model</strong> – The type of robot: ep or s1 [Default: <code class="docutils literal notranslate"><span class="pre">ep</span></code>]</p></li>
+<li><p><strong>tof_0</strong> – Add ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_0_parent</strong> – Parent frame of ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_0_xyz</strong> – Position of ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_0_rpy</strong> – Orientation of ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_1</strong> – Add ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_1_parent</strong> – Parent frame of ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_1_xyz</strong> – Position of ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_1_rpy</strong> – Orientation of ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_2</strong> – Add ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_2_parent</strong> – Parent frame of ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_2_xyz</strong> – Position of ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_2_rpy</strong> – Orientation of ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_3</strong> – Add ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_3_parent</strong> – Parent frame of ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_3_xyz</strong> – Position of ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_3_rpy</strong> – Orientation of ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="ros launch_file">
+<dt class="sig sig-object ros" id="robomaster_description.launch.main.launch">
+<em class="property"><span class="pre">launch</span> <span class="pre">file</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">main.launch</span></span><a class="headerlink" href="#robomaster_description.launch.main.launch" title="Permalink to this definition"></a></dt>
+<dd><p>Import <a class="reference internal" href="#robomaster_description.launch.main.launch" title="robomaster_description.launch.main.launch"><em class="xref ros ros-launch">main.launch</em></a> and launches <em class="xref ros ros-exec">joint_state_publisher</em>.
+Use this launch file to launch everything needed for the robot model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>joint_state_gui</strong> – If true, select the GUI version of <em class="xref ros ros-exec">join_state_publisher</em> [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>joint_state_rate</strong> – The rate to publish <em class="xref ros ros-pub">joint_states</em> [Default: <code class="docutils literal notranslate"><span class="pre">10.0</span></code>]</p></li>
+<li><p><strong>name</strong> – Name of the robot used as a tf prefix [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
+<li><p><strong>model</strong> – The type of robot: ep or s1 [Default: <code class="docutils literal notranslate"><span class="pre">ep</span></code>]</p></li>
+<li><p><strong>tof_0</strong> – Add ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_0_parent</strong> – Parent frame of ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_0_xyz</strong> – Position of ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_0_rpy</strong> – Orientation of ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_1</strong> – Add ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_1_parent</strong> – Parent frame of ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_1_xyz</strong> – Position of ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_1_rpy</strong> – Orientation of ToF sensor #1 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_2</strong> – Add ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_2_parent</strong> – Parent frame of ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_2_xyz</strong> – Position of ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_2_rpy</strong> – Orientation of ToF sensor #2 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_3</strong> – Add ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
+<li><p><strong>tof_3_parent</strong> – Parent frame of ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">base_link</span></code>]</p></li>
+<li><p><strong>tof_3_xyz</strong> – Position of ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+<li><p><strong>tof_3_rpy</strong> – Orientation of ToF sensor #3 [Default: <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span></code>]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="robomaster_msgs.html" class="btn btn-neutral float-right" title="robomaster_msgs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Jérôme Guzzi.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
