@@ -77,6 +77,7 @@
   <arg name="chassis_timeout" default="0.0" description="Chassis control timeout in seconds. See :ros:param:`chassis.timeout`"/>
   <arg name="chassis_twist_to_wheel_speeds" default="false" description="Enables `cmd_vel` translation to wheel speeds. See :ros:param:`chassis.twist_to_wheel_speeds`"/>
   <arg name="chassis_force_level" default="false" description="Force the state estimation to stay horizontal. See :ros:param:`chassis.force_level`"/>
+  <arg name="chassis_odom_twist_in_odom" default="false" description="Select odom frame for :ros:pub:`odom` twist component. See :ros:param:`chassis.odom_twist_in_odom`"/>
   <arg name="chassis_imu_includes_orientation" default="true" description="Include orientation in `imu`. See :ros:param:`chassis.imu_includes_orientation`"/>
   <arg name="chassis_error_linear_velocity" default="0.005" description="State estimation error -- linear velocity. See :ros:param:`chassis.error.linear_velocity.xy`"/>
   <arg name="chassis_error_angular_velocity_xy" default="0.01" description="State estimation error -- non horizontal angular velocity. See :ros:param:`chassis.error.angular_velocity.xy`"/>
@@ -158,6 +159,7 @@
       <param name="timeout" value="$(var chassis_timeout)"/>
       <param name="twist_to_wheel_speeds" value="$(var chassis_twist_to_wheel_speeds)"/>
       <param name="force_level" value="$(var chassis_force_level)"/>
+      <param name="odom_twist_in_odom" value="$(var chassis_odom_twist_in_odom)"/>
       <param name="imu_includes_orientation" value="$(var chassis_imu_includes_orientation)"/>
       <param name="error">
         <param name="linear_velocity.xy" value="$(var chassis_error_linear_velocity)"/>

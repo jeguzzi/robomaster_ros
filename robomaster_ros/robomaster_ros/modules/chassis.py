@@ -106,13 +106,18 @@ class Chassis(Module):
             self.logger.info("topic cmd_vel will control wheel speeds")
         else:
             self.logger.info("topic cmd_vel will control chassis twist")
-        odom_frame = node.tf_frame('odom')
-        base_link = node.tf_frame('base_link')
+        self.odom_frame = node.tf_frame('odom')
+        self.base_link = node.tf_frame('base_link')
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "When enabled, publishes :ros:pub:`odom` twist in the odom frame"))
+
         self.odom_msg = nav_msgs.msg.Odometry()
-        self.odom_msg.header.frame_id = odom_frame
-        self.odom_msg.child_frame_id = odom_frame
+        self.odom_msg.header.frame_id = self.odom_frame
         self.imu_msg = sensor_msgs.msg.Imu()
-        self.imu_msg.header.frame_id = base_link
+        self.imu_msg.header.frame_id = self.base_link
+        self.odom_twist_in_odom: bool = node.declare_parameter(
+            "chassis.odom_twist_in_odom", False, descriptor=desc).value
         # no covariance for the pose, as there are no sensors measuring absolute
         # position or orientation. Twist covariance
         # we assume linear x, y have the same constant variance in world frame
@@ -148,8 +153,8 @@ class Chassis(Module):
             descriptor=desc).value
         self.wheel_state_msg = sensor_msgs.msg.JointState(
             name=[node.tf_frame(name) for name in WHEEL_FRAMES])
-        self.transform_msg = geometry_msgs.msg.TransformStamped(child_frame_id=base_link)
-        self.transform_msg.header.frame_id = odom_frame
+        self.transform_msg = geometry_msgs.msg.TransformStamped(child_frame_id=self.base_link)
+        self.transform_msg.header.frame_id = self.odom_frame
         self.odom_pub = node.create_publisher(nav_msgs.msg.Odometry, 'odom', 1)
         self.imu_pub = node.create_publisher(sensor_msgs.msg.Imu, 'imu', 1)
         self.chassis_state_pub = node.create_publisher(
@@ -174,6 +179,15 @@ class Chassis(Module):
         self.engage_server = node.create_service(std_srvs.srv.SetBool, 'engage_wheels',
                                                  self.engage_cb)
         node.add_on_set_parameters_callback(self.set_params_cb)
+
+    @property
+    def odom_twist_in_odom(self) -> bool:
+        return self._odom_twist_in_odom
+
+    @odom_twist_in_odom.setter
+    def odom_twist_in_odom(self, value: bool) -> None:
+        self._odom_twist_in_odom = value
+        self.odom_msg.child_frame_id = self.odom_frame if value else self.base_link
 
     @property
     def linear_velocity_error(self) -> float:
@@ -252,6 +266,8 @@ class Chassis(Module):
                 self.angular_velocity_error_z = param.value
             elif param.name == 'chassis.error.linear_acceleration.xyz':
                 self.linear_acceleration_error = param.value
+            elif param.name == 'chassis.odom_twist_in_odom':
+                self.odom_twist_in_odom = param.value
         return rcl_interfaces.msg.SetParametersResult(successful=True)
 
     def engage(self, value: bool) -> None:
@@ -321,7 +337,10 @@ class Chassis(Module):
 
     def updated_velocity(self, msg: Tuple[float, float, float, float, float, float]) -> None:
         velocity = self.odom_msg.twist.twist.linear
-        (velocity.x, velocity.y) = (msg[0], -msg[1])
+        if self.odom_twist_in_odom:
+            (velocity.x, velocity.y) = (msg[0], -msg[1])
+        else:
+            (velocity.x, velocity.y) = (msg[3], -msg[4])
 
     # (yaw, pitch, roll)
     def updated_attitude(self, msg: Tuple[float, float, float]) -> None:
@@ -345,7 +364,7 @@ class Chassis(Module):
             f * G * value for value, f in zip(msg[:3], (1, -1, -1))]
         angular_speed = self.imu_msg.angular_velocity
         (angular_speed.x, angular_speed.y, angular_speed.z) = [
-            f * value for value, f in zip(msg[3:], (1, -1, -1))]
+            rad(f * value) for value, f in zip(msg[3:], (1, -1, -1))]
         # TODO(jerome): better? synchronization (should also check the jittering)
         stamp = self.clock.now().to_msg()
         if self.imu_has_orientation:
