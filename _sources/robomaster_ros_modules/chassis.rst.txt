@@ -34,6 +34,7 @@ merges it and republishes to ROS as
 Use parameter :ros:param:`chassis.force_level` to force the published state estimation
 to be perfectly horizontally, effectively projecting the orientation to be parallel to the ground.
 In any case, the robot is not tracking the vertical position, which is always set to zero.
+Enable parameter :ros:param:`chassis.odom_twist_in_odom` to switch to the odom frame for the twist.
 
 The driver also publishes the chassis state on topic :ros:pub:`state` gathered from :py:meth:`robomaster.chassis.Chassis.sub_status`
 at a rate defined by parameter :ros:param:`chassis.status.rate`.
@@ -131,6 +132,14 @@ Parameters
   When enabled, it force the published state estimation in :ros:pub:`odom` (and tf)
   to be horizontal.
 
+.. ros:parameter:: chassis.odom_twist_in_odom bool
+  :default: false
+  :dynamic:
+
+  When enabled, it switches the twist component of the published state estimation in :ros:pub:`odom`
+  to the robot's ``odom`` frame. The default is instead to use ``base_link``, i.e.,
+  to publish a twist relative to the robot.
+
 .. ros:parameter:: chassis.rate int
   :default: 10
   :dynamic:
@@ -213,7 +222,8 @@ Publishers
 
   Publishes the most recent state estimation. Publishing happens synchronously to :ros:pub:`imu`,
   with which it shares orientation and angular velocity.
-  Pose and twist are in the same ``odom`` frame.
+  Depending on the value of :ros:param:`chassis.odom_twist_in_odom`, pose and twist
+  are in the same ``odom`` frame or the twist is in the ``base_link`` frame.
   Update rate is controlled by parameter :ros:param:`chassis.rate`.
   The publishing rate may be lower due to poor communication with the robot.
 
