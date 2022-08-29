@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>robomaster_ros &mdash; Robomaster ROS 0.0.1 documentation</title>
@@ -89,9 +89,6 @@
 <p class="admonition-title">Summary</p>
 <details>
 <summary>Executables</summary><table class="docutils align-default">
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_ros.exec.connect" title="connect">connect</a></p></td>
 </tr>
@@ -109,9 +106,6 @@
 </table>
 </details><details>
 <summary>Launch files</summary><table class="docutils align-default">
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#robomaster_ros.launch.main.launch" title="main.launch">main.launch</a></p></td>
 </tr>
@@ -131,13 +125,13 @@ press the small button near the intelligent controller slider.
 The robot will read the code and try to connect to the network.
 The program wait until the robot connects and then terminates.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Positional arguments</dt>
+<dt class="field-odd">Positional arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ssid</strong> – The network SSID</p></li>
 <li><p><strong>password</strong> – The network password</p></li>
 </ul>
 </dd>
-<dt class="field-even">Optional arguments</dt>
+<dt class="field-even">Optional arguments<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>app_id</strong> – The app id of at most 7 letters</p>
 </dd>
 </dl>
@@ -149,7 +143,7 @@ The program wait until the robot connects and then terminates.</p>
 <dd><p>The command lists the available robots with their serial number, IP address,
 firmware version, and battery level. Discovered robots will beep and blink their LEDs.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Optional arguments</dt>
+<dt class="field-odd">Optional arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>timeout</strong> – How much to wait for robots</p></li>
 <li><p><strong>modules</strong> – Probe the robot modules</p></li>
@@ -201,7 +195,7 @@ before notifying modules to stop.</p>
 <dt class="sig sig-object ros" id="robomaster_ros.launch.main.launch">
 <em class="property"><span class="pre">launch</span> <span class="pre">file</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">main.launch</span></span><a class="headerlink" href="#robomaster_ros.launch.main.launch" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Arguments</dt>
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> – A name used as ROS namespace [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
 <li><p><strong>model</strong> – The type of robot: ep or s1 [Default: <code class="docutils literal notranslate"><span class="pre">ep</span></code>]</p></li>

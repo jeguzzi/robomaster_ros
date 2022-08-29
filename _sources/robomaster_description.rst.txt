@@ -22,41 +22,56 @@ Parts
 
   The robot arm
 
+  .. ros:model-viewer:: arm.gltf
+
+
 .. ros:model:: base.urdf.xacro
 
   The four-wheeled chassis
+
+  .. ros:model-viewer:: base.gltf
 
 .. ros:model:: camera.urdf.xacro
 
   The camera
 
+
 .. ros:model:: extension.urdf.xacro
 
   The metallic chassis extension to mount parts
+
 
 .. ros:model:: gimbal.urdf.xacro
 
   The gimbal and blaster
 
+  .. ros:model-viewer:: gimbal.gltf
+
 .. ros:model:: gripper.urdf.xacro
 
   The gripper
+
+  .. ros:model-viewer:: gripper.gltf
 
 .. ros:model:: intelligent_controller.urdf.xacro
 
   The intelligent controller
 
+
 .. ros:model:: led.urdf.xacro
 
   One chassis LED (a submodel of :ros:model:`base.urdf.xacro`)
+
 
 .. ros:model:: tof.urdf.xacro
 
   The Time-of-flight distance sensor
 
+
 .. ros:model:: wheels.urdf.xacro
 
   One wheel (a submodel of :ros:model:`base.urdf.xacro`)
+
 
 
 Robots
@@ -67,10 +82,14 @@ Robots
   The assembled Robomaster EP Core with arm, gripper, and metallic extension.
   The intelligent controller is mounted in the extension. The camera in mounted on the arm.
 
+  .. ros:model-viewer:: robomaster_ep.gltf
+
 .. ros:model:: robomaster_s1.urdf.xacro
 
   The assembled Robomaster S1 with gimbal and blaster.
   The intelligent controller and the camera are mounted on the gimbal.
+
+  .. ros:model-viewer:: robomaster_s1.gltf
 
 Launch files
 -------------
