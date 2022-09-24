@@ -47,7 +47,7 @@ def add_unknown_protocol(cmdset: int, cmdid: int, hint: str = '?') -> None:
             f'with buffer {buf!r} ({len(buf)})')
 
     def unpack_req(self: Any, buf: bytes, offset: int = 0) -> None:
-        logging.warning(
+        logging.debug(
             f'[{hint}] Received unknown request with cmd set {cmdset:#x} and id {cmdid:#x}, '
             f'with buffer {buf!r} ({len(buf)})')
 
