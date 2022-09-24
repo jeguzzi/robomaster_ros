@@ -59,8 +59,17 @@ def esc2angular_speed(value: int) -> float:
 
 def quaternion_from_euler(roll: float, pitch: float, yaw: float
                           ) -> quaternion.quaternion:
-    # TODO(jerome):
-    return quaternion.from_euler_angles(roll, pitch, yaw)
+    cy = math.cos(yaw * 0.5);
+    sy = math.sin(yaw * 0.5);
+    cp = math.cos(pitch * 0.5);
+    sp = math.sin(pitch * 0.5);
+    cr = math.cos(roll * 0.5);
+    sr = math.sin(roll * 0.5);
+    w = cr * cp * cy + sr * sp * sy;
+    x = sr * cp * cy - cr * sp * sy;
+    y = cr * sp * cy + sr * cp * sy;
+    z = cr * cp * sy - sr * sp * cy;
+    return quaternion.as_quat_array([w, x, y, z])
 
 
 def wheel_speeds_from_twist(vx: float, vy: float, vtheta: float,
@@ -112,10 +121,21 @@ class Chassis(Module):
             description=(
                 "When enabled, publishes :ros:pub:`odom` twist in the odom frame"))
 
+        self.position: Optional[Tuple[float, float]] = None
+        self.yaw: Optional[float] = None
         self.odom_msg = nav_msgs.msg.Odometry()
         self.odom_msg.header.frame_id = self.odom_frame
         self.imu_msg = sensor_msgs.msg.Imu()
         self.imu_msg.header.frame_id = self.base_link
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "When enabled, compute :ros:pub:`odom` twist as"
+                " the finite difference of the position"))
+        self.odom_twist_from_pose_diff: bool = node.declare_parameter(
+            "chassis.odom_twist_from_pose_diff", True, descriptor=desc).value
+        desc = rcl_interfaces.msg.ParameterDescriptor(
+            description=(
+                "When enabled, publishes :ros:pub:`odom` twist in the odom frame"))
         self.odom_twist_in_odom: bool = node.declare_parameter(
             "chassis.odom_twist_in_odom", False, descriptor=desc).value
         # no covariance for the pose, as there are no sensors measuring absolute
@@ -161,6 +181,7 @@ class Chassis(Module):
             robomaster_msgs.msg.ChassisStatus, 'state', 1)
         chassis_rate = rate(node, 'chassis', 10)
         status_rate = rate(node, 'chassis.status', 1)
+        self.position_period = 1.0 / chassis_rate
         if chassis_rate:
             self.subscribe(chassis_rate)
         if status_rate:
@@ -195,8 +216,11 @@ class Chassis(Module):
 
     @linear_velocity_error.setter
     def linear_velocity_error(self, value: float) -> None:
+        variance = value ** 2
         vs = self.odom_msg.twist.covariance
-        vs[0] = vs[4] = value ** 2
+        vs[0] = vs[7] = variance
+        ps = self.odom_msg.pose.covariance
+        ps[0] = ps[7] = variance
 
     @property
     def angular_velocity_error_xy(self) -> float:
@@ -204,10 +228,13 @@ class Chassis(Module):
 
     @angular_velocity_error_xy.setter
     def angular_velocity_error_xy(self, value: float) -> None:
+        variance = value ** 2
         vs = self.odom_msg.twist.covariance
-        vs[21] = vs[28] = value ** 2
-        vs = self.imu_msg.angular_velocity_covariance
-        vs[0] = vs[4] = value ** 2
+        vs[21] = vs[28] = variance
+        ivs = self.imu_msg.angular_velocity_covariance
+        ivs[0] = ivs[4] = variance
+        ps = self.odom_msg.pose.covariance
+        ps[21] = ps[28] = variance
 
     @property
     def angular_velocity_error_z(self) -> float:
@@ -215,10 +242,13 @@ class Chassis(Module):
 
     @angular_velocity_error_z.setter
     def angular_velocity_error_z(self, value: float) -> None:
+        variance = value ** 2
         vs = self.odom_msg.twist.covariance
-        vs[35] = value ** 2
-        vs = self.imu_msg.angular_velocity_covariance
-        vs[8] = value ** 2
+        vs[35] = variance
+        ivs = self.imu_msg.angular_velocity_covariance
+        ivs[8] = variance
+        ps = self.odom_msg.pose.covariance
+        ps[35] = variance
 
     @property
     def linear_acceleration_error(self) -> float:
@@ -226,8 +256,9 @@ class Chassis(Module):
 
     @linear_acceleration_error.setter
     def linear_acceleration_error(self, value: float) -> None:
+        variance = value ** 2
         vs = self.imu_msg.linear_acceleration_covariance
-        vs[0] = vs[4] = vs[8] = value ** 2
+        vs[0] = vs[4] = vs[8] = variance
 
     def set_params_cb(self, params: Any) -> rcl_interfaces.msg.SetParametersResult:
         for param in params:
@@ -268,6 +299,11 @@ class Chassis(Module):
                 self.linear_acceleration_error = param.value
             elif param.name == 'chassis.odom_twist_in_odom':
                 self.odom_twist_in_odom = param.value
+            elif param.name == 'chassis.odom_twist_from_pose_diff':
+                if not self.odom_twist_from_pose_diff:
+                    self.position = None
+                self.odom_twist_from_pose_diff = param.value
+
         return rcl_interfaces.msg.SetParametersResult(successful=True)
 
     def engage(self, value: bool) -> None:
@@ -293,10 +329,13 @@ class Chassis(Module):
         if rate:
             # There is no need to unsubscribe
             self.api.sub_position(cs=1, freq=rate, callback=self.updated_position)
+            # TODO(Jerome): ignore if self.odom_twist_from_pose_diff is True
+            # if not self.odom_twist_from_pose_diff:
             self.api.sub_velocity(freq=rate, callback=self.updated_velocity)
             self.api.sub_attitude(freq=rate, callback=self.updated_attitude)
             self.api.sub_imu(freq=rate, callback=self.updated_imu)
             self.api.sub_esc(freq=rate, callback=self.updated_esc)
+            self.position_period = 1.0 / rate
 
     def unsubscribe(self) -> None:
         self.api.unsub_position()
@@ -333,9 +372,26 @@ class Chassis(Module):
 
     def updated_position(self, msg: Tuple[float, float, float]) -> None:
         position = self.odom_msg.pose.pose.position
-        (position.x, position.y) = (msg[0], -msg[1])
+        x, y = position.x, position.y = (msg[0], -msg[1])
+        if self.odom_twist_from_pose_diff:
+            velocity = self.odom_msg.twist.twist.linear
+            if self.position is None:
+                vx = 0.0
+                vy = 0.0
+            else:
+                vx = (x - self.position[0]) / self.position_period
+                vy = (y - self.position[1]) / self.position_period
+            self.position = (x, y)
+            if self.odom_twist_in_odom:
+                velocity.x, velocity.y = (vx, vy)
+            elif self.yaw is not None:
+                velocity.x = math.cos(self.yaw) * vx + math.sin(self.yaw) * vy
+                velocity.y = math.cos(self.yaw) * vy - math.sin(self.yaw) * vx
+
 
     def updated_velocity(self, msg: Tuple[float, float, float, float, float, float]) -> None:
+        if self.odom_twist_from_pose_diff:
+            return
         velocity = self.odom_msg.twist.twist.linear
         if self.odom_twist_in_odom:
             (velocity.x, velocity.y) = (msg[0], -msg[1])
@@ -346,12 +402,13 @@ class Chassis(Module):
     def updated_attitude(self, msg: Tuple[float, float, float]) -> None:
         orientation = self.odom_msg.pose.pose.orientation
         yaw = -rad(msg[0])
+        self.yaw = yaw
         if self.force_level:
             pitch = 0.0
             roll = 0.0
         else:
-            pitch = rad(msg[1])
-            roll = -rad(msg[2])
+            pitch = -rad(msg[1])
+            roll = rad(msg[2])
         q = quaternion_from_euler(yaw=yaw, pitch=pitch, roll=roll)
         (orientation.x, orientation.y, orientation.z, orientation.w) = (q.x, q.y, q.z, q.w)
 
@@ -364,7 +421,7 @@ class Chassis(Module):
             f * G * value for value, f in zip(msg[:3], (1, -1, -1))]
         angular_speed = self.imu_msg.angular_velocity
         (angular_speed.x, angular_speed.y, angular_speed.z) = [
-            rad(f * value) for value, f in zip(msg[3:], (1, -1, -1))]
+            f * value for value, f in zip(msg[3:], (1, -1, -1))]
         # TODO(jerome): better? synchronization (should also check the jittering)
         stamp = self.clock.now().to_msg()
         if self.imu_has_orientation:
