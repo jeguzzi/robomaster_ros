@@ -108,6 +108,8 @@
 
   <!-- $(env HOME)/.ros -->
 
+  <group>
+
   <push-ros-namespace namespace="$(var name)"/>
 
   <node name="robomaster" pkg="robomaster_ros" exec="robomaster_driver" output="screen"
@@ -116,7 +118,7 @@
     <param name="serial_number" value="$(var serial_number)"/>
     <param name="conn_type" value="$(var conn_type)"/>
     <param name="lib_log_level" value="$(var lib_log_level)"/>
-
+    <param name="mode" value="$(var gimbal_mode)"/>
     <param name="arm">
       <param name="enabled" value="$(var arm)"/>
       <param name="rate" value="$(var arm_rate)"/>
@@ -242,5 +244,6 @@
   <!-- <include file="$(find-pkg-share robomaster_ros)/launch/camera_proc.launch.py" if="$(var video_raw)">
   </include> -->
 
+</group>
 
 </launch>
