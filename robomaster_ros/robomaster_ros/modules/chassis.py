@@ -59,16 +59,16 @@ def esc2angular_speed(value: int) -> float:
 
 def quaternion_from_euler(roll: float, pitch: float, yaw: float
                           ) -> quaternion.quaternion:
-    cy = math.cos(yaw * 0.5);
-    sy = math.sin(yaw * 0.5);
-    cp = math.cos(pitch * 0.5);
-    sp = math.sin(pitch * 0.5);
-    cr = math.cos(roll * 0.5);
-    sr = math.sin(roll * 0.5);
-    w = cr * cp * cy + sr * sp * sy;
-    x = sr * cp * cy - cr * sp * sy;
-    y = cr * sp * cy + sr * cp * sy;
-    z = cr * cp * sy - sr * sp * cy;
+    cy = math.cos(yaw * 0.5)
+    sy = math.sin(yaw * 0.5)
+    cp = math.cos(pitch * 0.5)
+    sp = math.sin(pitch * 0.5)
+    cr = math.cos(roll * 0.5)
+    sr = math.sin(roll * 0.5)
+    w = cr * cp * cy + sr * sp * sy
+    x = sr * cp * cy - cr * sp * sy
+    y = cr * sp * cy + sr * cp * sy
+    z = cr * cp * sy - sr * sp * cy
     return quaternion.as_quat_array([w, x, y, z])
 
 
@@ -132,7 +132,7 @@ class Chassis(Module):
                 "When enabled, compute :ros:pub:`odom` twist as"
                 " the finite difference of the position"))
         self.odom_twist_from_pose_diff: bool = node.declare_parameter(
-            "chassis.odom_twist_from_pose_diff", True, descriptor=desc).value
+            "chassis.odom_twist_from_pose_diff", False, descriptor=desc).value
         desc = rcl_interfaces.msg.ParameterDescriptor(
             description=(
                 "When enabled, publishes :ros:pub:`odom` twist in the odom frame"))
@@ -328,12 +328,12 @@ class Chassis(Module):
     def subscribe(self, rate: Rate) -> None:
         if rate:
             # There is no need to unsubscribe
+            self.api.sub_imu(freq=rate, callback=self.updated_imu)
+            self.api.sub_attitude(freq=rate, callback=self.updated_attitude)
             self.api.sub_position(cs=1, freq=rate, callback=self.updated_position)
             # TODO(Jerome): ignore if self.odom_twist_from_pose_diff is True
             # if not self.odom_twist_from_pose_diff:
             self.api.sub_velocity(freq=rate, callback=self.updated_velocity)
-            self.api.sub_attitude(freq=rate, callback=self.updated_attitude)
-            self.api.sub_imu(freq=rate, callback=self.updated_imu)
             self.api.sub_esc(freq=rate, callback=self.updated_esc)
             self.position_period = 1.0 / rate
 
@@ -379,15 +379,21 @@ class Chassis(Module):
                 vx = 0.0
                 vy = 0.0
             else:
+                # TODO(Jerome): I should not assume that the period is the same
+                # - get the time diff
+                # - round to the nearest tick (20 ms)
                 vx = (x - self.position[0]) / self.position_period
                 vy = (y - self.position[1]) / self.position_period
             self.position = (x, y)
+            if vx == 0 and vy == 0:
+                # exact same message => repetition -> do not set velocity
+                return
             if self.odom_twist_in_odom:
                 velocity.x, velocity.y = (vx, vy)
             elif self.yaw is not None:
                 velocity.x = math.cos(self.yaw) * vx + math.sin(self.yaw) * vy
                 velocity.y = math.cos(self.yaw) * vy - math.sin(self.yaw) * vx
-
+        self.publish_state_estimation()
 
     def updated_velocity(self, msg: Tuple[float, float, float, float, float, float]) -> None:
         if self.odom_twist_from_pose_diff:
@@ -423,6 +429,9 @@ class Chassis(Module):
         (angular_speed.x, angular_speed.y, angular_speed.z) = [
             f * value for value, f in zip(msg[3:], (1, -1, -1))]
         # TODO(jerome): better? synchronization (should also check the jittering)
+        # self.publish_state_estimation()
+
+    def publish_state_estimation(self) -> None:
         stamp = self.clock.now().to_msg()
         if self.imu_has_orientation:
             self.imu_msg.orientation = self.odom_msg.pose.pose.orientation

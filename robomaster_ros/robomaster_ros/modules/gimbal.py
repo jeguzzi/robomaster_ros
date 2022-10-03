@@ -59,8 +59,9 @@ class Gimbal(Module):
         self.logger = node.get_logger()
         self.node = node
         mode: int = node.declare_parameter('mode', 2).value
-        robot.set_robot_mode(mode2api(mode))
         self._mode = mode2api(mode)
+        robot.set_robot_mode(self._mode)
+        self.logger.info(f"Set initial robot mode to {self._mode}")
         self.joint_msg = sensor_msgs.msg.JointState()
         self.joint_msg.name = [self.node.tf_frame(name) for name in ('gimbal_joint', 'blaster_joint')]
 

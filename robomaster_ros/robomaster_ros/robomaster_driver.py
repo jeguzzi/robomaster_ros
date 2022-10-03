@@ -1,9 +1,11 @@
-from typing import Any
+from typing import Any, Optional
 import time
+import signal
 
 import rclpy
 import rclpy.executors
 import rclpy.logging
+
 
 from robomaster_ros.client import RoboMasterROS
 
@@ -14,7 +16,22 @@ def main(args: Any = None) -> None:
     # TODO(Jerome): currently not triggered by ctrl+C
     # rclpy.get_default_context().on_shutdown(...)
     should_reconnect = True
-    while should_reconnect:
+
+    node: Optional[RoboMasterROS] = None
+
+    def shutdown(sig, _):
+        if node:
+            if rclpy.ok():
+                node.abort()
+                rclpy.spin_once(node, executor=executor, timeout_sec=0.1)
+            if rclpy.ok():
+                node.stop()
+                rclpy.spin_once(node, executor=executor, timeout_sec=0.1)
+        rclpy.try_shutdown()
+
+    signal.signal(signal.SIGINT, shutdown)
+
+    while should_reconnect and rclpy.ok():
         try:
             node = RoboMasterROS(executor=executor)
         except KeyboardInterrupt:
@@ -22,18 +39,25 @@ def main(args: Any = None) -> None:
         should_reconnect = node.reconnect
         if not node.disconnection.done():
             try:
-                rclpy.spin_until_future_complete(node, node.disconnection, executor=executor)
+                while rclpy.ok() and not node.disconnection.done():
+                    rclpy.spin_until_future_complete(
+                        node, node.disconnection, executor=executor, timeout_sec=1.0)
             except KeyboardInterrupt:
                 node.get_logger().warn('KeyboardInterrupt')
                 should_reconnect = False
-        node.abort()
+                break
+            except rclpy._rclpy_pybind11.RCLError:
+                should_reconnect = False
+                break
         if rclpy.ok():
+            node.abort()
             rclpy.spin_once(node, executor=executor, timeout_sec=0.1)
-        node.stop()
         if rclpy.ok():
+            node.stop()
             rclpy.spin_once(node, executor=executor, timeout_sec=0.1)
         node.destroy_node()
+        node = None
         time.sleep(0.1)
-    if rclpy.ok():
-        # TODO(Jerome): maybe remove, as probably never needed
-        rclpy.shutdown()
+    rclpy.try_shutdown()
+    if node:
+        node.destroy_node()
