@@ -75,7 +75,7 @@ add_unknown_protocols()
 
 def wait_for_robot(serial_number: Optional[str]) -> None:
     while not robomaster.conn.scan_robot_ip(user_sn=serial_number):
-        pass
+        time.sleep(1.0)
 
 
 class RoboMasterROS(rclpy.node.Node):  # type: ignore
