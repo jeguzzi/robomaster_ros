@@ -1,5 +1,6 @@
 # flake8: noqa: E402
 import logging
+import random
 import time
 
 
@@ -75,7 +76,7 @@ add_unknown_protocols()
 
 def wait_for_robot(serial_number: Optional[str]) -> None:
     while not robomaster.conn.scan_robot_ip(user_sn=serial_number):
-        time.sleep(1.0)
+        time.sleep(random.uniform(1.0, 2.0))
 
 
 class RoboMasterROS(rclpy.node.Node):  # type: ignore
