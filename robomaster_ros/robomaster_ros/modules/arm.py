@@ -52,20 +52,24 @@ class Arm(Module):
         left_motor_angle: float = node.declare_parameter('arm.left_motor.angle', 0.073304).value
         right_motor_direction: int = node.declare_parameter('arm.right_motor.direction', -1).value
         left_motor_direction: int = node.declare_parameter('arm.left_motor.direction', 1).value
+        right_motor_index: int = node.declare_parameter('arm.right_motor.index', 1).value
+        left_motor_index: int = node.declare_parameter('arm.left_motor.index', 0).value
         self.servos = {
             'right_motor': RMServo(
-                index=1, reference_angle=right_motor_angle, reference_value=right_motor_zero,
-                direction=right_motor_direction, name=node.tf_frame('arm_1_joint')),
+                index=right_motor_index, reference_angle=right_motor_angle,
+                reference_value=right_motor_zero, direction=right_motor_direction,
+                name=node.tf_frame('arm_1_joint')),
             'left_motor': RMServo(
-                index=0, reference_angle=left_motor_angle, reference_value=left_motor_zero,
-                direction=left_motor_direction, name=node.tf_frame("rod_joint"))
+                index=left_motor_index, reference_angle=left_motor_angle,
+                reference_value=left_motor_zero, direction=left_motor_direction,
+                name=node.tf_frame("rod_joint"))
         }
         node.get_logger().info(
-            f"[Arm] left servo: direction {left_motor_direction}, value {left_motor_zero}, "
-            f"angle {left_motor_angle}")
+            f"[Arm] left servo: index {left_motor_index}, direction {left_motor_direction}, "
+            f"value {left_motor_zero}, angle {left_motor_angle}")
         node.get_logger().info(
-            f"[Arm] right servo: direction {right_motor_direction}, value {right_motor_zero}, "
-            f"angle {right_motor_angle}")
+            f"[Arm] right servo: index {right_motor_index}, direction {right_motor_direction}, "
+            f"value {right_motor_zero}, angle {right_motor_angle}")
         self.arm_position_msg = geometry_msgs.msg.PointStamped()
         self.arm_position_msg.header.frame_id = node.tf_frame('arm_base_link')
         self.arm_position_msg.point.y = 0.0

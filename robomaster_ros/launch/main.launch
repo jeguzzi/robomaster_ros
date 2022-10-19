@@ -17,6 +17,8 @@
   <arg name="right_motor_angle" default="-0.274016" description="The arm right servo zero angle"/>
   <arg name="left_motor_direction" default="1" description="The arm left servo direction"/>
   <arg name="right_motor_direction" default="-1" description="The arm right servo direction"/>
+  <arg name="left_motor_index" default="0" description="The arm left servo index"/>
+  <arg name="right_motor_index" default="1" description="The arm right servo index"/>
 
   <arg name="arm_rate" default="10" description="The update rate for the arm state"/>
 
@@ -101,6 +103,10 @@
   <let name="camera" value="$(eval '$(var audio) or $(var video)')"/>
   <arg name="camera_calibration_suffix" default="" description="The suffix to append to the camera calibration file"/>
 
+  <arg name="camera_yaw" default="0.0" description="The camera orientation with respect to the arm"/>
+
+
+
   <!-- <arg name="display_battery" default="off"/> -->
 
   <arg name="camera_calibration_directory" default="$(find-pkg-share robomaster_ros)/config" description="The location of the camera calibration files"/>
@@ -128,6 +134,8 @@
       <param name="left_motor.direction" value="$(var left_motor_direction)"/>
       <param name="right_motor.angle" value="$(var right_motor_angle)"/>
       <param name="left_motor.angle" value="$(var left_motor_angle)"/>
+      <param name="right_motor.index" value="$(var right_motor_index)"/>
+      <param name="left_motor.index" value="$(var left_motor_index)"/>
     </param>
     <param name="armor">
       <param name="enabled" value="$(var armor)"/>
@@ -230,6 +238,7 @@
     <arg name="tof_1" value="$(var tof_1)"/>
     <arg name="tof_2" value="$(var tof_2)"/>
     <arg name="tof_3" value="$(var tof_3)"/>
+    <arg name="camera_yaw" value="$(var camera_yaw)"/>
   </include>
 
   <!-- <node pkg="image_transport" name="image_compressed" exec="republish" args="raw in:=/camera/image_raw compressed out/compressed:=/camera/image_raw" if="$(var video_compressed)" /> -->

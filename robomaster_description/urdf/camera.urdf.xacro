@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#xacro">
 
-  <xacro:macro name="camera" params="tf_prefix='' mount=''">
+  <xacro:macro name="camera" params="tf_prefix='' mount='' camera_yaw=0.0">
 
     <link name="${tf_prefix}camera_link">
       <inertial>
@@ -30,7 +30,7 @@
 
     <xacro:if value="${mount == 'arm'}">
       <joint name="${tf_prefix}camera_joint" type="fixed">
-        <origin xyz="0.0053865 -0.0195698 0.0473739" rpy="0 1.6898531 0"/>
+        <origin xyz="0.0053865 -0.0195698 0.0473739" rpy="0 1.6898531 ${camera_yaw}"/>
         <parent link="${tf_prefix}arm_2_link"/>
         <child link="${tf_prefix}camera_link"/>
       </joint>

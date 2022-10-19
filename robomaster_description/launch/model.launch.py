@@ -12,6 +12,7 @@ from launch_ros.actions import Node
 args_descriptions = {
     "name": "Name of the robot used as a tf prefix",
     "model": "The type of robot: ep or s1",
+    "camera_yaw": "The camera orientation with respect to the arm"
 }
 
 for i in range(4):
@@ -20,7 +21,9 @@ for i in range(4):
     args_descriptions[f'tof_{i}_xyz'] = f"Position of ToF sensor #{i}"
     args_descriptions[f'tof_{i}_rpy'] = f"Orientation of ToF sensor #{i}"
 
+
 def urdf(name: str = '', model: str = 'ep',
+         camera_yaw: float = 0.0,
          tof_0: bool = False, tof_0_parent: str = 'base_link',
          tof_0_xyz: str = '0 0 0', tof_0_rpy: str = '0 0 0',
          tof_1: bool = False, tof_1_parent: str = 'base_link',
