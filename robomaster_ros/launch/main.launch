@@ -104,7 +104,7 @@
   <arg name="camera_calibration_suffix" default="" description="The suffix to append to the camera calibration file"/>
 
   <arg name="camera_yaw" default="0.0" description="The camera orientation with respect to the arm"/>
-
+  <arg name="camera_rate" default="-1.0" description="The camera maximal fps. A negative rate means no throttling."/>
 
 
   <!-- <arg name="display_battery" default="off"/> -->
@@ -155,6 +155,7 @@
         <param name="h264" value="$(var video_h264)"/>
         <param name="resolution" value="$(var video_resolution)"/>
         <param name="calibration_file" value="$(var camera_calibration_file)"/>
+        <param name="rate" value="$(var camera_rate)"/>
       </param>
       <param name="audio">
         <param name="enabled" value="$(var audio)"/>

@@ -11,7 +11,9 @@ import robomaster.media
 import robomaster_msgs.msg
 import sensor_msgs.msg
 import rcl_interfaces.msg
-# import rclpy.duration
+import rclpy.duration
+import rclpy.time
+from rclpy.clock import ClockType
 
 from typing import TYPE_CHECKING, Optional, Dict, Any
 if TYPE_CHECKING:
@@ -55,11 +57,19 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         self._message_queue: "queue.Queue[sensor_msgs.msg.Image]" = queue.Queue(1)
         self.clock = node.get_clock()
         self.video: bool = node.declare_parameter("camera.video.enabled", True).value
+        self.next_capture_time = self.clock.now()
+
         if self.video:
             self.publish_raw_video: bool = node.declare_parameter("camera.video.raw", True).value
             self.publish_h264_video: bool = node.declare_parameter("camera.video.h264", True).value
             protocol: str = node.declare_parameter("camera.video.protocol", "tcp").value
             height: int = node.declare_parameter("camera.video.resolution", 360).value
+            rate: float = node.declare_parameter("camera.video.rate", -1.0).value
+            self.min_video_period: Optional[rclpy.duration.Duration]
+            if rate > 0:
+                self.min_video_period = rclpy.duration.Duration(nanoseconds=1e9 / rate)
+            else:
+                self.min_video_period = None
             node.create_subscription(
                 robomaster_msgs.msg.CameraConfig, 'camera/config',
                 self.has_updated_camera_config, 1)
@@ -168,9 +178,10 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                 except queue.Empty:
                     break
             if data:
+                capture_time = self.clock.now()
                 if self.publish_h264_video:
                     msg = robomaster_msgs.msg.H264Packet()
-                    msg.header.stamp = self.clock.now().to_msg()
+                    msg.header.stamp = capture_time.to_msg()
                     msg.header.frame_id = self.frame_id
                     msg.data = data
                     msg.seq = seq
@@ -180,10 +191,13 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                     frames = self._h264_decode(data)
                     self._video_frame_count += len(frames)
                     # self.logger.info(f"Got frames {len(frames)}")
+                    if self.min_video_period:
+                        if capture_time < self.next_capture_time:
+                            continue
+                    self.next_capture_time += self.min_video_period
                     for frame in frames[-1:]:
                         # self.logger.info(f"SHAPE {frame.shape}")
                         i_msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
-                        capture_time = self.clock.now()
                         # + rclpy.duration.Duration(nanoseconds=3e8)
                         i_msg.header.stamp = capture_time.to_msg()
                         i_msg.header.frame_id = self.frame_id
