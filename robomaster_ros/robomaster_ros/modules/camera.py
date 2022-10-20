@@ -194,7 +194,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                     if self.min_video_period:
                         if capture_time < self.next_capture_time:
                             continue
-                    self.next_capture_time += self.min_video_period
+                        self.next_capture_time += self.min_video_period
                     for frame in frames[-1:]:
                         # self.logger.info(f"SHAPE {frame.shape}")
                         i_msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
