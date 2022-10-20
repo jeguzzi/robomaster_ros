@@ -244,4 +244,7 @@ class Gripper(Module):
         self.gripper.sub_status(freq=10, callback=cb)
         while self._gripper_state == -1:
             time.sleep(0.01)
-        self.gripper.unsub_status()
+        try:
+            self.gripper.unsub_status()
+        except AttributeError:
+            pass
