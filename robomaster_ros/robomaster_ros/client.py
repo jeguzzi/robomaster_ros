@@ -43,7 +43,7 @@ def pad_serial(value: str) -> str:
 
 def add_unknown_protocol(cmdset: int, cmdid: int, hint: str = '?') -> None:
     def unpack_resp(self: Any, buf: bytes, offset: int = 0) -> None:
-        logging.warning(
+        logging.debug(
             f'[{hint}] Received unknown response with cmd set {cmdset:#x} and id {cmdid:#x}, '
             f'with buffer {buf!r} ({len(buf)})')
 
@@ -81,6 +81,8 @@ def wait_for_robot(serial_number: Optional[str]) -> None:
 
 class RoboMasterROS(rclpy.node.Node):  # type: ignore
 
+    initialized: bool = False
+
     def __init__(self, executor: Optional[rclpy.executors.Executor] = None) -> None:
         super(RoboMasterROS, self).__init__("robomaster_ros", start_parameter_services=True)
         # robomaster.logger.set_level(logging.ERROR)
@@ -97,7 +99,6 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
                     f"trasformed to {sn}")
         else:
             sn = None
-        self.initialized = False
         self.connected = False
         if conn_type == 'sta':
             self.get_logger().info("Waiting for a robot")

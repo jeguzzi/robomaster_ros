@@ -27,6 +27,8 @@ def main(args: Any = None) -> None:
             if rclpy.ok():
                 node.stop()
                 rclpy.spin_once(node, executor=executor, timeout_sec=0.1)
+        else:
+            raise KeyboardInterrupt
         rclpy.try_shutdown()
 
     signal.signal(signal.SIGINT, shutdown)
