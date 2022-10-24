@@ -34,6 +34,7 @@
   <arg name="blaster" default="$(eval '\'$(var model)\' == \'s1\'')" description="Enable the blaster module"/>
 
   <arg name="gripper" default="$(eval '\'$(var model)\' == \'ep\'')" description="Enable the gripper module"/>
+  <arg name="open_gripper" default="false" description="Whenever to open gripper at initialization"/>
 
   <arg name="sbus" default="false" description="Enable the sbus module"/>
 
@@ -181,6 +182,7 @@
     </param>
     <param name="gripper">
       <param name="enabled" value="$(var gripper)"/>
+      <param name="open" value="$(var open_gripper)"/>
     </param>
     <param name="led">
       <param name="enabled" value="$(var led)"/>
