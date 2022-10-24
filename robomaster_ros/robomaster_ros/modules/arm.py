@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from ..client import RoboMasterROS
 
 from .. import Module
-from ..action import wait_action, abort_action
+from ..action import wait_action, abort_action, remove_action_with_target
 from ..utils import rate, nearest_rate, Rate
 
 
@@ -93,6 +93,8 @@ class Arm(Module):
         self.action: Optional[robomaster.action.Action] = None
         node.create_subscription(geometry_msgs.msg.Vector3, 'cmd_arm',
                                  self.has_received_velocity_command, 10)
+        node.create_subscription(geometry_msgs.msg.Point, 'target_arm_position',
+                                 self.has_received_position_command, 1)
         node.add_on_set_parameters_callback(self.set_params_cb)
 
     def has_received_velocity_command(self, msg: geometry_msgs.msg.Vector3) -> None:
@@ -124,6 +126,16 @@ class Arm(Module):
         # action._action_id += 1
         # msg._proto._action_ctrl = 1
         self.robot.client.send_msg(msg)
+
+    def has_received_position_command(self, msg: geometry_msgs.msg.Point) -> None:
+        # self.node.get_logger().info(f"[Arm] arm position command {msg}")
+        x = int(msg.x * 1000)
+        z = int(msg.z * 1000)
+        action = robomaster.robotic_arm.RoboticArmMoveAction(x, z, z=0, mode=1)
+        action._action_id = action._get_next_action_id()
+        msg = self.robot._action_dispatcher.get_msg_by_action(action)
+        self.robot.client.send_msg(msg)
+
 
     def subscribe(self, rate: Rate) -> None:
         if rate:
@@ -157,7 +169,7 @@ class Arm(Module):
         if self.action:
             self.action._abort()
             while self.action is not None:
-                self.logger.info("wait for the action to terminate")
+                self.logger.info(f"[Arm] wait for action {self.action} to terminate")
                 time.sleep(0.1)
 
     def publish_sensor_raw_state(self, msg: ServoData) -> None:
@@ -181,7 +193,7 @@ class Arm(Module):
                 # print(v.value, v.bias, v.angle)
         right_motor = self.servos['right_motor']
         left_motor = self.servos['left_motor']
-        if(right_motor.valid and left_motor.valid):
+        if (right_motor.valid and left_motor.valid):
             arm_state_msg = sensor_msgs.msg.JointState()
             arm_state_msg.header.stamp = self.clock.now().to_msg()
             joints = arm_joint_state(right_motor=right_motor.angle, left_motor=left_motor.angle)
@@ -206,39 +218,41 @@ class Arm(Module):
             if delta == 0:
                 # HACK(Jerome): else it moves to an undefined target
                 goal_handle.succeed()
-                self.logger.info('No need to move arm')
+                self.logger.info('[Arm] No need to move')
                 return robomaster_msgs.action.MoveArm.Result()
             # HACK(Jerome): else the teleop +/- x is not concluding the action
             timeout = max(1.0, delta / 0.02)  # 2cm/s
         else:
             f = self.api.moveto
-        try:
-            new_action = f(x=int(request.x * 1000), y=int(request.z * 1000))
-        except RuntimeError as e:
-            self.logger.warning(f'Cannot move arm: {e}')
-            goal_handle.abort()
-            return robomaster_msgs.action.MoveArm.Result()
+        while True:
+            try:
+                new_action = f(x=int(request.x * 1000), y=int(request.z * 1000))
+                break
+            except RuntimeError:
+                self.logger.warning('[Arm] remove current action')
+                remove_action_with_target(
+                    self.robot, robomaster.robotic_arm.RoboticArmMoveAction.target)
         self.action = new_action
-        self.logger.info(f'Start moving arm with request {request}')
+        self.logger.info(f'[Arm] Start moving with request {request}: {new_action}')
         feedback_msg = robomaster_msgs.action.MoveArm.Feedback()
 
         def cb() -> None:
             # self.logger.info(f'Moving arm ... {action._percent}')
-            feedback_msg.progress = cast(robomaster.action.Action, self.action)._percent * 0.01
+            feedback_msg.progress = cast(robomaster.action.Action, new_action)._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
 
         # add_cb(self.action, cb)
         # self.action.wait_for_completed(timeout=timeout)
-        wait_action(self.action, cb, timeout=timeout)
+        wait_action(new_action, cb, timeout=timeout)
 
         if goal_handle.is_cancel_requested:
-            self.logger.info('Done moving chassis: canceled')
+            self.logger.info('[Arm] Done moving: canceled')
             goal_handle.canceled()
         elif self.action.has_succeeded:
-            self.logger.info('Done moving chassis: succeed')
+            self.logger.info('[Arm] Done moving: succeeded')
             goal_handle.succeed()
         else:
-            self.logger.warning('Done moving arm: aborted')
+            self.logger.warning('[Arm] Done moving: aborted')
             try:
                 goal_handle.abort()
             except rclpy._rclpy_pybind11.RCLError:
@@ -256,7 +270,7 @@ class Arm(Module):
 
     def _stop_action(self) -> None:
         if self.action:
-            self.logger.info('Canceling move arm action')
+            self.logger.info('[Arm] Canceling action')
             # ABORTED, which would be a more corrent state, is not handled as a completed state
             # by the SDK, therefore we use FAILED
             # Specific:
