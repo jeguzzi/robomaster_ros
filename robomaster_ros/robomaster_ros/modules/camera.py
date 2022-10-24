@@ -13,7 +13,7 @@ import sensor_msgs.msg
 import rcl_interfaces.msg
 import rclpy.duration
 import rclpy.time
-from rclpy.clock import ClockType
+# from rclpy.clock import ClockType
 
 from typing import TYPE_CHECKING, Optional, Dict, Any
 if TYPE_CHECKING:
@@ -67,6 +67,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
             rate: float = node.declare_parameter("camera.video.rate", -1.0).value
             self.min_video_period: Optional[rclpy.duration.Duration]
             if rate > 0:
+                self.logger.info(f"[Camera] fps limited to {rate:.1f}")
                 self.min_video_period = rclpy.duration.Duration(nanoseconds=1e9 / rate)
             else:
                 self.min_video_period = None
@@ -98,7 +99,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                                 sensor_msgs.msg.CameraInfo, 'camera/camera_info', 1)
                             self.publish_camera_info = True
                 except FileNotFoundError:
-                    self.logger.warn(f"Calibration file not found at {calibration_path}")
+                    self.logger.warn(f"[Camera] Calibration file not found at {calibration_path}")
             self.logger.info(f"[Camera] Start video stream with resolution {height}p")
             self.api.start_video_stream(display=False, resolution=f"{height}p")
         self.audio: bool = node.declare_parameter("camera.audio.enabled", True).value
@@ -123,14 +124,15 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         for param in params:
             if param.name == 'camera.video.resolution' and self.video:
                 if param.value in (360, 540, 720):
-                    self.logger.info(f"Will set resolution to {param.value}")
+                    self.logger.info(f"[Camera] Will set resolution to {param.value}")
                     self.api.stop_video_stream()
                     self.api.start_video_stream(display=False, resolution=f"{param.value}p")
-                    self.logger.info(f"Has set resolution to {param.value}")
+                    self.logger.info(f"[Camera] Has set resolution to {param.value}")
                 else:
                     success = False
                     self.logger.warning(
-                        f"Resolution {param.value} not supported. Should be 360, 540, or 720")
+                        f"[Camera] Resolution {param.value} not supported. "
+                        "Should be 360, 540, or 720")
         return rcl_interfaces.msg.SetParametersResult(successful=success)
 
     def start_video_stream(self, display: bool = False, addr: Optional[str] = None,
@@ -189,12 +191,13 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                     self.h264_video_pub.publish(msg)
                 if self.publish_raw_video:
                     frames = self._h264_decode(data)
+                    if not frames:
+                        continue
                     self._video_frame_count += len(frames)
                     # self.logger.info(f"Got frames {len(frames)}")
                     if self.min_video_period:
                         if capture_time < self.next_capture_time:
                             continue
-                        self.next_capture_time += self.min_video_period
                     for frame in frames[-1:]:
                         # self.logger.info(f"SHAPE {frame.shape}")
                         i_msg = self.bridge.cv2_to_imgmsg(frame, encoding="bgr8")
@@ -205,6 +208,9 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                             self._message_queue.put(i_msg, block=False)
                         except queue.Full:
                             pass
+                        else:
+                            if self.min_video_period:
+                                self.next_capture_time += self.min_video_period
 
     def _video_publisher_task(self) -> None:
         while self._video_streaming:
