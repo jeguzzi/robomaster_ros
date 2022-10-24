@@ -92,6 +92,9 @@ class Gripper(Module):
 
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.gripper = robot.gripper
+        _open: bool = node.declare_parameter('gripper.open', False).value
+        if _open:
+            self.gripper.open()
         self.node = node
         self.logger = node.get_logger()
         self.clock = node.get_clock()
@@ -184,7 +187,7 @@ class Gripper(Module):
         deadline = self.clock.now() + rclpy.duration.Duration(seconds=7)
         while (current_state != request.target_state and not self.should_abort and
                not goal_handle.is_cancel_requested):
-            if(self.clock.now() > deadline):
+            if (self.clock.now() > deadline):
                 self.logger.warning(
                     f'Deadline to reach gripper target state {request.target_state} elapsed')
                 break
@@ -229,9 +232,9 @@ class Gripper(Module):
             msg = robomaster_msgs.msg.GripperState(state=value)
             msg.header.stamp = self.clock.now().to_msg()
             self.gripper_pub.publish(msg)
-            if(value == robomaster_msgs.msg.GripperState.OPEN):
+            if (value == robomaster_msgs.msg.GripperState.OPEN):
                 self.node.joint_state_pub.publish(self.joint_state(0))
-            if(value == robomaster_msgs.msg.GripperState.CLOSE):
+            if (value == robomaster_msgs.msg.GripperState.CLOSE):
                 self.node.joint_state_pub.publish(self.joint_state(1))
 
     def query_gripper_state(self) -> None:
