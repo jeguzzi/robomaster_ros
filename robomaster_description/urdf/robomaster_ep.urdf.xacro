@@ -9,6 +9,7 @@
   <xacro:if value="${_name == ''}">
     <xacro:property name="tf_prefix" value=""/>
   </xacro:if>
+  <xacro:arg name="camera_yaw" default="0.0"/>
 
   <xacro:include filename="base.urdf.xacro"/>
   <xacro:include filename="arm.urdf.xacro"/>
@@ -22,7 +23,7 @@
   <xacro:extension tf_prefix="${tf_prefix}" use_rear_extension="true"/>
   <xacro:intelligent_controller tf_prefix="${tf_prefix}" mount="extension"/>
   <xacro:arm tf_prefix="${tf_prefix}"/>
-  <xacro:camera tf_prefix="${tf_prefix}" mount="arm"/>
+  <xacro:camera tf_prefix="${tf_prefix}" mount="arm" camera_yaw="$(arg camera_yaw)"/>
   <xacro:gripper tf_prefix="${tf_prefix}"/>
 
   <xacro:add_tof index="0" tf_prefix="${tf_prefix}"/>
