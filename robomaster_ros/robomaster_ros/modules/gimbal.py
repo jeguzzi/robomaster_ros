@@ -79,6 +79,7 @@ class Gimbal(Module):
         self._move_gimbal_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.MoveGimbal, 'move_gimbal',
             self.execute_move_gimbal_callback,
+            goal_callback=self.new_gimbal_goal_callback,
             cancel_callback=self.cancel_gimbal_callback,
             callback_group=cbg)
         # Do I need the recenter action too? ... let's add it ... then I decide if I should keep it
@@ -259,6 +260,12 @@ class Gimbal(Module):
             self.action._changeto_state(robomaster.action.ACTION_FAILED)
             # TODO: tentative
             move(self.api, yaw=0, pitch=0).wait_for_completed(timeout=2)
+
+    def new_gimbal_goal_callback(self, goal_request: robomaster_msgs.action.MoveGimbal.Goal
+                                 ) -> rclpy.action.server.GoalResponse:
+        if self.action:
+            return rclpy.action.server.GoalResponse.REJECT
+        return rclpy.action.server.GoalResponse.ACCEPT
 
     def cancel_gimbal_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
         # self.logger.warn('It is not possible to cancel onboard actions')

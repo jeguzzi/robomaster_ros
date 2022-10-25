@@ -51,6 +51,7 @@ class Speaker(Module):
         cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
         self._sound_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.PlaySound, "play", self.execute_play_sound,
+            goal_callback=self.new_speaker_goal_callback,
             cancel_callback=self.cancel_callback, callback_group=cbg)
         self._audio_files: Dict[int, str] = {}
         self._audio_id = 0
@@ -147,6 +148,12 @@ class Speaker(Module):
                 pass
         self.action = None
         return robomaster_msgs.action.PlaySound.Result()
+
+    def new_speaker_goal_callback(self, goal_request: robomaster_msgs.action.PlaySound.Goal
+                                  ) -> rclpy.action.server.GoalResponse:
+        if self.action:
+            return rclpy.action.server.GoalResponse.REJECT
+        return rclpy.action.server.GoalResponse.ACCEPT
 
     def cancel_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
         # self.logger.warn('It is not possible to cancel onboard actions')

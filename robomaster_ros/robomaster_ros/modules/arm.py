@@ -86,8 +86,10 @@ class Arm(Module):
             self.servo_raw_state_pub = node.create_publisher(
                 robomaster_msgs.msg.ServoRawState, 'servo_raw_state', 1)
         cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
+        self.logger.info(f"[Arm] Callback group {cbg}")
         self._move_arm_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.MoveArm, 'move_arm', self.execute_move_arm_callback,
+            goal_callback=self.new_move_arm_goal_callback,
             cancel_callback=self.cancel_move_arm_callback, callback_group=cbg)
         # self.goal_handle: Optional[rclpy.action.server.ServerGoalHandle] = None
         self.action: Optional[robomaster.action.Action] = None
@@ -228,10 +230,11 @@ class Arm(Module):
             try:
                 new_action = f(x=int(request.x * 1000), y=int(request.z * 1000))
                 break
-            except RuntimeError:
-                self.logger.warning('[Arm] remove current action')
+            except RuntimeError as e:
+                self.logger.warning(
+                    f'[Arm] Failed creating new action {e} => remove current action')
                 remove_action_with_target(
-                    self.robot, robomaster.robotic_arm.RoboticArmMoveAction.target)
+                    self.robot, robomaster.robotic_arm.RoboticArmMoveAction._target)
         self.action = new_action
         self.logger.info(f'[Arm] Start moving with request {request}: {new_action}')
         feedback_msg = robomaster_msgs.action.MoveArm.Feedback()
@@ -248,7 +251,7 @@ class Arm(Module):
         if goal_handle.is_cancel_requested:
             self.logger.info('[Arm] Done moving: canceled')
             goal_handle.canceled()
-        elif self.action.has_succeeded:
+        elif new_action.has_succeeded:
             self.logger.info('[Arm] Done moving: succeeded')
             goal_handle.succeed()
         else:
@@ -260,6 +263,12 @@ class Arm(Module):
                 pass
         self.action = None
         return robomaster_msgs.action.MoveArm.Result()
+
+    def new_move_arm_goal_callback(self, goal_request: robomaster_msgs.action.MoveArm.Goal
+                                   ) -> rclpy.action.server.GoalResponse:
+        if self.action:
+            return rclpy.action.server.GoalResponse.REJECT
+        return rclpy.action.server.GoalResponse.ACCEPT
 
     def cancel_move_arm_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
         # self.logger.warn('It is not possible to cancel onboard actions')

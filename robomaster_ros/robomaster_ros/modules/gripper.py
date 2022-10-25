@@ -125,6 +125,7 @@ class Gripper(Module):
         # TODO(Jerome): there is no need to lock when I use exclusive callback groups
         self._gripper_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.GripperControl, 'gripper', self.execute_gripper_callback,
+            goal_callback=self.new_gripper_goal_callback,
             cancel_callback=self.cancel_gripper_callback, callback_group=cbg)
 
     def stop(self) -> None:
@@ -213,6 +214,12 @@ class Gripper(Module):
             self.logger.info(f'Done moving gripper after {duration.nanoseconds / 1e6:.0f} ms')
         self._gripper_action_lock.release()
         return robomaster_msgs.action.GripperControl.Result(duration=duration.to_msg())
+
+    def new_gripper_goal_callback(self, goal_request: robomaster_msgs.action.GripperControl.Goal
+                                  ) -> rclpy.action.server.GoalResponse:
+        if self._gripper_action_lock.locked():
+            return rclpy.action.server.GoalResponse.REJECT
+        return rclpy.action.server.GoalResponse.ACCEPT
 
     def cancel_gripper_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
         self.logger.info('Canceling gripper action')

@@ -105,6 +105,7 @@ class Servo(Module):
         cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
         self._move_servo_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.MoveServo, 'move_servo', self.execute_move_servo_callback,
+            goal_callback=self.new_servo_goal_callback,
             cancel_callback=self.cancel_callback, callback_group=cbg)
 
     def publish_sensor_raw_state(self, msg: ServoData) -> None:
@@ -157,6 +158,12 @@ class Servo(Module):
         self.action = None
         self.logger.info('Done moving servo')
         return robomaster_msgs.action.MoveServo.Result()
+
+    def new_servo_goal_callback(self, goal_request: robomaster_msgs.action.MoveServo.Goal
+                                ) -> rclpy.action.server.GoalResponse:
+        if self.action:
+            return rclpy.action.server.GoalResponse.REJECT
+        return rclpy.action.server.GoalResponse.ACCEPT
 
     def cancel_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
         self.logger.warn('It is not possible to cancel onboard actions')

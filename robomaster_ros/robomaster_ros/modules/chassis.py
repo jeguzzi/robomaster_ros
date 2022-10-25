@@ -196,6 +196,7 @@ class Chassis(Module):
         cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
         self._move_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.Move, 'move', self.execute_move_callback,
+            goal_callback=self.new_move_goal_callback,
             cancel_callback=self.cancel_move_callback, callback_group=cbg)
         self.engage_server = node.create_service(std_srvs.srv.SetBool, 'engage_wheels',
                                                  self.engage_cb)
@@ -511,6 +512,12 @@ class Chassis(Module):
                 pass
         self.action = None
         return robomaster_msgs.action.Move.Result()
+
+    def new_move_goal_callback(self, goal_request: robomaster_msgs.action.Move.Goal
+                               ) -> rclpy.action.server.GoalResponse:
+        if self.action:
+            return rclpy.action.server.GoalResponse.REJECT
+        return rclpy.action.server.GoalResponse.ACCEPT
 
     def cancel_move_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
         if self.action:

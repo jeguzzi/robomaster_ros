@@ -83,6 +83,7 @@ def abort_action(robot: robomaster.robot.Robot, action: robomaster.action.Action
 
 
 def remove_action_with_target(robot: robomaster.robot.Robot, target: int) -> bool:
+    rclpy.logging.get_logger("SDK").warning(f"remove_action_with_target {target}")
     dispatcher = robot.action_dispatcher
     dispatcher._in_progress_mutex.acquire()
     key: Optional[int] = None
@@ -93,5 +94,6 @@ def remove_action_with_target(robot: robomaster.robot.Robot, target: int) -> boo
                 break
     if key is not None:
         del dispatcher._in_progress[key]
+        rclpy.logging.get_logger("SDK").warning(f"Deleted action {key}")
     dispatcher._in_progress_mutex.release()
     return key is not None
