@@ -86,6 +86,7 @@ class Gimbal(Module):
         self._recenter_gimbal_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.RecenterGimbal, 'recenter_gimbal',
             self.execute_recenter_gimbal_callback,
+            goal_callback=self.new_gimbal_goal_callback,
             cancel_callback=self.cancel_gimbal_callback,
             callback_group=cbg)
         self.action: Optional[robomaster.action.Action] = None
@@ -261,8 +262,7 @@ class Gimbal(Module):
             # TODO: tentative
             move(self.api, yaw=0, pitch=0).wait_for_completed(timeout=2)
 
-    def new_gimbal_goal_callback(self, goal_request: robomaster_msgs.action.MoveGimbal.Goal
-                                 ) -> rclpy.action.server.GoalResponse:
+    def new_gimbal_goal_callback(self, goal_request: Any) -> rclpy.action.server.GoalResponse:
         if self.action:
             return rclpy.action.server.GoalResponse.REJECT
         return rclpy.action.server.GoalResponse.ACCEPT
