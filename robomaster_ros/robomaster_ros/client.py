@@ -80,6 +80,8 @@ def wait_for_robot(serial_number: Optional[str]) -> None:
         try:
             found = robomaster.conn.scan_robot_ip(user_sn=serial_number)
         except OSError:
+            pass
+        if not found:
             time.sleep(random.uniform(1.0, 2.0))
 
 
