@@ -26,6 +26,7 @@ import rclpy.action
 import rclpy.task
 import rclpy.duration
 
+import std_msgs.msg
 import sensor_msgs.msg
 
 import tf2_ros.transform_broadcaster
@@ -123,10 +124,14 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
             self.disconnection.set_result(False)
             return
         self.get_logger().info("Connected")
+        qos = rclpy.qos.QoSProfile(
+            depth=1,
+            history=rclpy.qos.QoSHistoryPolicy.KEEP_LAST,
+            durability=rclpy.qos.QoSDurabilityPolicy.TRANSIENT_LOCAL)
+        self.connected_pub = self.create_publisher(std_msgs.msg.Bool, 'connected', qos)
         self.connected = True
         self._tf_name = self.declare_parameter('tf_prefix', '').value
         self.initialized = True
-        self._got_hb = False
         self.heartbeat_check_timer = self.create_timer(5, self.heartbeat_check)
         self.heartbeat_handler = robomaster.client.MsgHandler(
             proto_data=robomaster.protocol.ProtoSdkHeartBeat(),
@@ -140,6 +145,7 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
                         modules.items() if self.enabled(name)]
         module_string = ', '.join(type(module).__name__ for module in self.modules)
         self.get_logger().info(f"Enabled modules: {module_string}")
+        self.connected_pub.publish(std_msgs.msg.Bool(data=True))
 
     def __del__(self) -> None:
         self.stop()
@@ -159,8 +165,11 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
                 module.stop()
                 # self.get_logger().info(f"Stopped module {module}")
             time.sleep(0.5)
-            if self.connected:
-                self.ep_robot.close()
+            if not self.connected:
+                self.ep_robot._client.stop()
+            self.ep_robot.close()
+            self.connected = False
+            self.connected_pub.publish(std_msgs.msg.Bool(data=False))
             self.initialized = False
             self.get_logger().info("Has stopped client")
 
@@ -173,15 +182,9 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
         return self.declare_parameter(f"{name}.enabled", False).value
 
     def heartbeat_check(self) -> None:
-        self.heartbeat_check_timer.reset()
-        # print('heartbeat_check', time.time(), self._got_hb)
-        if not self._got_hb:
-            self.disconnection.set_result(False)
-            self.connected = False
-            self.get_logger().warn("Disconnected")
-            # self.get_logger().warn(f"{self.disconnection.done()}")
-        self._got_hb = False
+        self.connected = False
+        self.disconnection.set_result(False)
+        self.get_logger().warn("Disconnected")
 
     def got_heart_beat(self, msg: Any) -> None:
-        # print('H', time.time())
-        self._got_hb = True
+        self.heartbeat_check_timer.reset()

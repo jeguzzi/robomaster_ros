@@ -20,6 +20,8 @@ def main(args: Any = None) -> None:
     node: Optional[RoboMasterROS] = None
 
     def shutdown(sig, _):
+        nonlocal should_reconnect
+        should_reconnect = False
         if node:
             if rclpy.ok():
                 node.abort()
@@ -45,7 +47,6 @@ def main(args: Any = None) -> None:
                     rclpy.spin_until_future_complete(
                         node, node.disconnection, executor=executor, timeout_sec=1.0)
             except KeyboardInterrupt:
-                node.get_logger().warn('KeyboardInterrupt')
                 should_reconnect = False
                 break
             except rclpy._rclpy_pybind11.RCLError:
