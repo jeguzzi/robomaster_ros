@@ -63,7 +63,8 @@ class Gimbal(Module):
         robot.set_robot_mode(self._mode)
         self.logger.info(f"Set initial robot mode to {self._mode}")
         self.joint_msg = sensor_msgs.msg.JointState()
-        self.joint_msg.name = [self.node.tf_frame(name) for name in ('gimbal_joint', 'blaster_joint')]
+        self.joint_msg.name = [self.node.tf_frame(name) for name
+                               in ('gimbal_joint', 'blaster_joint')]
 
         gimbal_rate = rate(node, 'gimbal', 10)
         if gimbal_rate:
@@ -143,7 +144,8 @@ class Gimbal(Module):
             self.robot.set_robot_mode(robomaster.robot.CHASSIS_LEAD)
             try:
                 self.logger.info("Will lock")
-                # Sent at least a (unit) 1, else it won't execute the action on board and change state
+                # Sent at least a (unit) 1, else it won't execute the action
+                # on board and change state
                 # TODO(Jerome): check timeouts
                 move(self.api, yaw=0.5).wait_for_completed(timeout=2)
                 move(self.api, yaw=-0.5).wait_for_completed(timeout=2)

@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any
 from datetime import datetime as dt
 
 
