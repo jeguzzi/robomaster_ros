@@ -12,7 +12,7 @@ Full documentation available at https://jeguzzi.github.io/robomaster_ros.
 
 #### ROS2
 
-Install a current version of ROS2 (foxy or galactic), following the [official instructions](https://docs.ros.org/en/galactic/Installation.html).
+Install a currently supported version of ROS2 (foxy -- iron), following the [official instructions](https://docs.ros.org/en/galactic/Installation.html).
 and then install colcon
 ```bash
 sudo apt install python3-colcon-common-extensions
