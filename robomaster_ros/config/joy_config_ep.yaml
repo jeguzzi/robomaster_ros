@@ -77,21 +77,19 @@
       action_goal:
         target_state: 1
       buttons: [6, 0]
-    move_arm:
-      type: action
-      interface_type: robomaster_msgs/action/MoveArm
-      action_name: move_arm
-      action_goal:
-        relative: true
-      buttons: [6]
+    comarm:
+      type: topic
+      interface_type: "geometry_msgs/msg/Vector3"
+      topic_name: cmd_arm
+      deadman_buttons: [6]  # RT
       axis_mappings:
         x:
-          axis: 4
-          scale: 0.02
+          axis: 3
+          scale: 0.2
           offset: 0
         z:
-          axis: 5
-          scale: 0.02
+          axis: 1
+          scale: 0.2
           offset: 0
     engage:
       type: service

@@ -67,6 +67,7 @@ def probe_robot(ip: str, sn: str, logger: logging.Logger,
     ep_robot.led.set_led(r=255, effect=robomaster.led.EFFECT_FLASH, freq=5)
     if modules:
         for name, module in sorted(ep_robot._modules.items()):
+            logger.info(f'\t{name} ?')
             version = module.get_version()
             if version:
                 logger.info(f'\t{name} {version}')
