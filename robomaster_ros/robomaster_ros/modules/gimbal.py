@@ -72,7 +72,7 @@ class Gimbal(Module):
         node.create_subscription(robomaster_msgs.msg.GimbalCommand, 'cmd_gimbal',
                                  self.has_received_command, 1)
         # Latched
-        node.create_subscription(robomaster_msgs.msg.Mode, 'gimabl/mode', self.has_received_mode, 1)
+        node.create_subscription(robomaster_msgs.msg.Mode, 'gimbal/mode', self.has_received_mode, 1)
         node.create_subscription(std_msgs.msg.Bool, 'gimbal/lock', self.has_received_lock, 1)
         node.create_subscription(std_msgs.msg.Bool, 'gimbal/engage', self.has_received_engage, 1)
         cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
