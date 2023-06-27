@@ -7,6 +7,7 @@ import rclpy.action
 import robomaster.robot
 import sensor_msgs.msg
 import robomaster_msgs.msg
+import robomaster_msgs.srv
 import robomaster_msgs.action
 
 from typing import Dict, List, Tuple, Any, Optional, cast
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
     from ..client import RoboMasterROS
 
 from .. import Module
-from ..utils import rate, deg
+from ..utils import rate, deg, rad
 from ..action import add_cb
 
 # DONE from the APP 1 unit = 0.17578 degress
@@ -60,10 +61,14 @@ class RMServo:
     def speed(self) -> float:
         return self.direction * self.speed_value * math.pi / UNIT_180_DEG / 5
 
-    # TODO(Jerome): review
-    def external(self, angle: float) -> float:
-        return (self.direction * (angle - self.reference_angle) +
-                self.reference_value * math.pi / UNIT_180_DEG)
+    # convert an angle in the URDF defined joint frame to an angle in the servo own frame.
+    def angle_to_servo(self, angle: float) -> float:
+        return self.direction * (angle - self.reference_angle)
+
+    # convert an angle to the URDF defined joint frame from an angle in the servo own frame,
+    # i.e. the inverse of `angle_to_servo`
+    def angle_from_servo(self, zero_angle: float) -> float:
+        return self.direction * zero_angle + self.reference_angle
 
 
 # TODO(maybe): add get_angle
@@ -107,6 +112,10 @@ class Servo(Module):
             node, robomaster_msgs.action.MoveServo, 'move_servo', self.execute_move_servo_callback,
             goal_callback=self.new_servo_goal_callback,
             cancel_callback=self.cancel_callback, callback_group=cbg)
+        get_angle_cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
+        node.create_service(
+            robomaster_msgs.srv.GetServoAngle, 'get_servo_angle',
+            self.get_servo_angle_cb, callback_group=get_angle_cbg)
 
     def publish_sensor_raw_state(self, msg: ServoData) -> None:
         omsg = robomaster_msgs.msg.ServoRawState()
@@ -132,11 +141,17 @@ class Servo(Module):
                                     ) -> robomaster_msgs.action.MoveServo.Result:
         # TODO(jerome): Complete with failures, ...
         request = goal_handle.request
+        if request.index not in self.servos:
+            self.logger.warning(f'Unknown servo with index {request.index}')
+            goal_handle.abort()
+            return robomaster_msgs.action.MoveServo.Result()
         servo = self.servos[request.index]
         feedback_msg = robomaster_msgs.action.MoveServo.Feedback()
         try:
+            # `angle` is the angle with respect to the servo zero in degrees
+            # `index` starts from 1
             self.action = self.api.moveto(
-                index=servo.index + 1, angle=round(deg(servo.external(request.angle))))
+                index=servo.index + 1, angle=round(deg(servo.angle_to_servo(request.angle))))
         except RuntimeError as e:
             self.logger.warning(f'Cannot move servo: {e}')
             goal_handle.abort()
@@ -147,7 +162,7 @@ class Servo(Module):
             feedback_msg.progress = cast(robomaster.action.Action, self.action)._percent * 0.01
             goal_handle.publish_feedback(feedback_msg)
         add_cb(self.action, cb)
-        # TODO(Jerome): parametrize timeput
+        # TODO(Jerome): parametrize timeout
         self.action.wait_for_completed(timeout=7)
         if self.action.has_succeeded:
             goal_handle.succeed()
@@ -187,10 +202,20 @@ class Servo(Module):
         self.publish_sensor_raw_state(msg)
 
     def has_received_cmd(self, msg: robomaster_msgs.msg.ServoCommand) -> None:
-        if msg.enable:
-            # self.logger.info("\n\nSEND drive_speed\n\n")
-            speed = rpm(msg.angular_speed)
-            self.api.drive_speed(index=msg.index + 1, speed=speed)
-            self.logger.info(f"SENT drive_speed {speed}")
-        else:
-            self.api.pause()
+        if msg.index in self.servos:
+            if msg.enable:
+                speed = rpm(msg.angular_speed) * self.servos[msg.index].direction
+                self.api.drive_speed(index=msg.index + 1, speed=speed)
+                self.logger.debug(f"servo target speed set to {speed}")
+            else:
+                self.api.pause(index=msg.index + 1)
+
+    def get_servo_angle_cb(self, request: robomaster_msgs.srv.GetServoAngle.Request,
+                     response: robomaster_msgs.srv.GetServoAngle.Response
+                     ) -> robomaster_msgs.srv.GetServoAngle.Response:
+        if request.index in self.servos:
+            beta: float = self.api.get_angle(index=request.index + 1)
+            self.logger.info(f"beta {beta}")
+            response.angle = self.servos[request.index].angle_from_servo(
+                rad(beta) - math.pi)
+        return response

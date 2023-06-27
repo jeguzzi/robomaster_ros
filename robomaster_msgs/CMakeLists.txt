@@ -74,6 +74,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/GetADC.srv"
   "srv/GetIO.srv"
   "srv/GetPulse.srv"
+  "srv/GetServoAngle.srv"
   DEPENDENCIES std_msgs
  )
 
