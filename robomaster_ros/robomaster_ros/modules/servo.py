@@ -140,6 +140,7 @@ class Servo(Module):
     def execute_move_servo_callback(self, goal_handle: Any
                                     ) -> robomaster_msgs.action.MoveServo.Result:
         # TODO(jerome): Complete with failures, ...
+        # TODO(jerome): Check if enable concurrent actions for different servos
         request = goal_handle.request
         if request.index not in self.servos:
             self.logger.warning(f'Unknown servo with index {request.index}')
@@ -215,7 +216,6 @@ class Servo(Module):
                      ) -> robomaster_msgs.srv.GetServoAngle.Response:
         if request.index in self.servos:
             beta: float = self.api.get_angle(index=request.index + 1)
-            self.logger.info(f"beta {beta}")
             response.angle = self.servos[request.index].angle_from_servo(
                 rad(beta) - math.pi)
         return response
