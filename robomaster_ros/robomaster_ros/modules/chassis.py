@@ -112,9 +112,9 @@ class Chassis(Module):
         self.force_level: bool = node.declare_parameter(
             "chassis.force_level", False, descriptor=desc).value
         if self.twist_to_wheel_speeds:
-            self.logger.info("topic cmd_vel will control wheel speeds")
+            self.logger.info("[Chassis] Topic cmd_vel will control wheel speeds")
         else:
-            self.logger.info("topic cmd_vel will control chassis twist")
+            self.logger.info("[Chassis] Topic cmd_vel will control chassis twist")
         self.odom_frame = node.tf_frame('odom')
         self.base_link = node.tf_frame('base_link')
         desc = rcl_interfaces.msg.ParameterDescriptor(
@@ -273,9 +273,9 @@ class Chassis(Module):
             elif param.name == 'chassis.twist_to_wheel_speeds':
                 self.twist_to_wheel_speeds = param.value
                 if self.twist_to_wheel_speeds:
-                    self.logger.info("topic cmd_vel will control wheel speeds")
+                    self.logger.info("[Chassis] Topic cmd_vel will control wheel speeds")
                 else:
-                    self.logger.info("topic cmd_vel will control chassis twist")
+                    self.logger.info("[Chassis] Topic cmd_vel will control chassis twist")
             elif param.name == 'chassis.force_level':
                 self.force_level = param.value
             elif param.name == 'chassis.rate':
@@ -311,7 +311,7 @@ class Chassis(Module):
         proto = robomaster.protocol.ProtoChassisSetWorkMode()
         proto._mode = 1 if value else 0
         self.api._send_sync_proto(proto)
-        self.logger.info(f"{'Engaged' if value else 'Disengaged'} wheel motors")
+        self.logger.info(f"{'[Chassis] Engaged' if value else 'Disengaged'} wheel motors")
 
     def engage_cb(self, request: std_srvs.srv.SetBool.Request,
                   response: std_srvs.srv.SetBool.Response) -> std_srvs.srv.SetBool.Response:
@@ -323,7 +323,7 @@ class Chassis(Module):
         if self.action:
             self.action._abort()
             while self.action is not None:
-                self.logger.info("wait for the action to terminate")
+                self.logger.info("[Chassis] Wait for the action to terminate")
                 time.sleep(0.1)
 
     def subscribe(self, rate: Rate) -> None:
@@ -475,11 +475,11 @@ class Chassis(Module):
                 x=request.x, y=-request.y, z=deg(request.theta), xy_speed=request.linear_speed,
                 z_speed=deg(request.angular_speed))
         except RuntimeError as e:
-            self.logger.warning(f'Cannot move: {e}')
+            self.logger.warning(f'[Chassis] Cannot move: {e}')
             goal_handle.abort()
             return robomaster_msgs.action.Move.Result()
 
-        self.logger.info(f'Start moving chassis with request {request}')
+        self.logger.info(f'[Chassis] Start moving chassis with request {request}')
         feedback_msg = robomaster_msgs.action.Move.Feedback()
 
         def cb() -> None:
@@ -498,13 +498,13 @@ class Chassis(Module):
         wait_action(self.action, cb)
 
         if goal_handle.is_cancel_requested:
-            self.logger.info('Done moving chassis: canceled')
+            self.logger.info('[Chassis] Done moving: canceled')
             goal_handle.canceled()
         elif self.action.has_succeeded:
-            self.logger.info('Done moving chassis: succeed')
+            self.logger.info('[Chassis] Done moving: succeed')
             goal_handle.succeed()
         else:
-            self.logger.warning('Done moving chassis: aborted')
+            self.logger.warning('[Chassis] Done moving: aborted')
             try:
                 goal_handle.abort()
             except rclpy._rclpy_pybind11.RCLError:
@@ -526,7 +526,7 @@ class Chassis(Module):
 
     def _stop_action(self) -> None:
         if self.action:
-            self.logger.info('Canceling move action')
+            self.logger.info('[Chassis] Canceling move action')
             # ABORTED, which would be a more corrent state, is not handled as a completed state
             # by the SDK, therefore we use FAILED
             # Action specific way to abort:

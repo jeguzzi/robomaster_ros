@@ -86,7 +86,7 @@ class Arm(Module):
             self.servo_raw_state_pub = node.create_publisher(
                 robomaster_msgs.msg.ServoRawState, 'servo_raw_state', 1)
         cbg = rclpy.callback_groups.MutuallyExclusiveCallbackGroup()
-        self.logger.info(f"[Arm] Callback group {cbg}")
+        # self.logger.info(f"[Arm] Callback group {cbg}")
         self._move_arm_action_server = rclpy.action.ActionServer(
             node, robomaster_msgs.action.MoveArm, 'move_arm', self.execute_move_arm_callback,
             goal_callback=self.new_move_arm_goal_callback,

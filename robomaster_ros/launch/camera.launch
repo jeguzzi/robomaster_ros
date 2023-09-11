@@ -1,7 +1,6 @@
 <launch>
 
   <arg name="name" default=""/>
-  <arg name="model" default="ep"/>
   <arg name="serial_number" default=""/>
   <arg name="conn_type" default="sta"/>
 

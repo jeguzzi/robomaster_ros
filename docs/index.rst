@@ -19,6 +19,8 @@ Welcome to Robomaster ROS's documentation!
    robomaster_ros
    robomaster_driver_node
 
+   changelog
+
 
 Indices and tables
 ==================

@@ -93,21 +93,25 @@
   <!-- 0: FREE, 1: GIMBAL_LEAD, 2: CHASSIS_LEAD -->
   <arg name="gimbal_mode" default="2" description="Gimbal-chassis coontrol coupling"/>
 
-  <arg name="video_resolution" default="360" description="Video resolution: 360, 540 or 720 pixels height"/>
-  <arg name="video_raw" default="true" description="Enables publishing decoded video stream"/>
-  <arg name="video_h264" default="false" description="Enables publishing original H264 encoded video stream"/>
-  <!-- <arg name="video_compressed" default="false"/> -->
-  <arg name="audio_raw" default="false" description="Enables publishing decoded audio stream"/>
-  <arg name="audio_opus" default="false" description="Enables publishing original OPUS encoded audio stream"/>
-  <let name="video" value="$(eval '\'$(var video_raw)\' in (\'true\', \'True\') or \'$(var video_h264)\' in (\'true\', \'True\')')"/>
-  <let name="audio" value="$(eval '\'$(var audio_raw)\' in (\'true\', \'True\') or \'$(var audio_opus)\' in (\'true\', \'True\')')"/>
-  <let name="camera" value="$(eval '$(var audio) or $(var video)')"/>
-  <arg name="camera_calibration_suffix" default="" description="The suffix to append to the camera calibration file"/>
 
+  <let name="default_mode" value="$(eval '2 if __import__(\'importlib.util\').util.find_spec(\'rclpy.event_handler\') else 0')"/>
+
+  <arg name="camera" default="true" description="Enables camera module"/>
   <arg name="camera_yaw" default="0.0" description="The camera orientation with respect to the arm"/>
-  <arg name="camera_rate" default="-1.0" description="The camera maximal fps. A negative rate means no throttling."/>
 
+  <arg name="video_resolution" default="360" description="Video resolution: 360, 540 or 720 pixels height"/>
+  <arg name="video_rate" default="-1.0" description="The camera maximal fps. A negative rate means no throttling."/>
+  <arg name="video_raw" default="$(var default_mode)" description="Enables publishing decoded video stream: OFF=0, ON=1, ON_DEMAND=2"/>
+  <arg name="video_h264" default="$(var default_mode)" description="Enables publishing original H264 encoded video stream: OFF=0, ON=1, ON_DEMAND=2"/>
+  <arg name="video_ffmpeg" default="$(var default_mode)" description="Enables publishing the original H264 encoded video stream as a image transport [ffmpeg] topic: OFF=0, ON=1, ON_DEMAND=2"/>
+  <!-- <arg name="video_compressed" default="false"/> -->
+  
+  <arg name="audio_raw" default="$(var default_mode)" description="Enables publishing decoded audio stream: OFF=0, ON=1, ON_DEMAND=2"/>
+  <arg name="audio_opus" default="$(var default_mode)" description="Enables publishing original OPUS encoded audio stream: OFF=0, ON=1, ON_DEMAND=2"/>
+  <arg name="audio_level" default="$(var default_mode)" description="Enables publishing sound level: OFF=0, ON=1, ON_DEMAND=2"/>
 
+  <arg name="camera_calibration_suffix" default="" description="The suffix to append to the camera calibration file"/>
+ 
   <!-- <arg name="display_battery" default="off"/> -->
 
   <arg name="camera_calibration_directory" default="$(find-pkg-share robomaster_ros)/config" description="The location of the camera calibration files"/>
@@ -151,17 +155,17 @@
     <param name="camera">
       <param name="enabled" value="$(var camera)"/>
       <param name="video">
-        <param name="enabled" value="$(var video)"/>
         <param name="raw" value="$(var video_raw)"/>
         <param name="h264" value="$(var video_h264)"/>
+        <param name="ffmpeg" value="$(var video_ffmpeg)"/>
         <param name="resolution" value="$(var video_resolution)"/>
         <param name="calibration_file" value="$(var camera_calibration_file)"/>
-        <param name="rate" value="$(var camera_rate)"/>
+        <param name="rate" value="$(var video_rate)"/>
       </param>
       <param name="audio">
-        <param name="enabled" value="$(var audio)"/>
         <param name="raw" value="$(var audio_raw)"/>
         <param name="opus" value="$(var audio_opus)"/>
+        <param name="level" value="$(var audio_level)"/>
       </param>
     </param>
     <param name="chassis">
