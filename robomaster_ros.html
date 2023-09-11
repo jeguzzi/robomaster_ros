@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>robomaster_ros &mdash; Robomaster ROS 0.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/design-tabs.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -31,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Robomaster ROS
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Robomaster ROS
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -54,6 +58,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="robomaster_driver_node.html">Robomaster Driver Node</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
         </div>
@@ -69,8 +74,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>robomaster_ros</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">robomaster_ros</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/robomaster_ros.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -212,6 +217,8 @@ before notifying modules to stop.</p>
 <li><p><strong>right_motor_angle</strong> – The arm right servo zero angle [Default: <code class="docutils literal notranslate"><span class="pre">-0.274016</span></code>]</p></li>
 <li><p><strong>left_motor_direction</strong> – The arm left servo direction [Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>]</p></li>
 <li><p><strong>right_motor_direction</strong> – The arm right servo direction [Default: <code class="docutils literal notranslate"><span class="pre">-1</span></code>]</p></li>
+<li><p><strong>left_motor_index</strong> – The arm left servo index [Default: <code class="docutils literal notranslate"><span class="pre">0</span></code>]</p></li>
+<li><p><strong>right_motor_index</strong> – The arm right servo index [Default: <code class="docutils literal notranslate"><span class="pre">1</span></code>]</p></li>
 <li><p><strong>arm_rate</strong> – The update rate for the arm state [Default: <code class="docutils literal notranslate"><span class="pre">10</span></code>]</p></li>
 <li><p><strong>armor</strong> – Enable the armor module [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
 <li><p><strong>armor_sensitivity</strong> – Armor sensitivity [Default: <code class="docutils literal notranslate"><span class="pre">0.5</span></code>]</p></li>
@@ -220,6 +227,7 @@ before notifying modules to stop.</p>
 <li><p><strong>speaker</strong> – Enable the speaker module [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
 <li><p><strong>blaster</strong> – Enable the blaster module [Default: <code class="docutils literal notranslate"><span class="pre">'&lt;model&gt;'</span> <span class="pre">==</span> <span class="pre">'s1'</span></code>]</p></li>
 <li><p><strong>gripper</strong> – Enable the gripper module [Default: <code class="docutils literal notranslate"><span class="pre">'&lt;model&gt;'</span> <span class="pre">==</span> <span class="pre">'ep'</span></code>]</p></li>
+<li><p><strong>open_gripper</strong> – Whenever to open gripper at initialization [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
 <li><p><strong>sbus</strong> – Enable the sbus module [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
 <li><p><strong>servo</strong> – Enable the servo module. Should not be enabled together with the arm module [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
 <li><p><strong>tof_0</strong> – Enable ToF sensor #0 [Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>]</p></li>
@@ -254,11 +262,16 @@ before notifying modules to stop.</p>
 <li><p><strong>gimbal</strong> – Enables gimbal module [Default: <code class="docutils literal notranslate"><span class="pre">'&lt;model&gt;'</span> <span class="pre">==</span> <span class="pre">'s1'</span></code>]</p></li>
 <li><p><strong>gimbal_rate</strong> – Update rate for gimbal state [Default: <code class="docutils literal notranslate"><span class="pre">10</span></code>]</p></li>
 <li><p><strong>gimbal_mode</strong> – Gimbal-chassis coontrol coupling [Default: <code class="docutils literal notranslate"><span class="pre">2</span></code>]</p></li>
+<li><p><strong>camera</strong> – Enables camera module [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
+<li><p><strong>camera_yaw</strong> – The camera orientation with respect to the arm [Default: <code class="docutils literal notranslate"><span class="pre">0.0</span></code>]</p></li>
 <li><p><strong>video_resolution</strong> – Video resolution: 360, 540 or 720 pixels height [Default: <code class="docutils literal notranslate"><span class="pre">360</span></code>]</p></li>
-<li><p><strong>video_raw</strong> – Enables publishing decoded video stream [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
-<li><p><strong>video_h264</strong> – Enables publishing original H264 encoded video stream [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
-<li><p><strong>audio_raw</strong> – Enables publishing decoded audio stream [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
-<li><p><strong>audio_opus</strong> – Enables publishing original OPUS encoded audio stream [Default: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p></li>
+<li><p><strong>video_rate</strong> – The camera maximal fps. A negative rate means no throttling. [Default: <code class="docutils literal notranslate"><span class="pre">-1.0</span></code>]</p></li>
+<li><p><strong>video_raw</strong> – Enables publishing decoded video stream: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
+<li><p><strong>video_h264</strong> – Enables publishing original H264 encoded video stream: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
+<li><p><strong>video_ffmpeg</strong> – Enables publishing the original H264 encoded video stream as a image transport [ffmpeg] topic: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
+<li><p><strong>audio_raw</strong> – Enables publishing decoded audio stream: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
+<li><p><strong>audio_opus</strong> – Enables publishing original OPUS encoded audio stream: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
+<li><p><strong>audio_level</strong> – Enables publishing sound level: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
 <li><p><strong>camera_calibration_suffix</strong> – The suffix to append to the camera calibration file [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
 <li><p><strong>camera_calibration_directory</strong> – The location of the camera calibration files [Default: <code class="docutils literal notranslate"><span class="pre">pkg_share(robomaster_ros)/config</span></code>]</p></li>
 <li><p><strong>camera_calibration_file</strong> – The camera calibration file [Default: <code class="docutils literal notranslate"><span class="pre">&lt;camera_calibration_directory&gt;/rm_camera_calibration_&lt;video_resolution&gt;&lt;camera_calibration_suffix&gt;.yaml</span></code>]</p></li>

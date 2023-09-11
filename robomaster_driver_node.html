@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Robomaster Driver Node &mdash; Robomaster ROS 0.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/design-tabs.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -31,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Robomaster ROS
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Robomaster ROS
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -74,6 +78,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#publishers">Publishers</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
         </div>
@@ -89,8 +94,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Robomaster Driver Node</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Robomaster Driver Node</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/robomaster_driver_node.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -137,7 +142,7 @@ configured by parameters <a class="reference internal" href="#RoboMasterROS.para
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/blaster.html#RoboMasterROS.param.blaster.enabled" title="blaster.enabled">blaster.enabled</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.audio.enabled" title="camera.audio.enabled">camera.audio.enabled</a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.audio.level" title="camera.audio.level">camera.audio.level</a></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.audio.opus" title="camera.audio.opus">camera.audio.opus</a></p></td>
 </tr>
@@ -147,7 +152,7 @@ configured by parameters <a class="reference internal" href="#RoboMasterROS.para
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.calibration_file" title="camera.video.calibration_file">camera.video.calibration_file</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.enabled" title="camera.video.enabled">camera.video.enabled</a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.ffmpeg" title="camera.video.ffmpeg">camera.video.ffmpeg</a></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.param.camera.video.h264" title="camera.video.h264">camera.video.h264</a></p></td>
 </tr>
@@ -301,29 +306,31 @@ configured by parameters <a class="reference internal" href="#RoboMasterROS.para
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/image_color" title="camera/image_color">camera/image_color</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/image_h264" title="camera/image_h264">camera/image_h264</a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/image_color/ffmpeg" title="camera/image_color/ffmpeg">camera/image_color/ffmpeg</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/gripper.html#RoboMasterROS.pub.gripper" title="gripper">gripper</a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/camera.html#RoboMasterROS.pub.camera/image_h264" title="camera/image_h264">camera/image_h264</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/armor.html#RoboMasterROS.pub.hit" title="hit">hit</a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/gripper.html#RoboMasterROS.pub.gripper" title="gripper">gripper</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.pub.imu" title="imu">imu</a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/armor.html#RoboMasterROS.pub.hit" title="hit">hit</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#RoboMasterROS.pub.joint_states_p" title="joint_states_p">joint_states_p</a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.pub.imu" title="imu">imu</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.pub.odom" title="odom">odom</a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#RoboMasterROS.pub.joint_states_p" title="joint_states_p">joint_states_p</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/sbus.html#RoboMasterROS.pub.sbus" title="sbus">sbus</a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.pub.odom" title="odom">odom</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.pub.sensor_adapter" title="sensor_adapter">sensor_adapter</a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/sbus.html#RoboMasterROS.pub.sbus" title="sbus">sbus</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/servo.html#RoboMasterROS.pub.servo_raw_state" title="servo_raw_state">servo_raw_state</a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.pub.sensor_adapter" title="sensor_adapter">sensor_adapter</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.pub.state" title="state">state</a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/servo.html#RoboMasterROS.pub.servo_raw_state" title="servo_raw_state">servo_raw_state</a></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.pub.uart/rx" title="uart/rx">uart/rx</a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.pub.state" title="state">state</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/vision.html#RoboMasterROS.pub.vision" title="vision">vision</a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/uart.html#RoboMasterROS.pub.uart/rx" title="uart/rx">uart/rx</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/vision.html#RoboMasterROS.pub.vision" title="vision">vision</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -337,6 +344,25 @@ configured by parameters <a class="reference internal" href="#RoboMasterROS.para
 <tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.srv_server.get_io" title="get_io">get_io</a></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/sensor_adapter.html#RoboMasterROS.srv_server.get_pulse" title="get_pulse">get_pulse</a></p></td>
+</tr>
+</tbody>
+</table>
+</details><details>
+<summary>Action servers</summary><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/gripper.html#RoboMasterROS.act_server.gripper" title="gripper">gripper</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/chassis.html#RoboMasterROS.act_server.move" title="move">move</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/arm.html#RoboMasterROS.act_server.move_arm" title="move_arm">move_arm</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/gimbal.html#RoboMasterROS.act_server.move_gimbal" title="move_gimbal">move_gimbal</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/servo.html#RoboMasterROS.act_server.move_servo" title="move_servo">move_servo</a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="robomaster_ros_modules/speaker.html#RoboMasterROS.act_server.play" title="play">play</a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="robomaster_ros_modules/gimbal.html#RoboMasterROS.act_server.recenter_gimbal" title="recenter_gimbal">recenter_gimbal</a></p></td>
 </tr>
 </tbody>
 </table>

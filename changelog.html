@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Robomaster ROS 0.0.1 documentation</title>
+  <title>Changelog &mdash; Robomaster ROS 0.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -19,8 +20,9 @@
         <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/design-tabs.js"></script>
     <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Vision" href="robomaster_ros_modules/vision.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,7 +45,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
@@ -51,7 +53,16 @@
 <li class="toctree-l1"><a class="reference internal" href="robomaster_msgs.html">robomaster_msgs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="robomaster_ros.html">robomaster_ros</a></li>
 <li class="toctree-l1"><a class="reference internal" href="robomaster_driver_node.html">Robomaster Driver Node</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#unreleased">Unreleased</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#added">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changed">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removed">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">[0.1] - 2023-09-11</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -68,8 +79,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Index</li>
+      <li class="breadcrumb-item active">Changelog</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/changelog.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -77,17 +89,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
-</div>
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this heading"></a></h1>
+<section id="unreleased">
+<h2>Unreleased<a class="headerlink" href="#unreleased" title="Permalink to this heading"></a></h2>
+<section id="added">
+<h3>Added<a class="headerlink" href="#added" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Topic <code class="docutils literal notranslate"><span class="pre">camera/image_color/ffmpeg</span></code> and parameter <code class="docutils literal notranslate"><span class="pre">camera.video.ffmpeg</span></code> to support <code class="docutils literal notranslate"><span class="pre">image_transport</span></code>.</p></li>
+</ul>
+</section>
+<section id="changed">
+<h3>Changed<a class="headerlink" href="#changed" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Support for runtime video/audio activation. Parameters <code class="docutils literal notranslate"><span class="pre">camera.video.raw</span></code>, <code class="docutils literal notranslate"><span class="pre">camera.video.h264</span></code>, <code class="docutils literal notranslate"><span class="pre">camera.audio.raw</span></code>, <code class="docutils literal notranslate"><span class="pre">camerra.audio.opus</span></code> are now integer-valued and dynamic. Same for the related launch arguments <code class="docutils literal notranslate"><span class="pre">video_raw</span></code>, <code class="docutils literal notranslate"><span class="pre">video_h264</span></code>, <code class="docutils literal notranslate"><span class="pre">audio_raw</span></code>, <code class="docutils literal notranslate"><span class="pre">audio_opus</span></code>.</p></li>
+<li><p>Parameter <code class="docutils literal notranslate"><span class="pre">camera.video.resolution</span></code> is now dynamic.</p></li>
+</ul>
+</section>
+<section id="removed">
+<h3>Removed<a class="headerlink" href="#removed" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Parameters <code class="docutils literal notranslate"><span class="pre">camera.video.enabled</span></code>, <code class="docutils literal notranslate"><span class="pre">camera.audio.enabled</span></code> are superseded by the more fine-grained parameters related to the specific topics.</p></li>
+</ul>
+</section>
+</section>
+<section id="id1">
+<h2>[0.1] - 2023-09-11<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>Initial release.</p>
+</section>
+</section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="robomaster_ros_modules/vision.html" class="btn btn-neutral float-left" title="Vision" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

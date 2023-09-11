@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting Started &mdash; Robomaster ROS 0.0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" type="text/css" />
+      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script src="_static/design-tabs.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -31,11 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Robomaster ROS
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Robomaster ROS
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -50,6 +54,7 @@
 <li class="toctree-l1"><a class="reference internal" href="robomaster_msgs.html">robomaster_msgs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="robomaster_ros.html">robomaster_ros</a></li>
 <li class="toctree-l1"><a class="reference internal" href="robomaster_driver_node.html">Robomaster Driver Node</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 </ul>
 
         </div>
@@ -65,8 +70,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Getting Started</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -90,7 +95,7 @@ Connect your PC to it using the SSID and password printed on the top of the inte
 <dt>Wi-Fi Router</dt><dd><p>move the slider on the intelligent controller to the front (<a class="reference internal" href="robomaster_driver_node.html#RoboMasterROS.param.conn_type" title="RoboMasterROS.param.conn_type"><em class="xref ros ros-param">conn_type</em></a> = <code class="docutils literal notranslate"><span class="pre">&quot;sta&quot;</span></code>)
 and connect your PC to a Wi-Fi router. To communicate the network SSID and password to the robot,
 you can use the Robomaster app or run <a class="reference internal" href="robomaster_ros.html#robomaster_ros.exec.connect" title="robomaster_ros.exec.connect"><em class="xref ros ros-exec">connect</em></a>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ros2 run robomaster_ros connect &lt;SSID&gt; &lt;PASSWORD&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ros2<span class="w"> </span>run<span class="w"> </span>robomaster_ros<span class="w"> </span>connect<span class="w"> </span>&lt;SSID&gt;<span class="w"> </span>&lt;PASSWORD&gt;
 </pre></div>
 </div>
 <p>Point the robot’s camera towards the QR code and press the small button near the intelligent controller slider.
@@ -98,14 +103,14 @@ The robot will read the code and connect to the network.</p>
 </dd>
 </dl>
 <p>You can check that a robot is available and ready to be connected by running <a class="reference internal" href="robomaster_ros.html#robomaster_ros.exec.discover" title="robomaster_ros.exec.discover"><em class="xref ros ros-exec">discover</em></a>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ros2 run robomaster_ros discover
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ros2<span class="w"> </span>run<span class="w"> </span>robomaster_ros<span class="w"> </span>discover
 <span class="go">[INFO] [1658231475.202434272] [discover]: Discovered 1 robots</span>
 <span class="go">[INFO] [1658231476.378546964] [discover]: Connected to robot XXXXXXXXXXXXXX at 192.168.1.136: version 01.01.1131, battery 20%</span>
 </pre></div>
 </div>
 <p>The command will list the robots, which will beep and blink their LEDs.</p>
 <p>You are ready to start controlling the robot through ROS:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ros2 launch robomaster_ros main.launch model:<span class="o">=</span>&lt;ep<span class="p">|</span>s1&gt;
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ros2<span class="w"> </span>launch<span class="w"> </span>robomaster_ros<span class="w"> </span>main.launch<span class="w"> </span>model:<span class="o">=</span>&lt;ep<span class="p">|</span>s1&gt;
 </pre></div>
 </div>
 <p>Pick your robot type in <code class="docutils literal notranslate"><span class="pre">model:=&lt;ep|s1&gt;</span></code> to publish the correct URDF model and enable the appropriate modules.</p>

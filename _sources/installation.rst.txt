@@ -8,7 +8,7 @@ Pre-requisites
 ROS2
 ^^^^
 
-#. Install a current version of ROS2 (i.e., foxy, galactic, or humble),
+#. Install a current version of ROS2 (i.e., foxy, galactic, humble, or iron),
    following the `official instructions <https://docs.ros.org/en/humble/Installation.html>`_.
 
 #. In case you opted for a minimal installation (ROS2-base), add the following packages:
@@ -84,3 +84,20 @@ Robomaster ROS packages
 
 .. _colcon: https://colcon.readthedocs.io/en/released/
 .. _create a colcon workspace: https://colcon.readthedocs.io/en/released/user/quick-start.html#tl-dr
+
+
+Optional Runtime Dependencies
+-----------------------------
+
+To conform to ``image_transport`` when streaming the camera images, install ``PyAV`` and ``ffmpeg_image_transport``.
+
+   .. code-block:: console
+
+      python3 -m pip install av
+      git clone https://github.com/berndpfrommer/ffmpeg_image_transport_msgs src/ffmpeg_image_transport_msgs
+      git clone https://github.com/berndpfrommer/ffmpeg_image_transport src/ffmpeg_image_transport
+      colcon build --packages-select ffmpeg_image_transport_msgs ffmpeg_image_transport
+
+
+If you are running ``robomaster_ros`` on a different machine (e.g., a SCB connected to the robot), you can 
+skip installing the ``image_transport`` plugin (i.e., ``ffmpeg_image_transport``) as you only need the interfaces (i.e., ``ffmpeg_image_transport_msgs``).
