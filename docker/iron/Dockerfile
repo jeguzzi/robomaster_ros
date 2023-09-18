@@ -1,4 +1,4 @@
-aFROM ros:iron
+FROM ros:iron
 MAINTAINER Jerome Guzzi "jerome@idsia.ch"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
