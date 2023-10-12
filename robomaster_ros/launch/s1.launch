@@ -5,7 +5,7 @@
   <arg name="conn_type" default="sta"/>
   <arg name="lib_log_level" default="ERROR"/>
   <arg name="video_resolution" default="360"/>
-  <arg name="video_raw" default="true"/>
+  <arg name="video_raw" default="1"/>
   <arg name="video_h264" default="false"/>
   <arg name="video_compressed" default="false"/>
   <arg name="audio_raw" default="false"/>
