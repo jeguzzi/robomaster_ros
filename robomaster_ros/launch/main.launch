@@ -1,11 +1,11 @@
 <launch>
 
-  <arg name="name" default="" description="A name used as ROS namespace"/>
-  <arg name="model" default="ep" description="The type of robot: ep or s1"/>
+  <arg name="name" default="$(env RM_NAME '')" description="A name used as ROS namespace"/>
+  <arg name="model" default="$(env RM_MODEL 'ep')" description="The type of robot: ep or s1"/>
   <arg name="with_model_description" default="true" description="Enables publishing the robot model"/>
   <arg name="log_level" default="info" description="ROS logging level"/>
   <!-- CLIENT -->
-  <arg name="serial_number" default="" description="The serial number of the robot. Leave empty to ignore it."/>
+  <arg name="serial_number" default="$(env RM_SERIAL_NUMBER '')" description="The serial number of the robot. Leave empty to ignore it."/>
   <arg name="conn_type" default="sta" description="The type of connection: sta, ap, or rndis"/>
   <arg name="lib_log_level" default="ERROR" description="Robomaster SDK logging level"/>
   <arg name="reconnect" default="true" description="Wait for reconnections"/>
