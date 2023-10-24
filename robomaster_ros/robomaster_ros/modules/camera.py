@@ -380,7 +380,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                 continue
             capture_time = self.clock.now()
             if self.should_publish_video_ffmpeg:
-                for pts, is_keyframe, pkt_data in parser.parse(data):
+                for is_keyframe, pts, pkt_data in parser.parse(data):
                     msg = FFMPEGPacket()
                     msg.is_bigendian = False
                     msg.flags = 1 if is_keyframe else 0
