@@ -93,7 +93,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
 
         video_raw = node.declare_parameter("camera.video.raw", 2).value
         video_h264 = node.declare_parameter("camera.video.h264", 2).value
-        video_ffmpeg = node.declare_parameter("camera.video.ffmpeg",2).value
+        video_ffmpeg = node.declare_parameter("camera.video.ffmpeg", 2).value
 
         protocol: str = node.declare_parameter("camera.video.protocol",
                                                "tcp").value
@@ -131,7 +131,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                 'camera/image_h264',
                 1,
                 event_callbacks=event_callbacks)
-        if FFMPEG_AVAILABLE and video_ffmpeg:
+        if FFMPEG_AVAILABLE and video_ffmpeg >= 0:
             if EVENT_HANDLER_AVAILABLE:
                 event_callbacks = PublisherEventCallbacks(
                     matched=self.video_ffmpeg_pub_event_cb)
@@ -145,7 +145,10 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         calibration_path = node.declare_parameter(
             "camera.video.calibration_file", '').value
         self.should_publish_camera_info = False
-        if calibration_path:
+
+        self.has_video = max(video_raw, video_h264, video_ffmpeg) >= 0
+
+        if calibration_path and self.has_video:
             try:
                 with open(calibration_path, 'r') as f:
                     calibration = yaml.load(f, yaml.SafeLoader)
@@ -167,8 +170,6 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         self.video_h264 = video_h264
         self.video_ffmpeg = video_ffmpeg
 
-        self.has_video = any((video_raw, video_h264, video_ffmpeg))
-
         self.audio_is_active = False
         self._audio_raw = ActiveMode.OFF
         self._audio_opus = ActiveMode.OFF
@@ -182,30 +183,33 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         audio_level = node.declare_parameter("camera.audio.level",2).value
 
         event_callbacks = None
-        if EVENT_HANDLER_AVAILABLE:
-            event_callbacks = PublisherEventCallbacks(
-                matched=self.audio_raw_pub_event_cb)
-        self.audio_raw_pub = node.create_publisher(
-            robomaster_msgs.msg.AudioData,
-            'camera/audio_raw',
-            1,
-            event_callbacks=event_callbacks)
-        if EVENT_HANDLER_AVAILABLE:
-            event_callbacks = PublisherEventCallbacks(
-                matched=self.audio_opus_pub_event_cb)
-        self.audio_opus_pub = node.create_publisher(
-            robomaster_msgs.msg.AudioOpus,
-            'camera/audio_opus',
-            1,
-            event_callbacks=event_callbacks)
-        if EVENT_HANDLER_AVAILABLE:
-            event_callbacks = PublisherEventCallbacks(
-                matched=self.audio_level_pub_event_cb)
-        self.audio_level_pub = node.create_publisher(
-            robomaster_msgs.msg.AudioLevel,
-            'camera/audio_level',
-            1,
-            event_callbacks=event_callbacks)
+        if audio_raw >= 0:
+            if EVENT_HANDLER_AVAILABLE:
+                event_callbacks = PublisherEventCallbacks(
+                    matched=self.audio_raw_pub_event_cb)
+            self.audio_raw_pub = node.create_publisher(
+                robomaster_msgs.msg.AudioData,
+                'camera/audio_raw',
+                1,
+                event_callbacks=event_callbacks)
+        if audio_opus >= 0:
+            if EVENT_HANDLER_AVAILABLE:
+                event_callbacks = PublisherEventCallbacks(
+                    matched=self.audio_opus_pub_event_cb)
+            self.audio_opus_pub = node.create_publisher(
+                robomaster_msgs.msg.AudioOpus,
+                'camera/audio_opus',
+                1,
+                event_callbacks=event_callbacks)
+        if audio_level >= 0:
+            if EVENT_HANDLER_AVAILABLE:
+                event_callbacks = PublisherEventCallbacks(
+                    matched=self.audio_level_pub_event_cb)
+            self.audio_level_pub = node.create_publisher(
+                robomaster_msgs.msg.AudioLevel,
+                'camera/audio_level',
+                1,
+                event_callbacks=event_callbacks)
         # self.api.start_audio_stream()
 
         count_subs_period_s = node.declare_parameter(
@@ -215,7 +219,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         self.audio_opus = audio_opus
         self.audio_level = audio_level
 
-        self.has_audio = any((video_raw, video_h264, video_ffmpeg))
+        self.has_audio = max(audio_raw, audio_opus, audio_level) >= 0
 
         if not EVENT_HANDLER_AVAILABLE and (self.has_audio or self.has_video):
             self.count_subs_timer = node.create_timer(count_subs_period_s,
