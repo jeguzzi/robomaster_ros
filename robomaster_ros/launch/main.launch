@@ -94,7 +94,10 @@
   <arg name="gimbal_mode" default="2" description="Gimbal-chassis coontrol coupling"/>
 
 
-  <let name="default_mode" value="$(eval '2 if __import__(\'importlib.util\').util.find_spec(\'rclpy.event_handler\') else 0')"/>
+  <!-- <let name="default_mode" value="$(eval '2 if __import__(\'importlib.util\').util.find_spec(\'rclpy.event_handler\') else 0')"/> -->
+
+  <let name="default_mode" value="2"/>
+
 
   <arg name="camera" default="true" description="Enables camera module"/>
   <arg name="camera_yaw" default="0.0" description="The camera orientation with respect to the arm"/>
