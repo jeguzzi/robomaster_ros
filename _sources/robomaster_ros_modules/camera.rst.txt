@@ -30,9 +30,10 @@ with :ros:sub:`camera/config`.
   To avoid streaming or decoding images or sounds when not needed, we expose the parameters
   ``camera.{audio|video}.<format>`` to control the activation of the different topics. They support the following values:
 
+  - -1: topic is not created; this config cannot be changed at runtime,
   - 0: topic is not active, messages are not published,
   - 1: topic is active, messages are published,
-  - 2: topic is active on-demand, messages published only when there is at least one subscriber; only supported from ROS 2 iron.
+  - 2: topic is active on-demand, messages published only when there is at least one subscriber.
 
   When no audio/video topic is active, the audio/video stream from the robot to the ROS driver is stopped.
   As soon as one topic becomes active, the stream is resumed.

@@ -13,12 +13,12 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/design-tabs.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -106,12 +106,12 @@
            <div itemprop="articleBody">
              
   <section id="robomaster-driver-node">
-<h1>Robomaster Driver Node<a class="headerlink" href="#robomaster-driver-node" title="Permalink to this heading"></a></h1>
+<h1>Robomaster Driver Node<a class="headerlink" href="#robomaster-driver-node" title="Link to this heading"></a></h1>
 <dl class="ros node">
 <dt class="sig sig-object ros" id="node.RoboMasterROS">
-<em class="property"><span class="pre">node</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">RoboMasterROS</span></span><a class="headerlink" href="#node.RoboMasterROS" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">node</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">RoboMasterROS</span></span><a class="headerlink" href="#node.RoboMasterROS" title="Link to this definition"></a></dt>
 <dd><p>This node provides a ROS interface to a Robomaster using the official Python client library.</p>
-<p>It wraps functionality from <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.robot.Robot" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.robot.Robot</span></code></a> to create and monitor a connection to a robot,
+<p>It wraps functionality from <code class="xref py py-class docutils literal notranslate"><span class="pre">rm:robomaster.robot.Robot</span></code> to create and monitor a connection to a robot,
 configured by parameters <a class="reference internal" href="#RoboMasterROS.param.conn_type" title="RoboMasterROS.param.conn_type"><em class="xref ros ros-param">conn_type</em></a>, <a class="reference internal" href="#RoboMasterROS.param.serial_number" title="RoboMasterROS.param.serial_number"><em class="xref ros ros-param">serial_number</em></a>, and <a class="reference internal" href="#RoboMasterROS.param.reconnect" title="RoboMasterROS.param.reconnect"><em class="xref ros ros-param">reconnect</em></a>.</p>
 <div class="admonition">
 <p class="admonition-title">Summary</p>
@@ -370,11 +370,11 @@ configured by parameters <a class="reference internal" href="#RoboMasterROS.para
 </dd></dl>
 
 <p>The robot and the client library are modulars: for example, one can attach a ToF sensor
-and use class <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.sensor.DistanceSensor" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.sensor.DistanceSensor</span></code></a> to read it.
+and use class <code class="xref py py-class docutils literal notranslate"><span class="pre">rm:robomaster.sensor.DistanceSensor</span></code> to read it.
 The ROS node follows the same organization, with submodules that corresponds to hardware parts.
 Modules can be enabled using parameters <em class="xref ros ros-param">&lt;module&gt;.enabled</em>: by default they are all disabled.</p>
 <section id="modules">
-<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h2>
+<h2>Modules<a class="headerlink" href="#modules" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="robomaster_ros_modules/arm.html">Arm</a><ul>
@@ -488,18 +488,18 @@ Modules can be enabled using parameters <em class="xref ros ros-param">&lt;modul
 </div>
 </section>
 <section id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
 <p>The following parameters configures the client library and the general behavior of the ROS node.</p>
 <dl class="ros parameter">
 <dt class="sig sig-object ros" id="RoboMasterROS.param.lib_log_level">
-<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">lib_log_level</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.lib_log_level" title="Permalink to this definition"></a></dt>
-<dd><p>The logging level used for the internal SDK wrapped by the ROS node (see <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/log.html" title="(in RoboMaster Developer Guide v0.1.19)"><span>RoboMaster SDK 如何记录日志</span></a>).</p>
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">lib_log_level</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.lib_log_level" title="Link to this definition"></a></dt>
+<dd><p>The logging level used for the internal SDK wrapped by the ROS node (see <span class="xref std std-doc">rm:python_sdk/log</span>).</p>
 </dd></dl>
 
 <dl class="ros parameter">
 <dt class="sig sig-object ros" id="RoboMasterROS.param.conn_type">
-<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">conn_type</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;sta&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.conn_type" title="Permalink to this definition"></a></dt>
-<dd><p>The connection method between client and robot (see <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/connection.html" title="(in RoboMaster Developer Guide v0.1.19)"><span>RoboMaster SDK 和机器人建立连接</span></a>), one of:</p>
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">conn_type</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;sta&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.conn_type" title="Link to this definition"></a></dt>
+<dd><p>The connection method between client and robot (see <span class="xref std std-doc">rm:python_sdk/connection</span>), one of:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">&quot;sta&quot;</span></code></dt><dd><p>through a managed Wi-Fi network (SSID and password needs to be communicated to the robot,
 for instance using <cite>connect</cite>)</p>
@@ -513,8 +513,8 @@ for instance using <cite>connect</cite>)</p>
 
 <dl class="ros parameter">
 <dt class="sig sig-object ros" id="RoboMasterROS.param.serial_number">
-<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">serial_number</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.serial_number" title="Permalink to this definition"></a></dt>
-<dd><p>If non empty, it is passed to <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/robomaster.html#robomaster.robot.Robot.initialize" title="(in RoboMaster Developer Guide v0.1.19)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">robomaster.robot.Robot.initialize()</span></code></a> to select which robot to connect.
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">serial_number</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.serial_number" title="Link to this definition"></a></dt>
+<dd><p>If non empty, it is passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">robomaster.robot.Robot.initialize()</span></code> to select which robot to connect.
 The serial number is a 14-long code printed on the intelligent controller.
 If the parameter value is a shorter, it’s end is padded by <code class="docutils literal notranslate"><span class="pre">*</span></code>, while if it is longer, it is truncated.</p>
 <div class="admonition note">
@@ -525,14 +525,14 @@ If the parameter value is a shorter, it’s end is padded by <code class="docuti
 
 <dl class="ros parameter">
 <dt class="sig sig-object ros" id="RoboMasterROS.param.reconnect">
-<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">reconnect</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">true</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.reconnect" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">reconnect</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">true</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.reconnect" title="Link to this definition"></a></dt>
 <dd><p>If enabled, will keep the ROS node on while waiting for a robot to reconnect.
 In disabled, the node will terminate once the robot disconnects.</p>
 </dd></dl>
 
 <dl class="ros parameter">
 <dt class="sig sig-object ros" id="RoboMasterROS.param.tf_prefix">
-<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">tf_prefix</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.tf_prefix" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">tf_prefix</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.tf_prefix" title="Link to this definition"></a></dt>
 <dd><p>The prefix that gets prepended, if not empty, to any frame related to the robot,
 e.g., <code class="docutils literal notranslate"><span class="pre">base_link</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">&lt;tf_prefix&gt;/base_link</span></code>.</p>
 <div class="admonition warning">
@@ -544,11 +544,11 @@ Launch file <a class="reference internal" href="robomaster_ros.html#robomaster_r
 
 </section>
 <section id="publishers">
-<h2>Publishers<a class="headerlink" href="#publishers" title="Permalink to this heading"></a></h2>
+<h2>Publishers<a class="headerlink" href="#publishers" title="Link to this heading"></a></h2>
 <p>The following publishers are shared between modules</p>
 <dl class="ros publisher">
 <dt class="sig sig-object ros" id="RoboMasterROS.pub.joint_states_p">
-<em class="property"><span class="pre">publisher</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">joint_states_p</span></span><span class="w"> </span><a class="reference external" href="http://docs.ros2.org/galactic/api/sensor_msgs/msg/JointState.html"><em class="xref ros ros-msg"><span class="pre">sensor_msgs/msg/JointState</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.pub.joint_states_p" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">publisher</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">joint_states_p</span></span><span class="w"> </span><a class="reference external" href="http://docs.ros2.org/galactic/api/sensor_msgs/msg/JointState.html"><em class="xref ros ros-msg"><span class="pre">sensor_msgs/msg/JointState</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.pub.joint_states_p" title="Link to this definition"></a></dt>
 <dd><p>Publishes partial updates about joints: <a class="reference internal" href="robomaster_ros_modules/chassis.html#chassis-state"><span class="std std-ref">wheels</span></a>, gimbal, arm, and gripper.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -560,7 +560,7 @@ together <a class="reference internal" href="#RoboMasterROS.pub.joint_states_p" 
 
 <dl class="ros publisher">
 <dt class="sig sig-object ros" id="RoboMasterROS.pub./tf">
-<em class="property"><span class="pre">publisher</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">/tf</span></span><span class="w"> </span><a class="reference external" href="http://docs.ros2.org/galactic/api/tf2_msgs/msg/TFMessage.html"><em class="xref ros ros-msg"><span class="pre">tf2_msgs/msg/TFMessage</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.pub./tf" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">publisher</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">/tf</span></span><span class="w"> </span><a class="reference external" href="http://docs.ros2.org/galactic/api/tf2_msgs/msg/TFMessage.html"><em class="xref ros ros-msg"><span class="pre">tf2_msgs/msg/TFMessage</span></em></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Reliability: reliable"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-check-circle sd-text-primary" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM0 8a8 8 0 1116 0A8 8 0 010 8zm11.78-1.72a.75.75 0 00-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 00-1.06 1.06l2 2a.75.75 0 001.06 0l4.5-4.5z"></path></svg></a><span class="w"> </span><a class="reference external" href="https://docs.ros.org/en/humble/Concepts/About-Quality-of-Service-Settings.html#qos-policies" title="Durability: volatile"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-pin sd-text-muted" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M4.456.734a1.75 1.75 0 012.826.504l.613 1.327a3.081 3.081 0 002.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 11-1.061 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 00-1.707-2.084l-1.327-.613a1.75 1.75 0 01-.504-2.826L4.456.734zM5.92 1.866a.25.25 0 00-.404-.072L1.794 5.516a.25.25 0 00.072.404l1.328.613A4.582 4.582 0 015.73 9.63l.584 2.454a.25.25 0 00.42.12l5.47-5.47a.25.25 0 00-.12-.42L9.63 5.73a4.581 4.581 0 01-3.098-2.537L5.92 1.866z"></path></svg></a><a class="headerlink" href="#RoboMasterROS.pub./tf" title="Link to this definition"></a></dt>
 <dd><p>This publisher is used indirectly to broadcast the transform <a class="reference internal" href="robomaster_ros_modules/chassis.html#chassis-state"><span class="std std-ref">odom -&gt; base_link</span></a>.</p>
 </dd></dl>
 

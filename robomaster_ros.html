@@ -13,12 +13,12 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/design-tabs.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -86,10 +86,10 @@
            <div itemprop="articleBody">
              
   <section id="robomaster-ros">
-<h1>robomaster_ros<a class="headerlink" href="#robomaster-ros" title="Permalink to this heading"></a></h1>
+<h1>robomaster_ros<a class="headerlink" href="#robomaster-ros" title="Link to this heading"></a></h1>
 <dl class="ros package">
 <dt class="sig sig-object ros" id="package.robomaster_ros">
-<em class="property"><span class="pre">package</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_ros</span></span><a class="headerlink" href="#package.robomaster_ros" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">package</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_ros</span></span><a class="headerlink" href="#package.robomaster_ros" title="Link to this definition"></a></dt>
 <dd><div class="admonition">
 <p class="admonition-title">Summary</p>
 <details>
@@ -120,10 +120,10 @@
 </dd></dl>
 
 <section id="executables">
-<h2>Executables<a class="headerlink" href="#executables" title="Permalink to this heading"></a></h2>
+<h2>Executables<a class="headerlink" href="#executables" title="Link to this heading"></a></h2>
 <dl class="ros executable">
 <dt class="sig sig-object ros" id="robomaster_ros.exec.connect">
-<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">connect</span></span><span class="w"> </span><span class="sig sig-inline"><span class="pre">[-h]</span> <span class="pre">[--app_id</span> <span class="pre">APP_ID]</span> <span class="pre">ssid</span> <span class="pre">password</span></span><a class="headerlink" href="#robomaster_ros.exec.connect" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">connect</span></span><span class="w"> </span><span class="sig sig-inline"><span class="pre">[-h]</span> <span class="pre">[--app_id</span> <span class="pre">APP_ID]</span> <span class="pre">ssid</span> <span class="pre">password</span></span><a class="headerlink" href="#robomaster_ros.exec.connect" title="Link to this definition"></a></dt>
 <dd><p>The program shows a QR code that encodes SSID and password:
 point the robot’s camera towards the QR code and
 press the small button near the intelligent controller slider.
@@ -144,7 +144,7 @@ The program wait until the robot connects and then terminates.</p>
 
 <dl class="ros executable">
 <dt class="sig sig-object ros" id="robomaster_ros.exec.discover">
-<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">discover</span></span><span class="w"> </span><span class="sig sig-inline"><span class="pre">[-h]</span> <span class="pre">[--timeout</span> <span class="pre">TIMEOUT]</span> <span class="pre">[--modules]</span></span><a class="headerlink" href="#robomaster_ros.exec.discover" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">discover</span></span><span class="w"> </span><span class="sig sig-inline"><span class="pre">[-h]</span> <span class="pre">[--timeout</span> <span class="pre">TIMEOUT]</span> <span class="pre">[--modules]</span></span><a class="headerlink" href="#robomaster_ros.exec.discover" title="Link to this definition"></a></dt>
 <dd><p>The command lists the available robots with their serial number, IP address,
 firmware version, and battery level. Discovered robots will beep and blink their LEDs.</p>
 <dl class="field-list simple">
@@ -159,7 +159,7 @@ firmware version, and battery level. Discovered robots will beep and blink their
 
 <dl class="ros executable">
 <dt class="sig sig-object ros" id="robomaster_ros.exec.robomaster_driver">
-<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_driver</span></span><a class="headerlink" href="#robomaster_ros.exec.robomaster_driver" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">robomaster_driver</span></span><a class="headerlink" href="#robomaster_ros.exec.robomaster_driver" title="Link to this definition"></a></dt>
 <dd><p>Execute a Robomaster ROS driver instantiating <a class="reference internal" href="robomaster_driver_node.html#node.RoboMasterROS" title="node.RoboMasterROS"><code class="xref ros ros-node docutils literal notranslate"><span class="pre">RoboMasterROS</span></code></a>. When the robot disconnects,
 it waits until the robots connects again when <a class="reference internal" href="robomaster_driver_node.html#RoboMasterROS.param.reconnect" title="RoboMasterROS.param.reconnect"><em class="xref ros ros-param">reconnect</em></a> is enabled
 (destroying and creating another node each time).
@@ -177,33 +177,33 @@ before notifying modules to stop.</p>
 
 <dl class="ros executable">
 <dt class="sig sig-object ros" id="robomaster_ros.exec.h264_decoder">
-<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">h264_decoder</span></span><a class="headerlink" href="#robomaster_ros.exec.h264_decoder" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">h264_decoder</span></span><a class="headerlink" href="#robomaster_ros.exec.h264_decoder" title="Link to this definition"></a></dt>
 <dd><p>TODO</p>
 </dd></dl>
 
 <dl class="ros executable">
 <dt class="sig sig-object ros" id="robomaster_ros.exec.display_battery">
-<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">display_battery</span></span><a class="headerlink" href="#robomaster_ros.exec.display_battery" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">display_battery</span></span><a class="headerlink" href="#robomaster_ros.exec.display_battery" title="Link to this definition"></a></dt>
 <dd><p>TODO</p>
 </dd></dl>
 
 <dl class="ros executable">
 <dt class="sig sig-object ros" id="robomaster_ros.exec.play_audio">
-<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">play_audio</span></span><a class="headerlink" href="#robomaster_ros.exec.play_audio" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">executable</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">play_audio</span></span><a class="headerlink" href="#robomaster_ros.exec.play_audio" title="Link to this definition"></a></dt>
 <dd><p>TODO</p>
 </dd></dl>
 
 </section>
 <section id="launch-files">
-<h2>Launch files<a class="headerlink" href="#launch-files" title="Permalink to this heading"></a></h2>
+<h2>Launch files<a class="headerlink" href="#launch-files" title="Link to this heading"></a></h2>
 <dl class="ros launch_file">
 <dt class="sig sig-object ros" id="robomaster_ros.launch.main.launch">
-<em class="property"><span class="pre">launch</span> <span class="pre">file</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">main.launch</span></span><a class="headerlink" href="#robomaster_ros.launch.main.launch" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">launch</span> <span class="pre">file</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">main.launch</span></span><a class="headerlink" href="#robomaster_ros.launch.main.launch" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> – A name used as ROS namespace [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
-<li><p><strong>model</strong> – The type of robot: ep or s1 [Default: <code class="docutils literal notranslate"><span class="pre">ep</span></code>]</p></li>
+<li><p><strong>model</strong> – The type of robot: ep or s1 [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
 <li><p><strong>with_model_description</strong> – Enables publishing the robot model [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
 <li><p><strong>log_level</strong> – ROS logging level [Default: <code class="docutils literal notranslate"><span class="pre">info</span></code>]</p></li>
 <li><p><strong>serial_number</strong> – The serial number of the robot. Leave empty to ignore it. [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
@@ -264,14 +264,16 @@ before notifying modules to stop.</p>
 <li><p><strong>gimbal_mode</strong> – Gimbal-chassis coontrol coupling [Default: <code class="docutils literal notranslate"><span class="pre">2</span></code>]</p></li>
 <li><p><strong>camera</strong> – Enables camera module [Default: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p></li>
 <li><p><strong>camera_yaw</strong> – The camera orientation with respect to the arm [Default: <code class="docutils literal notranslate"><span class="pre">0.0</span></code>]</p></li>
+<li><p><strong>video</strong> – The default mode for video topics: OFF=0, ON=1, ON_DEMAND=2, DISABLED=-1 [Default: <code class="docutils literal notranslate"><span class="pre">2</span></code>]</p></li>
 <li><p><strong>video_resolution</strong> – Video resolution: 360, 540 or 720 pixels height [Default: <code class="docutils literal notranslate"><span class="pre">360</span></code>]</p></li>
 <li><p><strong>video_rate</strong> – The camera maximal fps. A negative rate means no throttling. [Default: <code class="docutils literal notranslate"><span class="pre">-1.0</span></code>]</p></li>
-<li><p><strong>video_raw</strong> – Enables publishing decoded video stream: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
-<li><p><strong>video_h264</strong> – Enables publishing original H264 encoded video stream: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
-<li><p><strong>video_ffmpeg</strong> – Enables publishing the original H264 encoded video stream as a image transport [ffmpeg] topic: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
-<li><p><strong>audio_raw</strong> – Enables publishing decoded audio stream: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
-<li><p><strong>audio_opus</strong> – Enables publishing original OPUS encoded audio stream: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
-<li><p><strong>audio_level</strong> – Enables publishing sound level: OFF=0, ON=1, ON_DEMAND=2 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;default_mode&gt;</span></code>]</p></li>
+<li><p><strong>video_raw</strong> – Enables publishing decoded video stream: OFF=0, ON=1, ON_DEMAND=2, DISABLED=-1 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;video&gt;</span></code>]</p></li>
+<li><p><strong>video_h264</strong> – Enables publishing original H264 encoded video stream: OFF=0, ON=1, ON_DEMAND=2, DISABLED=-1 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;video&gt;</span></code>]</p></li>
+<li><p><strong>video_ffmpeg</strong> – Enables publishing the original H264 encoded video stream as a image transport [ffmpeg] topic: OFF=0, ON=1, ON_DEMAND=2, DISABLED=-1 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;video&gt;</span></code>]</p></li>
+<li><p><strong>audio</strong> – The default mode for audio topics: OFF=0, ON=1, ON_DEMAND=2, DISABLED=-1 [Default: <code class="docutils literal notranslate"><span class="pre">0</span></code>]</p></li>
+<li><p><strong>audio_raw</strong> – Enables publishing decoded audio stream: OFF=0, ON=1, ON_DEMAND=2, DISABLED=-1 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;audio&gt;</span></code>]</p></li>
+<li><p><strong>audio_opus</strong> – Enables publishing original OPUS encoded audio stream: OFF=0, ON=1, ON_DEMAND=2, DISABLED=-1 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;audio&gt;</span></code>]</p></li>
+<li><p><strong>audio_level</strong> – Enables publishing sound level: OFF=0, ON=1, ON_DEMAND=2, DISABLED=-1 [Default: <code class="docutils literal notranslate"><span class="pre">&lt;audio&gt;</span></code>]</p></li>
 <li><p><strong>camera_calibration_suffix</strong> – The suffix to append to the camera calibration file [Default: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>]</p></li>
 <li><p><strong>camera_calibration_directory</strong> – The location of the camera calibration files [Default: <code class="docutils literal notranslate"><span class="pre">pkg_share(robomaster_ros)/config</span></code>]</p></li>
 <li><p><strong>camera_calibration_file</strong> – The camera calibration file [Default: <code class="docutils literal notranslate"><span class="pre">&lt;camera_calibration_directory&gt;/rm_camera_calibration_&lt;video_resolution&gt;&lt;camera_calibration_suffix&gt;.yaml</span></code>]</p></li>

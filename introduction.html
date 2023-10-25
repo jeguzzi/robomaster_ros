@@ -13,12 +13,12 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/design-tabs.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=d45e8c67"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -86,9 +86,9 @@
            <div itemprop="articleBody">
              
   <section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
 <section id="robomaster">
-<h2>Robomaster<a class="headerlink" href="#robomaster" title="Permalink to this heading"></a></h2>
+<h2>Robomaster<a class="headerlink" href="#robomaster" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://www.dji.com/ch/products/steam">DJI Robomaster</a> is a family commercial, educational robots, which currently features
 three types of ground robots (<a class="reference external" href="https://www.dji.com/ch/robomaster-s1">S1</a>, <a class="reference external" href="https://www.dji.com/ch/robomaster-ep-core">EP Core</a>, and EP) and one drone (TT).
 Our tools covers only the Robomaster ground robots, which are effectively different configurations
@@ -138,15 +138,15 @@ Python scripts are executed <em>onboard</em> by a restricted Python runtime.</p>
 protocol to get state, send commands, and trigger actions on the robot. We provide a ROS client that wraps this client library,</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python/apis.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">onboard Python library</span></a> used from the Robomaster App
-is different than the <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/python_sdk/modules.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">remote Python client library</span></a>.
+<p>The <span class="xref std std-doc">onboard Python library</span> used from the Robomaster App
+is different than the <span class="xref std std-doc">remote Python client library</span>.
 The first is interpreted by an onboard Python runtime. The second is interpreted on the user PC
 and communicates with the robots through IP sockets. The exposed functionality overlaps but it’s not identical.
-<a class="reference external" href="https://robomaster-dev.readthedocs.io/zh_CN/latest/index.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">DJI official documentation</span></a> distinguishes between them using the term SDK for the remote client library.</p>
+<span class="xref std std-doc">DJI official documentation</span> distinguishes between them using the term SDK for the remote client library.</p>
 </div>
 </section>
 <section id="ros2-and-robomaster">
-<h2>ROS2 and Robomaster<a class="headerlink" href="#ros2-and-robomaster" title="Permalink to this heading"></a></h2>
+<h2>ROS2 and Robomaster<a class="headerlink" href="#ros2-and-robomaster" title="Link to this heading"></a></h2>
 <p>Three packages provides the core functionality to use Robomaster robots in ROS2:</p>
 <dl class="simple">
 <dt><a class="reference internal" href="robomaster_msgs.html#package.robomaster_msgs" title="package.robomaster_msgs"><code class="xref ros ros-pkg docutils literal notranslate"><span class="pre">robomaster_msgs</span></code></a></dt><dd><p>defines all custom ROS interfaces. When possible, we use already standard interfaces
