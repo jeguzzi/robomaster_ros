@@ -111,7 +111,7 @@
 <dt class="sig sig-object ros" id="node.RoboMasterROS">
 <em class="property"><span class="pre">node</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">RoboMasterROS</span></span><a class="headerlink" href="#node.RoboMasterROS" title="Link to this definition"></a></dt>
 <dd><p>This node provides a ROS interface to a Robomaster using the official Python client library.</p>
-<p>It wraps functionality from <code class="xref py py-class docutils literal notranslate"><span class="pre">rm:robomaster.robot.Robot</span></code> to create and monitor a connection to a robot,
+<p>It wraps functionality from <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh-cn/latest/python_sdk/robomaster.html#robomaster.robot.Robot" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.robot.Robot</span></code></a> to create and monitor a connection to a robot,
 configured by parameters <a class="reference internal" href="#RoboMasterROS.param.conn_type" title="RoboMasterROS.param.conn_type"><em class="xref ros ros-param">conn_type</em></a>, <a class="reference internal" href="#RoboMasterROS.param.serial_number" title="RoboMasterROS.param.serial_number"><em class="xref ros ros-param">serial_number</em></a>, and <a class="reference internal" href="#RoboMasterROS.param.reconnect" title="RoboMasterROS.param.reconnect"><em class="xref ros ros-param">reconnect</em></a>.</p>
 <div class="admonition">
 <p class="admonition-title">Summary</p>
@@ -370,7 +370,7 @@ configured by parameters <a class="reference internal" href="#RoboMasterROS.para
 </dd></dl>
 
 <p>The robot and the client library are modulars: for example, one can attach a ToF sensor
-and use class <code class="xref py py-class docutils literal notranslate"><span class="pre">rm:robomaster.sensor.DistanceSensor</span></code> to read it.
+and use class <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh-cn/latest/python_sdk/robomaster.html#robomaster.sensor.DistanceSensor" title="(in RoboMaster Developer Guide v0.1.19)"><code class="docutils literal notranslate"><span class="pre">robomaster.sensor.DistanceSensor</span></code></a> to read it.
 The ROS node follows the same organization, with submodules that corresponds to hardware parts.
 Modules can be enabled using parameters <em class="xref ros ros-param">&lt;module&gt;.enabled</em>: by default they are all disabled.</p>
 <section id="modules">
@@ -493,13 +493,13 @@ Modules can be enabled using parameters <em class="xref ros ros-param">&lt;modul
 <dl class="ros parameter">
 <dt class="sig sig-object ros" id="RoboMasterROS.param.lib_log_level">
 <em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">lib_log_level</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;ERROR&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.lib_log_level" title="Link to this definition"></a></dt>
-<dd><p>The logging level used for the internal SDK wrapped by the ROS node (see <span class="xref std std-doc">rm:python_sdk/log</span>).</p>
+<dd><p>The logging level used for the internal SDK wrapped by the ROS node (see <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh-cn/latest/python_sdk/log.html" title="(in RoboMaster Developer Guide v0.1.19)"><span>RoboMaster SDK 如何记录日志</span></a>).</p>
 </dd></dl>
 
 <dl class="ros parameter">
 <dt class="sig sig-object ros" id="RoboMasterROS.param.conn_type">
 <em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">conn_type</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;sta&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.conn_type" title="Link to this definition"></a></dt>
-<dd><p>The connection method between client and robot (see <span class="xref std std-doc">rm:python_sdk/connection</span>), one of:</p>
+<dd><p>The connection method between client and robot (see <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh-cn/latest/python_sdk/connection.html" title="(in RoboMaster Developer Guide v0.1.19)"><span>RoboMaster SDK 和机器人建立连接</span></a>), one of:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">&quot;sta&quot;</span></code></dt><dd><p>through a managed Wi-Fi network (SSID and password needs to be communicated to the robot,
 for instance using <cite>connect</cite>)</p>
@@ -514,7 +514,7 @@ for instance using <cite>connect</cite>)</p>
 <dl class="ros parameter">
 <dt class="sig sig-object ros" id="RoboMasterROS.param.serial_number">
 <em class="property"><span class="pre">parameter</span></em><span class="w"> </span><span class="sig-name descname"><span class="pre">serial_number</span></span><span class="w"> </span><span class="pre">string</span><span class="w"> </span><span class="pre">[Default:</span> <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code><span class="pre">]</span><a class="headerlink" href="#RoboMasterROS.param.serial_number" title="Link to this definition"></a></dt>
-<dd><p>If non empty, it is passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">robomaster.robot.Robot.initialize()</span></code> to select which robot to connect.
+<dd><p>If non empty, it is passed to <a class="reference external" href="https://robomaster-dev.readthedocs.io/zh-cn/latest/python_sdk/robomaster.html#robomaster.robot.Robot.initialize" title="(in RoboMaster Developer Guide v0.1.19)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">robomaster.robot.Robot.initialize()</span></code></a> to select which robot to connect.
 The serial number is a 14-long code printed on the intelligent controller.
 If the parameter value is a shorter, it’s end is padded by <code class="docutils literal notranslate"><span class="pre">*</span></code>, while if it is longer, it is truncated.</p>
 <div class="admonition note">
