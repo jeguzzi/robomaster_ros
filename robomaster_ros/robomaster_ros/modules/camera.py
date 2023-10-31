@@ -282,17 +282,17 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                     self.resolution = param.value
                 else:
                     success = False
-            if param.name == 'camera.video.raw' and self.video_raw >= 0:
+            if param.name == 'camera.video.raw' and self.video_raw != ActiveMode.DISABLED:
                 self.video_raw = param.value
-            if param.name == 'camera.video.h264' and self.video_h264 >= 0:
+            if param.name == 'camera.video.h264' and self.video_h264 != ActiveMode.DISABLED:
                 self.video_h264 = param.value
-            if param.name == 'camera.video.ffmpeg' and self.video_ffmpeg >= 0:
+            if param.name == 'camera.video.ffmpeg' and self.video_ffmpeg != ActiveMode.DISABLED:
                 self.video_ffmpeg = param.value
-            if param.name == 'camera.audio.raw' and self.audio_raw >= 0:
+            if param.name == 'camera.audio.raw' and self.audio_raw != ActiveMode.DISABLED:
                 self.audio_raw = param.value
-            if param.name == 'camera.audio.opus' and self.audio_opus >= 0:
+            if param.name == 'camera.audio.opus' and self.audio_opus != ActiveMode.DISABLED:
                 self.audio_opus = param.value
-            if param.name == 'camera.audio.level' and self.audio_level >= 0:
+            if param.name == 'camera.audio.level' and self.audio_level != ActiveMode.DISABLED:
                 self.audio_level = param.value
         return rcl_interfaces.msg.SetParametersResult(successful=success)
 
