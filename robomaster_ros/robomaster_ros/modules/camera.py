@@ -231,22 +231,22 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         node.add_on_set_parameters_callback(self.set_params_cb)
 
     def count_subs_cb(self) -> None:
-        if self.video_h264 >= 0:
+        if self.video_h264 != ActiveMode.DISABLED:
             self._video_h264_subscribers = self.node.count_subscribers(
                 'camera/image_h264')
-        if self.video_raw >= 0:
+        if self.video_raw != ActiveMode.DISABLED:
             self._video_raw_subscribers = self.node.count_subscribers(
                 'camera/image_color')
-        if self.video_ffmpeg >= 0:
+        if self.video_ffmpeg != ActiveMode.DISABLED:
             self._video_ffmpeg_subscribers = self.node.count_subscribers(
                 'camera/image_color/ffmpeg')
-        if self.audio_raw >= 0:
+        if self.audio_raw != ActiveMode.DISABLED:
             self._audio_raw_subscribers = self.node.count_subscribers(
                 'camera/audio_raw')
-        if self.audio_opus >= 0:
+        if self.audio_opus != ActiveMode.DISABLED:
             self._audio_opus_subscribers = self.node.count_subscribers(
                 'camera/audio_opus')
-        if self.audio_level >= 0:
+        if self.audio_level != ActiveMode.DISABLED:
             self._audio_level_subscribers = self.node.count_subscribers(
                 'camera/audio_level')
         if self.has_video:
