@@ -14,6 +14,11 @@ For all of you that would like to use one of our Robomasters, here you find the
     docker-compose pull
 ```
 
+### Note on EOL ROS2 versions
+
+Building docker image linked to an EOL ROS2 version (like `foxy` and `galactic`) could lead to errors because the related repository signature is no more valid. We leave the docker files for reference but we strongly suggest to only build images linked to [currently supported ROS2 versions](https://docs.ros.org/en/foxy/Releases.html).
+
+
 ## Configuration
 
 To configure the driver, add/remove/edit the key-value pairs at the end of line 6 of the compose file
