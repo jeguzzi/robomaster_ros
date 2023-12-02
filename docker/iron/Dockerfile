@@ -22,8 +22,12 @@ RUN mkdir -p /ros_ws/src \
     && git clone https://github.com/ros/urdfdom.git --branch iron src/urdfdom \
     && git clone https://github.com/berndpfrommer/ffmpeg_image_transport_msgs.git \
     && source /ros_entrypoint.sh \
-    && colcon build --install-base /opt/ros/iron --merge-install \
+    && colcon build --install-base /opt/ros/ws --merge-install \
     && rm -r /ros_ws
+
+RUN /bin/sed -i \
+  '/source "\/opt\/ros\/$ROS_DISTRO\/setup.bash"/a source "\/opt\/ros\/ws\/setup.bash"' \
+  /ros_entrypoint.sh
 
 RUN python3 -m pip install -U numpy numpy-quaternion PyYaml av
 RUN python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git
@@ -33,5 +37,6 @@ RUN mkdir -p /ros_ws/src \
     && cd /ros_ws \
     && git clone https://github.com/jeguzzi/robomaster_ros.git src/robomaster_ros \
     && source /ros_entrypoint.sh \
-    && colcon build --install-base /opt/ros/iron --merge-install \
+    && colcon build --install-base /opt/ros/ws --merge-install \
     && rm -r /ros_ws
+
