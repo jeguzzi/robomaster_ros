@@ -1,10 +1,9 @@
+from typing import TYPE_CHECKING, List, Optional, Tuple, Union, cast
+
 import robomaster.robot
 import robomaster.vision
-
 import robomaster_msgs.msg
 
-from typing import Tuple, List, Union, Optional, cast
-from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from ..client import RoboMasterROS
 
@@ -26,14 +25,18 @@ robomaster.vision.VisionPushEvent.data_info = vision_data_info
 
 
 # TODO(jerome) : tentative
-def roi(x: float, y: float, w: float, h: float) -> robomaster_msgs.msg.RegionOfInterest:
-    return robomaster_msgs.msg.RegionOfInterest(
-        x_offset=x, y_offset=y, width=w, height=h
-    )
+def roi(x: float, y: float, w: float,
+        h: float) -> robomaster_msgs.msg.RegionOfInterest:
+    return robomaster_msgs.msg.RegionOfInterest(x_offset=x,
+                                                y_offset=y,
+                                                width=w,
+                                                height=h)
 
 
 class Vision(Module):
-    def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
+
+    def __init__(self, robot: robomaster.robot.Robot,
+                 node: 'RoboMasterROS') -> None:
         self.api = robot.vision
         self.node = node
         self.clock = node.get_clock()
@@ -42,19 +45,20 @@ class Vision(Module):
             'vision.targets', ["marker:red", "robot"]).value
         # Alternatively, I could use vision_msgs/Detection2DArray
         # But this requires a mapping between id and RM class types
-        self.vision_pub = node.create_publisher(
-            robomaster_msgs.msg.Detection, "vision", 10
-        )
-        self.vision_msg = robomaster_msgs.msg.Detection()
-        # self.vision_msg.header.frame_id = 'camera_optical_link'
-        node.get_logger().info(f"Enabling vision to detect {self.vision_targets}")
+        self.vision_pub = node.create_publisher(robomaster_msgs.msg.Detection,
+                                                "vision", 10)
+        self.frame_id = node.tf_frame('camera_optical_link')
+        node.get_logger().info(
+            f"Enabling vision to detect {self.vision_targets}")
         for name in self.vision_targets:
             color: Optional[str]
             try:
                 name, color = name.split(":")
             except ValueError:
                 color = None
-            self.api.sub_detect_info(name=name, color=color, callback=self.got_vision)
+            self.api.sub_detect_info(name=name,
+                                     color=color,
+                                     callback=self.got_vision)
 
     def stop(self) -> None:
         if self.node.connected:
@@ -67,47 +71,50 @@ class Vision(Module):
     def abort(self) -> None:
         pass
 
-    def has_detected_people(self, values: List[ROI]) -> None:
+    def detection_msg(self) -> robomaster_msgs.msg.Detection:
         msg = robomaster_msgs.msg.Detection()
         msg.header.stamp = self.clock.now().to_msg()
+        msg.header.frame_id = self.frame_id
+        return msg
+
+    def has_detected_people(self, values: List[ROI]) -> None:
+        msg = self.detection_msg()
         for (x, y, w, h) in values:
-            msg.people.append(robomaster_msgs.msg.DetectedPerson(roi=roi(x, y, w, h)))
+            msg.people.append(
+                robomaster_msgs.msg.DetectedPerson(roi=roi(x, y, w, h)))
         self.vision_pub.publish(msg)
 
     def has_detected_robots(self, values: List[ROI]) -> None:
-        msg = robomaster_msgs.msg.Detection()
-        msg.header.stamp = self.clock.now().to_msg()
+        msg = self.detection_msg()
         for (x, y, w, h) in values:
-            msg.robots.append(robomaster_msgs.msg.DetectedRobot(roi=roi(x, y, w, h)))
+            msg.robots.append(
+                robomaster_msgs.msg.DetectedRobot(roi=roi(x, y, w, h)))
         self.vision_pub.publish(msg)
 
     def has_detected_markers(self, values: List[ROI_ID]) -> None:
-        msg = robomaster_msgs.msg.Detection()
-        msg.header.stamp = self.clock.now().to_msg()
+        msg = self.detection_msg()
         for (x, y, w, h, kind) in values:
             msg.markers.append(
-                robomaster_msgs.msg.DetectedMarker(kind=kind, roi=roi(x, y, w, h))
-            )
+                robomaster_msgs.msg.DetectedMarker(kind=kind,
+                                                   roi=roi(x, y, w, h)))
         self.vision_pub.publish(msg)
 
     def has_detected_gestures(self, values: List[ROI_ID]) -> None:
-        msg = robomaster_msgs.msg.Detection()
-        msg.header.stamp = self.clock.now().to_msg()
+        msg = self.detection_msg()
         for (x, y, w, h, kind) in values:
             msg.gestures.append(
-                robomaster_msgs.msg.DetectedGesture(kind=kind, roi=roi(x, y, w, h))
-            )
+                robomaster_msgs.msg.DetectedGesture(kind=kind,
+                                                    roi=roi(x, y, w, h)))
         self.vision_pub.publish(msg)
 
     def has_detected_lines(self, values: List[Line]) -> None:
-        msg = robomaster_msgs.msg.Detection()
-        msg.header.stamp = self.clock.now().to_msg()
+        msg = self.detection_msg()
         for (x, y, curvature, angle) in values:
             msg.lines.append(
-                robomaster_msgs.msg.DetectedLine(
-                    x=x, y=y, curvature=curvature, angle=angle
-                )
-            )
+                robomaster_msgs.msg.DetectedLine(x=x,
+                                                 y=y,
+                                                 curvature=curvature,
+                                                 angle=angle))
         self.vision_pub.publish(msg)
 
     def got_vision(self, msg: Detection) -> None:
