@@ -6,9 +6,13 @@ services:
       context: ..
       dockerfile: Dockerfile
     network_mode: host
+    pid: host
+    ipc: host
     command: ros2 launch robomaster_ros ep.launch name:=rm_ep
   teleop:
     privileged: true
     image: jeguzzi/robomaster_ros:galactic
     network_mode: host
+    pid: host
+    ipc: host
     command: ros2 launch robomaster_ros teleop.launch model:=ep name:=rm_ep
