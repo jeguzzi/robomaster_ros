@@ -4,7 +4,7 @@
 
 int32 sound_id 1  # ID of the sound to play
 uint8 times 1     # how many times to play the same sound
-string file ""    # if not empry, the local file to be played.
+string file ""    # if not empty, the local file to be played.
 ---
 
 ---
