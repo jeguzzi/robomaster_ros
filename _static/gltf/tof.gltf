@@ -1,0 +1,92 @@
+{
+    "asset": {
+        "version": "2.0"
+    },
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteLength": 72,
+            "byteOffset": 0
+        },
+        {
+            "buffer": 0,
+            "byteLength": 96,
+            "byteOffset": 72
+        }
+    ],
+    "accessors": [
+        {
+            "bufferView": 0,
+            "count": 36,
+            "componentType": 5123,
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 1,
+            "count": 8,
+            "componentType": 5126,
+            "type": "VEC3",
+            "min": [
+                -0.0075,
+                -0.028,
+                -0.0145
+            ],
+            "max": [
+                0.0075,
+                0.028,
+                0.0145
+            ]
+        }
+    ],
+    "meshes": [
+        {
+            "primitives": [
+                {
+                    "indices": 0,
+                    "attributes": {
+                        "POSITION": 1
+                    }
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "name": "root",
+            "children": [
+                1
+            ],
+            "rotation": [
+                -0.7071067812,
+                0,
+                0,
+                0.7071067812
+            ]
+        },
+        {
+            "name": "tof_0_link",
+            "children": [
+                2
+            ]
+        },
+        {
+            "name": "tof_0_link/visual0",
+            "mesh": 0
+        }
+    ],
+    "scene": 0,
+    "scenes": [
+        {
+            "nodes": [
+                0
+            ],
+            "name": "robot_tof"
+        }
+    ],
+    "buffers": [
+        {
+            "byteLength": 168,
+            "uri": "data:application/octet-stream;base64,AAABAAIAAAACAAMAAAADAAUAAAAFAAQAAwACAAYAAwAGAAUAAgABAAcAAgAHAAYAAQAAAAQAAQAEAAcABAAFAAYABAAGAAcAj8L1u0Jg5bxokW28j8L1u0Jg5TxokW28j8L1O0Jg5TxokW28j8L1O0Jg5bxokW28j8L1u0Jg5bxokW08j8L1O0Jg5bxokW08j8L1O0Jg5TxokW08j8L1u0Jg5TxokW08"
+        }
+    ]
+}
