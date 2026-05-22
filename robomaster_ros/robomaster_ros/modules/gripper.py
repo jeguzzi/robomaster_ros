@@ -200,14 +200,14 @@ class Gripper(Module):
         if last and first:
             duration = last - first
         else:
-            self.logger.warn('Got no message from gripper')
+            self.logger.warning('Got no message from gripper')
             duration = rclpy.duration.Duration()
         if goal_handle.is_cancel_requested:
-            self.logger.warn('Canceled gripping')
+            self.logger.warning('Canceled gripping')
             goal_handle.canceled()
         elif self.should_abort or feedback_msg.current_state != request.target_state:
             goal_handle.abort()
-            self.logger.warn(f'Failed moving gripper state: current state '
+            self.logger.warning(f'Failed moving gripper state: current state '
                              f'[{self.gripper_state}] != target state [{request.target_state}]')
         else:
             goal_handle.succeed()

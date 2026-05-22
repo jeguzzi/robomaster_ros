@@ -182,7 +182,7 @@ class Servo(Module):
         return rclpy.action.server.GoalResponse.ACCEPT
 
     def cancel_callback(self, goal_handle: Any) -> rclpy.action.CancelResponse:
-        self.logger.warn('It is not possible to cancel onboard actions')
+        self.logger.warning('It is not possible to cancel onboard actions')
         return rclpy.action.CancelResponse.REJECT
 
     # (valid, speed, angle)

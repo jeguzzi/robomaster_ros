@@ -160,7 +160,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
                             1)
                         self.should_publish_camera_info = True
             except FileNotFoundError:
-                self.logger.warn(
+                self.logger.warning(
                     f"[Camera] Calibration file not found at {calibration_path}"
                 )
         # self.logger.info(f"[Camera] Start video stream with resolution {height}p")
@@ -394,7 +394,7 @@ class Camera(robomaster.media.LiveView, Module):  # type: ignore
         except ValueError:
             return
         if value != ActiveMode.OFF and not FFMPEG_AVAILABLE:
-            self.logger.warn(
+            self.logger.warning(
                 "[Camera] FFmpeg not available: install PyAV and ffmpeg_image_transport_msgs"
             )
             return
