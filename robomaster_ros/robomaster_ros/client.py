@@ -101,7 +101,7 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
         if sn:
             if len(sn) != SERIAL_NUMBER_LENGTH:
                 sn = pad_serial(sn)
-                self.get_logger().warn(
+                self.get_logger().warning(
                     f"Serial number must have length {SERIAL_NUMBER_LENGTH}: "
                     f"trasformed to {sn}")
         else:
