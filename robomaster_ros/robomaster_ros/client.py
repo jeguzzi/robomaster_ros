@@ -191,7 +191,7 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
     def heartbeat_check(self) -> None:
         self.connected = False
         self.disconnection.set_result(False)
-        self.get_logger().warn("Disconnected")
+        self.get_logger().warning("Disconnected")
 
     def got_heart_beat(self, msg: Any) -> None:
         self.heartbeat_check_timer.reset()
