@@ -28,7 +28,7 @@
   <arg name="battery" default="true" description="Enable the battery module"/>
 
   <arg name="led" default="true" description="Enable the LED module"/>
-  <arg name="led_color" default="[]" description="The initial color of the chassis LED"/>
+  <arg name="led_color" default="[0, 0, 0]" description="The initial color of the chassis LEDs"/>
 
   <arg name="speaker" default="true" description="Enable the speaker module"/>
 

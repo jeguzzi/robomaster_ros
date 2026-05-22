@@ -15,10 +15,15 @@ The robot will switch off all LEDs when initializing this module.
 Parameter
 ---------
 
-.. ros:parameter:: leds.enabled bool
+.. ros:parameter:: led.enabled bool
   :default: false
 
   Enables all the ROS interface described here, which by default is disabled, like all other modules.
+
+.. ros:parameter:: led.color int[]
+  :default: [0, 0, 0]
+
+   The color of all LEDs when starting.
 
 Subscriptions
 -------------
