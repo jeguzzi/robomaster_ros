@@ -28,6 +28,7 @@
   <arg name="battery" default="true" description="Enable the battery module"/>
 
   <arg name="led" default="true" description="Enable the LED module"/>
+  <arg name="led_color" default="[]" description="The initial color of the chassis LED"/>
 
   <arg name="speaker" default="true" description="Enable the speaker module"/>
 
@@ -70,7 +71,7 @@
   <let name="uart" value="$(eval '\'$(var uart_rx_enable)\' in (\'true\', \'True\') or \'$(var uart_tx_enable)\' in (\'true\', \'True\')')"/>
 
   <!-- e.g., <= 0 -> None -->
-  <arg name="pwm_frequencies" default="[-1,-1,-1,-1,-1,-1]" description="PWM dfrequencies. Enable the PWM module when at least one is positive."/>
+  <arg name="pwm_frequencies" default="[-1,-1,-1,-1,-1,-1]" description="PWM frequencies. Enable the PWM module when at least one is positive."/>
   <let name="pwm" value="$(eval 'max($(var pwm_frequencies)) > 0')"/>
 
   <!-- CHASSIS -->
@@ -193,6 +194,7 @@
     </param>
     <param name="led">
       <param name="enabled" value="$(var led)"/>
+      <param name="color" value="$(var led_color)"/>
     </param>
     <param name="pwm">
       <param name="enabled" value="$(var pwm)"/>

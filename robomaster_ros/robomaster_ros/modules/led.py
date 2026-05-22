@@ -17,8 +17,13 @@ class LED(Module):
     def __init__(self, robot: robomaster.robot.Robot, node: 'RoboMasterROS') -> None:
         self.api = robot.led
         self.node = node
-        self.api.set_led(comp=robomaster.led.COMP_ALL, effect=robomaster.led.EFFECT_OFF,
-                         r=255, g=255, b=0)
+        color = node.declare_parameter("led.color", [0, 0, 0]).value
+        if color and len(color) > 2 and any(color[:3]):
+            self.api.set_led(comp=robomaster.led.COMP_ALL, effect=robomaster.led.EFFECT_ON,
+                             r=color[0], g=color[1], b=color[2])
+        else:
+            self.api.set_led(comp=robomaster.led.COMP_ALL, effect=robomaster.led.EFFECT_OFF,
+                             r=255, g=255, b=0)
         node.create_subscription(
             robomaster_msgs.msg.LEDEffect, 'leds/effect', self.has_received_led_effect, 1)
         node.create_subscription(
