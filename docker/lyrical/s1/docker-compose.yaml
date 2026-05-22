@@ -1,0 +1,18 @@
+version: '3'
+services:
+  driver:
+    image: jeguzzi/robomaster_ros:humble
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    network_mode: host
+    pid: host
+    ipc: host
+    command: ros2 launch robomaster_ros main.launch model:=s1
+  teleop:
+    privileged: true
+    image: jeguzzi/robomaster_ros:humble
+    network_mode: host
+    pid: host
+    ipc: host
+    command: ros2 launch robomaster_ros teleop.launch model:=s1

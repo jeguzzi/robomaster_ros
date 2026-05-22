@@ -1,0 +1,8 @@
+version: '3'
+services:
+  robomaster:
+    image: jeguzzi/robomaster_ros:iron
+    build:
+      context: .
+    privileged: true
+    command: ros2 launch robomaster_ros main.launch
