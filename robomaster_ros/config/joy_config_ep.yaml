@@ -77,7 +77,7 @@
       action_goal:
         target_state: 1
       buttons: [6, 0]
-    comarm:
+    cmd_arm:
       type: topic
       interface_type: "geometry_msgs/msg/Vector3"
       topic_name: cmd_arm
