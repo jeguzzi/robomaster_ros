@@ -24,10 +24,6 @@ author = 'Jérôme Guzzi'
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
 
-import sys
-
-sys.path.insert(0, '/Users/Jerome/Dev/ROS/ros2_ws/src/sphinx_ros')
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be

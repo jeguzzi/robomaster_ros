@@ -90,6 +90,8 @@ Three packages provides the core functionality to use Robomaster robots in ROS2:
   The models have realistic visual and physical (i.e, inertia and collision shapes) details and
   can be used for state estimation, for simulation, and for visualization.
 
+.. ros:currentpackage:: robomaster_ros
+
 :ros:pkg:`robomaster_ros`
   contains Python libraries and executables to connect and control the robot. In particular, executable
   :ros:exec:`robomaster_driver` offers a ROS2 driver for the robot, wrapping the official client library,
