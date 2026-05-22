@@ -23,6 +23,7 @@ def main(args: Any = None) -> None:
         nonlocal should_reconnect
         should_reconnect = False
         if node:
+            node.stop_heartbeat_check()
             if rclpy.ok():
                 node.abort()
                 rclpy.spin_once(node, executor=executor, timeout_sec=0.1)
@@ -52,6 +53,7 @@ def main(args: Any = None) -> None:
             except rclpy._rclpy_pybind11.RCLError:
                 should_reconnect = False
                 break
+        node.stop_heartbeat_check()
         if rclpy.ok():
             node.abort()
             rclpy.spin_once(node, executor=executor, timeout_sec=0.1)

@@ -106,6 +106,7 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
                     f"trasformed to {sn}")
         else:
             sn = None
+        self.heartbeat_check_timer: Optional[rclpy.timer.Timer] = None
         self.connected = False
         if conn_type == 'sta':
             self.get_logger().info("Waiting for a robot")
@@ -132,35 +133,41 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
         self.connected = True
         self._tf_name = self.declare_parameter('tf_prefix', '').value
         self.initialized = True
-        self.heartbeat_check_timer = self.create_timer(5, self.heartbeat_check)
-        self.heartbeat_handler = robomaster.client.MsgHandler(
-            proto_data=robomaster.protocol.ProtoSdkHeartBeat(),
-            ack_cb=lambda _, msg: self.got_heart_beat(msg))
-
-        self.ep_robot._client.add_msg_handler(self.heartbeat_handler)
         self.joint_state_pub = self.create_publisher(
             sensor_msgs.msg.JointState, 'joint_states_p', 1)
         self.tf_broadcaster = tf2_ros.transform_broadcaster.TransformBroadcaster(self)
-        self.modules = [module(self.ep_robot, self) for name, module in
-                        modules.items() if self.enabled(name)]
-        module_string = ', '.join(type(module).__name__ for module in self.modules)
+        self.modules = {name: module(self.ep_robot, self) for name, module in
+                        modules.items() if self.enabled(name)}
+        module_string = ', '.join(type(module).__name__ for module in self.modules.values())
         self.get_logger().info(f"Enabled modules: {module_string}")
         self.connected_pub.publish(std_msgs.msg.Bool(data=True))
+        self.start_heartbeat_check()
 
     def __del__(self) -> None:
         self.stop()
 
+    def start_heartbeat_check(self) -> None:
+        self.heartbeat_check_timer = self.create_timer(5, self.heartbeat_check)
+        self.heartbeat_handler = robomaster.client.MsgHandler(
+            proto_data=robomaster.protocol.ProtoSdkHeartBeat(),
+            ack_cb=lambda _, msg: self.got_heart_beat(msg))
+        self.ep_robot._client.add_msg_handler(self.heartbeat_handler)
+
+    def stop_heartbeat_check(self) -> None:
+        if self.heartbeat_check_timer:
+            self.heartbeat_check_timer.cancel()
+
     def abort(self) -> None:
         if self.initialized:
             self.get_logger().info("Will abort any action")
-            for module in self.modules:
+            for _, module in self.modules.items():
                 module.abort()
 
     def stop(self) -> None:
         if self.initialized:
             self.get_logger().info("Will stop client")
-            self.heartbeat_check_timer.cancel()
-            for module in self.modules:
+            self.stop_heartbeat_check()
+            for _, module in self.modules.items():
                 # self.get_logger().info(f"Will stop module {module}")
                 module.stop()
                 # self.get_logger().info(f"Stopped module {module}")
