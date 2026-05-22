@@ -1,24 +1,24 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Introduction &mdash; Robomaster ROS 0.0.1 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d45e8c67"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="_static/design-tabs.js?v=36754332"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/design-tabs.js?v=36754332"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -138,11 +138,11 @@ Python scripts are executed <em>onboard</em> by a restricted Python runtime.</p>
 protocol to get state, send commands, and trigger actions on the robot. We provide a ROS client that wraps this client library,</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <span class="xref std std-doc">onboard Python library</span> used from the Robomaster App
-is different than the <span class="xref std std-doc">remote Python client library</span>.
+<p>The <a class="reference external" href="https://robomaster-dev.readthedocs.io/python/apis.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">onboard Python library</span></a> used from the Robomaster App
+is different than the <a class="reference external" href="https://robomaster-dev.readthedocs.io/python_sdk/modules.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">remote Python client library</span></a>.
 The first is interpreted by an onboard Python runtime. The second is interpreted on the user PC
 and communicates with the robots through IP sockets. The exposed functionality overlaps but it’s not identical.
-<span class="xref std std-doc">DJI official documentation</span> distinguishes between them using the term SDK for the remote client library.</p>
+<a class="reference external" href="https://robomaster-dev.readthedocs.io/index.html" title="(in RoboMaster Developer Guide v0.1.19)"><span class="xref std std-doc">DJI official documentation</span></a> distinguishes between them using the term SDK for the remote client library.</p>
 </div>
 </section>
 <section id="ros2-and-robomaster">
@@ -160,8 +160,10 @@ the different way to configure a robot with them (i.e., EP and S1).
 The models have realistic visual and physical (i.e, inertia and collision shapes) details and
 can be used for state estimation, for simulation, and for visualization.</p>
 </dd>
+</dl>
+<dl class="simple">
 <dt><a class="reference internal" href="robomaster_ros.html#package.robomaster_ros" title="package.robomaster_ros"><code class="xref ros ros-pkg docutils literal notranslate"><span class="pre">robomaster_ros</span></code></a></dt><dd><p>contains Python libraries and executables to connect and control the robot. In particular, executable
-<em class="xref ros ros-exec">robomaster_driver</em> offers a ROS2 driver for the robot, wrapping the official client library,
+<a class="reference internal" href="robomaster_ros.html#robomaster_ros.exec.robomaster_driver" title="robomaster_ros.exec.robomaster_driver"><em class="xref ros ros-exec">robomaster_driver</em></a> offers a ROS2 driver for the robot, wrapping the official client library,
 that exposes <em>all</em> available functionalities related to the robot’s parts.
 Users can configure the driver to use a subset of parts to reduce computational and networking costs.</p>
 </dd>

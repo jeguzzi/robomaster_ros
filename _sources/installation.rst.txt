@@ -8,7 +8,7 @@ Pre-requisites
 ROS2
 ^^^^
 
-#. Install a current version of ROS2 (i.e., foxy, galactic, humble, or iron),
+#. Install a current version of ROS2 (versions starting from foxy are supported),
    following the `official instructions <https://docs.ros.org/en/humble/Installation.html>`_.
 
 #. In case you opted for a minimal installation (ROS2-base), add the following packages:
@@ -53,7 +53,7 @@ which fixes some issues of the upstream repo.
    .. code-block:: console
 
       python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git
-      python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git#"egg=libmedia_codec&subdirectory=lib/libmedia_codec"
+      python3 -m pip install -i https://test.pypi.org/simple/ rm-libmedia-codec
 
 
 Robomaster ROS packages
