@@ -53,19 +53,19 @@ Parameters
   :default: 0 (before ROS 2 iron), 2 (from ROS 2 iron)
   :dynamic:
 
-  Enables the decoded video stream on :ros:pub:`camera/image_color`: 0 (off), 1 (on), 2 (on-demand).
+  Enables the decoded video stream on :ros:pub:`camera/image_color`: -1 (disabled), 0 (off), 1 (on), 2 (on-demand). If initially set to -1 (disabled), the value cannot be changed at runtime.
 
 .. ros:parameter:: camera.video.h264 int
   :default: 0 (before ROS 2 iron), 2 (from ROS 2 iron)
   :dynamic:
 
-  Enables the [original] H264 video stream on :ros:pub:`camera/image_h264`: 0 (off), 1 (on), 2 (on-demand).
+  Enables the [original] H264 video stream on :ros:pub:`camera/image_h264`: -1 (disabled), 0 (off), 1 (on), 2 (on-demand). If initially set to -1 (disabled), the value cannot be changed at runtime.
 
 .. ros:parameter:: camera.video.ffmpeg int
   :default: 0 (before ROS 2 iron), 2 (from ROS 2 iron)
   :dynamic:
 
-  Enables the [original] H264 video stream on :ros:pub:`camera/image_color/ffmpeg`: 0 (off), 1 (on), 2 (on-demand).
+  Enables the [original] H264 video stream on :ros:pub:`camera/image_color/ffmpeg`: -1 (disabled), 0 (off), 1 (on), 2 (on-demand). If initially set to -1 (disabled), the value cannot be changed at runtime.
 
 .. ros:parameter:: camera.video.protocol string
   :default: "tcp"
@@ -94,19 +94,19 @@ Parameters
   :default: true
   :dynamic:
 
-  Enables the publishing the decoded raw audio on :ros:pub:`camera/audio_raw`: 0 (off), 1 (on), 2 (on-demand).
+  Enables the publishing the decoded raw audio on :ros:pub:`camera/audio_raw`: -1 (disabled), 0 (off), 1 (on), 2 (on-demand). If initially set to -1 (disabled), the value cannot be changed at runtime.
 
 .. ros:parameter:: camera.audio.opus int
   :default: true
   :dynamic:
 
-  Enables the publishing the original encoded audio on :ros:pub:`camera/audio_opus`: 0 (off), 1 (on), 2 (on-demand).
+  Enables the publishing the original encoded audio on :ros:pub:`camera/audio_opus`: -1 (disabled), 0 (off), 1 (on), 2 (on-demand). If initially set to -1 (disabled), the value cannot be changed at runtime.
 
 .. ros:parameter:: camera.audio.level int
   :default: true
   :dynamic:
 
-  Enables the publishing audio levels on :ros:pub:`camera/audio_level`: 0 (off), 1 (on), 2 (on-demand).
+  Enables the publishing audio levels on :ros:pub:`camera/audio_level`: -1 (disabled), 0 (off), 1 (on), 2 (on-demand). If initially set to -1 (disabled), the value cannot be changed at runtime.
 
 Subscription
 ------------
