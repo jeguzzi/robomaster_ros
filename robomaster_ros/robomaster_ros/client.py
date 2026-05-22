@@ -99,11 +99,12 @@ class RoboMasterROS(rclpy.node.Node):  # type: ignore
         self.reconnect: bool = self.declare_parameter("reconnect", True).value
         sn: Optional[str] = self.declare_parameter("serial_number", "").value
         if sn:
-            if len(sn) != SERIAL_NUMBER_LENGTH:
-                sn = pad_serial(sn)
-                self.get_logger().warning(
-                    f"Serial number must have length {SERIAL_NUMBER_LENGTH}: "
-                    f"trasformed to {sn}")
+            pass
+            # if len(sn) != SERIAL_NUMBER_LENGTH:
+            #     sn = pad_serial(sn)
+            #     self.get_logger().warning(
+            #         f"Serial number must have length {SERIAL_NUMBER_LENGTH}: "
+            #         f"trasformed to {sn}")
         else:
             sn = None
         self.heartbeat_check_timer: Optional[rclpy.timer.Timer] = None
