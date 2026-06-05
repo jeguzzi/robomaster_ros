@@ -49,10 +49,20 @@ and
 python3 -m pip install -U numpy numpy-quaternion pyyaml
 ```
 then install the RoboMaster-SDK
-```bash
-python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git
-python3 -m pip install -i https://test.pypi.org/simple/ rm-libmedia-codec
-```
+
+- For Python < 3.11:
+
+  ```bash
+  python3 -m pip install git+https://github.com/jeguzzi/  RoboMaster-SDK.git
+  python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git#"egg=rm_libmedia_codec&subdirectory=lib/libmedia_codec"
+  ```
+
+- For Python >= 3.11:
+
+  ```bash
+  python3 -m pip install git+https://github.com/jeguzzi/  RoboMaster-SDK.git
+  python3 -m pip install -i https://test.pypi.org/simple/   rm-libmedia-codec
+  ```
 
 ### ROS2 package
 

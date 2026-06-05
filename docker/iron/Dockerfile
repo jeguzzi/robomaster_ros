@@ -31,7 +31,7 @@ RUN /bin/sed -i \
 
 RUN python3 -m pip install -U numpy numpy-quaternion PyYaml av
 RUN python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git
-RUN python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git#"egg=libmedia_codec&subdirectory=lib/libmedia_codec"
+RUN python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git#"egg=rm_libmedia_codec&subdirectory=lib/libmedia_codec"
 
 RUN mkdir -p /ros_ws/src \
     && cd /ros_ws \
