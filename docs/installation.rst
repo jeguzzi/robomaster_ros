@@ -48,14 +48,16 @@ which fixes some issues of the upstream repo.
       sudo apt install libopus-dev python3-pip
       python3 -m pip install -U numpy numpy-quaternion pyyaml
 
-#. Install the RoboMaster-SDK (Python < 3.11)
+#. Install the RoboMaster-SDK
+
+   - For Python < 3.11:
 
    .. code-block:: console
 
       python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git
       python3 -m pip install git+https://github.com/jeguzzi/RoboMaster-SDK.git#"egg=rm_libmedia_codec&subdirectory=lib/libmedia_codec"
 
-#. Install the RoboMaster-SDK (Python >= 3.11)
+   - For Python >= 3.11:
 
    .. code-block:: console
 
