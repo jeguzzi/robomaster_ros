@@ -12,7 +12,11 @@ import robomaster.media
 import robomaster_msgs.msg
 import sensor_msgs.msg
 import yaml
-from cv_bridge import CvBridge
+
+try:
+    from cv_bridge import CvBridge
+except ImportError:
+    from .bridge import Bridge as CvBridge
 
 try:
     from rclpy.event_handler import (PublisherEventCallbacks,
