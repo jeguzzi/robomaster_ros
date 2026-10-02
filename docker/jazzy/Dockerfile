@@ -1,4 +1,4 @@
-FROM ros:rolling
+FROM ros:jazzy
 MAINTAINER Jerome Guzzi "jerome@idsia.ch"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -6,13 +6,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     python3-numpy \
     python3-scipy \
-    ros-rolling-xacro \
-    ros-rolling-joint-state-publisher \
-    ros-rolling-joy \
-    ros-rolling-joy-teleop \
-    ros-rolling-joy-linux \
-    ros-rolling-urdfdom \
-    ros-rolling-ffmpeg-image-transport-msgs \
+    ros-jazzy-xacro \
+    ros-jazzy-joint-state-publisher \
+    ros-jazzy-joy \
+    ros-jazzy-joy-teleop \
+    ros-jazzy-joy-linux \
+    ros-jazzy-urdfdom \
+    ros-jazzy-ffmpeg-image-transport-msgs \
     && rm -rf /var/lib/apt/lists/*
 
 RUN locale-gen en_US.UTF-8
